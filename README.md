@@ -33,15 +33,15 @@
 <tbody>
 <tr>
 <td><a href="https://github.com/sametbrr/llm-wiki-manager"><b>llm-wiki-manager</b></a></td>
-<td><b>EN:</b> An LLM-managed personal wiki that compiles raw sources, builds cross-references, and compounds knowledge over time. Implements <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Karpathy's LLM Wiki pattern</a> with 8 operating modes and 4 idempotent Python scripts.<br><b>TR:</b> LLM tarafından yönetilen kişisel wiki — ham kaynakları derleyen, çapraz referanslar kuran ve bilgiyi zamanla biriktiren Claude Code skill'i. <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Karpathy pattern'ini</a> 8 çalışma modu ve 4 idempotent Python scriptiyle uygular.</td>
+<td><b>EN:</b> Skill for a persistent LLM-managed wiki — the LLM writes and cross-references while you curate sources. Implements <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Karpathy's LLM Wiki pattern</a> with 8 operating modes and 4 idempotent Python scripts.<br><b>TR:</b> Kalıcı, LLM tarafından yönetilen kişisel wiki için skill — LLM yazar ve çapraz referans kurarken siz kaynakları seçersiniz. <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Karpathy pattern'ini</a> 8 çalışma modu ve 4 idempotent Python scriptiyle uygular.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/prompt-architect"><b>prompt-architect</b></a></td>
-<td><b>EN:</b> An Agent Skill that turns any rough idea into a domain-classified, expert-level prompt using a 25-domain taxonomy and 8 quality gates. Supports Turkish and English input.<br><b>TR:</b> Ham fikri 25 domainlik sınıflandırma ve 8 kalite geçidi uygulayarak uzman seviye prompt'a dönüştüren Agent Skill. Türkçe ve İngilizce girdi destekler.</td>
+<td><b>EN:</b> Skill that turns any rough idea (TR/EN) into a domain-classified, quality-reviewed expert prompt using a 25-domain taxonomy and 8 quality gates.<br><b>TR:</b> Ham fikri (TR/EN) 25 domainlik sınıflandırma ve 8 kalite geçidinden geçirerek uzman seviye prompt'a dönüştüren skill.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/openapi-rest-mcp"><b>openapi-rest-mcp</b></a></td>
-<td><b>EN:</b> Generates an MCP server for any OpenAPI / Swagger spec. All endpoints are exposed as tools, zero manual configuration.<br><b>TR:</b> Herhangi bir OpenAPI / Swagger spec'i için otomatik MCP sunucusu oluşturur. Tüm endpoint'ler Claude'a tool olarak açılır, sıfır manuel konfigürasyon.</td>
+<td><b>EN:</b> MCP server that wraps any OpenAPI/Swagger REST API with CRUD, discovery, fuzzy search, and multi-scheme auth.<br><b>TR:</b> Herhangi bir OpenAPI/Swagger REST API'yi CRUD, endpoint keşfi, fuzzy search ve çoklu auth şemasıyla saran MCP sunucusu.</td>
 </tr>
 </tbody>
 </table>
@@ -52,9 +52,9 @@
 
 | Package / Paket | Description / Açıklama | Downloads / İndirmeler |
 |-----------------|------------------------|------------------------|
-| [**AssemblyServiceRegistrar**](https://github.com/sametbrr/AssemblyServiceRegistrar) | **EN:** Attribute-based automatic DI registration — eliminates thousands of lines of manual registration in large projects. **TR:** Attribute tabanlı otomatik DI kaydı — büyük projelerde binlerce satır manuel kaydı ortadan kaldırır. | [![NuGet](https://img.shields.io/nuget/dt/AssemblyServiceRegistrar?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/AssemblyServiceRegistrar) |
-| [**EnvironmentConfigurator**](https://github.com/sametbrr/EnvironmentConfigurator) | **EN:** Automatic appsettings selection and config layering by environment. One-line setup, zero boilerplate. **TR:** Ortama göre otomatik appsettings seçimi ve config katmanlama. Tek satır kurulum, sıfır boilerplate. | [![NuGet](https://img.shields.io/nuget/dt/EnvironmentConfigurator?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/EnvironmentConfigurator) |
-| [**openapi-rest-mcp**](https://github.com/sametbrr/openapi-rest-mcp) | **EN:** MCP server for any OpenAPI spec — CRUD calls, endpoint discovery, fuzzy search, flexible auth. .NET-friendly. **TR:** OpenAPI spec'i için MCP sunucusu — CRUD, endpoint keşfi, fuzzy search, esnek auth. .NET uyumlu. | [![npm](https://img.shields.io/npm/dt/openapi-rest-mcp?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/openapi-rest-mcp) |
+| [**AssemblyServiceRegistrar**](https://github.com/sametbrr/AssemblyServiceRegistrar) | **EN:** .NET library that auto-registers services via marker interfaces and attributes — supports all lifetimes and open generics. **TR:** Marker interface ve attribute'lar aracılığıyla servisleri otomatik kaydeden .NET kütüphanesi — tüm lifetime'ları ve open generic'leri destekler. | [![NuGet](https://img.shields.io/nuget/dt/AssemblyServiceRegistrar?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/AssemblyServiceRegistrar) |
+| [**EnvironmentConfigurator**](https://github.com/sametbrr/EnvironmentConfigurator) | **EN:** ASP.NET Core package for single-call environment-aware config loading with auto-scaffolded publish profiles and appsettings. **TR:** Ortama duyarlı yapılandırmayı tek çağrıyla yükleyen, publish profilleri ve appsettings dosyalarını otomatik oluşturan ASP.NET Core paketi. | [![NuGet](https://img.shields.io/nuget/dt/EnvironmentConfigurator?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/EnvironmentConfigurator) |
+| [**openapi-rest-mcp**](https://github.com/sametbrr/openapi-rest-mcp) | **EN:** MCP server that wraps any OpenAPI/Swagger REST API with CRUD, discovery, fuzzy search, and multi-scheme auth. **TR:** Herhangi bir OpenAPI/Swagger REST API'yi CRUD, endpoint keşfi, fuzzy search ve çoklu auth şemasıyla saran MCP sunucusu. | [![npm](https://img.shields.io/npm/dt/openapi-rest-mcp?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/openapi-rest-mcp) |
 
 ---
 
