@@ -78,6 +78,22 @@ Tools that make LLMs first-class citizens in developer workflows — not assista
 <td>Turns any rough idea into a domain-classified, quality-reviewed expert prompt — 25-domain taxonomy, 8 quality gates, works in TR and EN.</td>
 </tr>
 <tr>
+<td><a href="https://github.com/sametbrr/notebooklm"><b>notebooklm</b></a></td>
+<td>Full programmatic access to Google NotebookLM from the terminal — create notebooks, add sources, generate podcasts, videos, quizzes, and more. Includes a one-time browser auth flow and multi-format downloads.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/readme-standard"><b>readme-standard</b></a></td>
+<td>Enforces a consistent README.md + README.tr.md structure across projects — 23 rules, four modes (Create, Audit, Fix, TR Sync), and auto-detection of project type from package.json / .csproj / pyproject.toml / SKILL.md.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/look-again"><b>look-again</b></a></td>
+<td>Saves conversation checkpoints as markdown files and resumes them with full context — decisions, rejected alternatives, and the final plan preserved verbatim. Works on Claude Code and Claude.ai.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/project-radar"><b>project-radar</b></a></td>
+<td>Daily GitHub trending & community discovery radar — pulls the full Trending list, scans HN, Reddit, Product Hunt, YouTube and the wider web, scores each project 0–100 on usefulness, and renders a self-contained Turkish HTML report with a persistent watchlist.</td>
+</tr>
+<tr>
 <td><a href="https://github.com/sametbrr/openapi-rest-mcp"><b>openapi-rest-mcp</b></a></td>
 <td>Drop any OpenAPI/Swagger spec and get a fully functional MCP server — CRUD, endpoint discovery, fuzzy search, and multi-scheme auth out of the box.</td>
 </tr>

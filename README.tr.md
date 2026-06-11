@@ -78,6 +78,22 @@ LLM'leri geliştirici iş akışlarında birinci sınıf vatandaş yapan araçla
 <td>Herhangi bir ham fikri domain sınıflandırmalı, kalite incelemeli uzman prompt'a dönüştürür — 25 domainlik sınıflandırma, 8 kalite geçidi, TR ve EN destekli.</td>
 </tr>
 <tr>
+<td><a href="https://github.com/sametbrr/notebooklm"><b>notebooklm</b></a></td>
+<td>Google NotebookLM'e terminalden tam programatik erişim — notebook oluştur, kaynak ekle, podcast, video, quiz ve daha fazlasını üret. Tek seferlik tarayıcı auth akışı ve çoklu format indirme desteği.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/readme-standard"><b>readme-standard</b></a></td>
+<td>Projeler genelinde tutarlı README.md + README.tr.md yapısını zorunlu kılar — 23 kural, dört mod (Oluştur, Denetle, Düzelt, TR Senkronize), package.json / .csproj / pyproject.toml / SKILL.md'den otomatik proje tipi algılama.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/look-again"><b>look-again</b></a></td>
+<td>Konuşma checkpoint'lerini markdown dosyaları olarak kaydeder ve tam bağlamla devam eder — kararlar, reddedilen alternatifler ve son plan birebir korunur. Claude Code ve Claude.ai'de çalışır.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/project-radar"><b>project-radar</b></a></td>
+<td>Günlük GitHub trending ve topluluk keşif radarı — Trending listesinin tamamını çeker, HN, Reddit, Product Hunt, YouTube ve geniş web'i tarar, her projeyi 0–100 kullanışlılık skoruyla değerlendirir ve kalıcı bir watchlist ile Türkçe HTML rapor oluşturur.</td>
+</tr>
+<tr>
 <td><a href="https://github.com/sametbrr/openapi-rest-mcp"><b>openapi-rest-mcp</b></a></td>
 <td>Herhangi bir OpenAPI/Swagger spec'ini bırakın, tam işlevsel bir MCP sunucusu elde edin — CRUD, endpoint keşfi, fuzzy search ve çoklu auth kutudan çıkar.</td>
 </tr>
