@@ -44,7 +44,7 @@ Designing systems where developers work less and deliver more — by putting LLM
 The best developer workflow is the one you barely have to think about.
 ```
 
-Full Stack Developer with 4+ years of production experience at NarPOS — building and scaling enterprise products with .NET, Angular, and NX Monorepo architecture.
+Full Stack Developer with 4+ years of production experience at NarPOS — building and scaling enterprise products with .NET, Angular/React, and NX Monorepo architecture.
 
 But what I'm focused on now goes beyond writing code:
 
@@ -64,6 +64,13 @@ I share everything I build as open source — because the best ideas compound wh
 
 Tools that make LLMs first-class citizens in developer workflows — not assistants you have to prompt carefully, but systems that act.
 
+Every plugin below ships through one marketplace — [**skill-hub**](https://github.com/sametbrr/skill-hub). Register it once, install anything by name:
+
+```bash
+claude plugin marketplace add sametbrr/skill-hub
+claude plugin install llm-wiki-manager@sametbrr/skill-hub
+```
+
 <table>
 <thead>
 <tr><th width="200">Project</th><th>What it does</th></tr>
@@ -74,16 +81,16 @@ Tools that make LLMs first-class citizens in developer workflows — not assista
 <td>A persistent, LLM-managed personal wiki. The model writes, cross-references, and maintains the knowledge base while you curate sources. Implements <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Karpathy's LLM Wiki pattern</a> with 8 operating modes.</td>
 </tr>
 <tr>
+<td><a href="https://github.com/sametbrr/github-manager"><b>github-manager</b></a></td>
+<td>Audits and fixes a GitHub account end to end — profile fields, profile README, repo descriptions, topics, and project READMEs. Four analyzer agents plus a bundled <a href="https://github.com/sametbrr/readme-standard">readme-standard</a> for the README pass.</td>
+</tr>
+<tr>
 <td><a href="https://github.com/sametbrr/prompt-architect"><b>prompt-architect</b></a></td>
-<td>Turns any rough idea into a domain-classified, quality-reviewed expert prompt — 25-domain taxonomy, 8 quality gates, works in TR and EN.</td>
+<td>Turns any rough idea into a domain-classified, quality-reviewed expert prompt — 25-domain taxonomy, model-aware tuning, 11 quality gates, works in TR and EN.</td>
 </tr>
 <tr>
-<td><a href="https://github.com/sametbrr/notebooklm"><b>notebooklm</b></a></td>
-<td>Full programmatic access to Google NotebookLM from the terminal — create notebooks, add sources, generate podcasts, videos, quizzes, and more. Includes a one-time browser auth flow and multi-format downloads.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/sametbrr/readme-standard"><b>readme-standard</b></a></td>
-<td>Enforces a consistent README.md + README.tr.md structure across projects — 23 rules, four modes (Create, Audit, Fix, TR Sync), and auto-detection of project type from package.json / .csproj / pyproject.toml / SKILL.md.</td>
+<td><a href="https://github.com/sametbrr/crypt-sync"><b>crypt-sync</b></a></td>
+<td>Keeps <code>.env</code> and secret files encrypted inside git and synced across machines with <a href="https://github.com/FiloSottile/age">age</a> — plaintext never leaves the working tree. Ships as both a Claude Code plugin and a standalone npm CLI.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/look-again"><b>look-again</b></a></td>
@@ -92,6 +99,10 @@ Tools that make LLMs first-class citizens in developer workflows — not assista
 <tr>
 <td><a href="https://github.com/sametbrr/project-radar"><b>project-radar</b></a></td>
 <td>Daily GitHub trending & community discovery radar — pulls the full Trending list, scans HN, Reddit, Product Hunt, YouTube and the wider web, scores each project 0–100 on usefulness, and renders a self-contained Turkish HTML report with a persistent watchlist.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/readme-standard"><b>readme-standard</b></a></td>
+<td>Enforces a consistent README.md + README.tr.md structure across projects — 23 rules, four modes (Create, Audit, Fix, TR Sync), and auto-detection of project type from package.json / .csproj / pyproject.toml / SKILL.md.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/openapi-rest-mcp"><b>openapi-rest-mcp</b></a></td>
@@ -107,6 +118,7 @@ Tools that make LLMs first-class citizens in developer workflows — not assista
 | [**AssemblyServiceRegistrar**](https://github.com/sametbrr/AssemblyServiceRegistrar) | Zero-boilerplate DI registration in .NET — marker interfaces and attributes, all lifetimes, open generics supported. | [![NuGet](https://img.shields.io/nuget/dt/AssemblyServiceRegistrar?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/AssemblyServiceRegistrar) |
 | [**EnvironmentConfigurator**](https://github.com/sametbrr/EnvironmentConfigurator) | Single-call environment-aware config loading for ASP.NET Core — publish profiles and appsettings auto-scaffolded. | [![NuGet](https://img.shields.io/nuget/dt/EnvironmentConfigurator?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/EnvironmentConfigurator) |
 | [**openapi-rest-mcp**](https://github.com/sametbrr/openapi-rest-mcp) | Wrap any REST API as an MCP server without writing a single tool handler. | [![npm](https://img.shields.io/npm/dt/openapi-rest-mcp?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/openapi-rest-mcp) |
+| [**crypt-sync**](https://github.com/sametbrr/crypt-sync) | Commit `.env` files to git safely — age-encrypted at rest, decrypted only in your working tree. | [![npm](https://img.shields.io/npm/dt/crypt-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/crypt-sync) |
 
 ---
 

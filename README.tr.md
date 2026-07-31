@@ -44,7 +44,7 @@ Geliştiricilerin daha az düşünüp daha fazla ürettiği sistemler tasarlıyo
 En iyi geliştirici iş akışı, üzerine neredeyse hiç düşünmek zorunda kalmadığındır.
 ```
 
-NarPOS'ta 4+ yıldır Full Stack Developer olarak .NET, Angular ve NX Monorepo mimarisiyle kurumsal ürünler geliştiriyor ve ölçeklendiriyorum.
+NarPOS'ta 4+ yıldır Full Stack Developer olarak .NET, Angular/React ve NX Monorepo mimarisiyle kurumsal ürünler geliştiriyor ve ölçeklendiriyorum.
 
 Ama şu an odaklandığım şey bunun çok ötesine geçiyor:
 
@@ -64,6 +64,13 @@ Ama şu an odaklandığım şey bunun çok ötesine geçiyor:
 
 LLM'leri geliştirici iş akışlarında birinci sınıf vatandaş yapan araçlar — dikkatli prompt gerektiren asistanlar değil, gerçekten hareket eden sistemler.
 
+Aşağıdaki tüm plugin'ler tek bir marketplace üzerinden dağıtılıyor — [**skill-hub**](https://github.com/sametbrr/skill-hub). Bir kez kaydedin, istediğinizi isimle kurun:
+
+```bash
+claude plugin marketplace add sametbrr/skill-hub
+claude plugin install llm-wiki-manager@sametbrr/skill-hub
+```
+
 <table>
 <thead>
 <tr><th width="200">Proje</th><th>Ne yapar</th></tr>
@@ -74,16 +81,16 @@ LLM'leri geliştirici iş akışlarında birinci sınıf vatandaş yapan araçla
 <td>Kalıcı, LLM tarafından yönetilen kişisel wiki. Model siz kaynakları seçerken yazar, çapraz referans kurar ve bilgi tabanını korur. <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Karpathy'nin LLM Wiki pattern'ini</a> 8 çalışma moduyla uygular.</td>
 </tr>
 <tr>
+<td><a href="https://github.com/sametbrr/github-manager"><b>github-manager</b></a></td>
+<td>Bir GitHub hesabını uçtan uca denetler ve düzeltir — profil alanları, profil README'i, repo açıklamaları, topic'ler ve proje README'leri. Dört analiz ajanı ve README geçişi için paket içinde gelen <a href="https://github.com/sametbrr/readme-standard">readme-standard</a>.</td>
+</tr>
+<tr>
 <td><a href="https://github.com/sametbrr/prompt-architect"><b>prompt-architect</b></a></td>
-<td>Herhangi bir ham fikri domain sınıflandırmalı, kalite incelemeli uzman prompt'a dönüştürür — 25 domainlik sınıflandırma, 8 kalite geçidi, TR ve EN destekli.</td>
+<td>Herhangi bir ham fikri domain sınıflandırmalı, kalite incelemeli uzman prompt'a dönüştürür — 25 domainlik sınıflandırma, model duyarlı ayarlama, 11 kalite geçidi, TR ve EN destekli.</td>
 </tr>
 <tr>
-<td><a href="https://github.com/sametbrr/notebooklm"><b>notebooklm</b></a></td>
-<td>Google NotebookLM'e terminalden tam programatik erişim — notebook oluştur, kaynak ekle, podcast, video, quiz ve daha fazlasını üret. Tek seferlik tarayıcı auth akışı ve çoklu format indirme desteği.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/sametbrr/readme-standard"><b>readme-standard</b></a></td>
-<td>Projeler genelinde tutarlı README.md + README.tr.md yapısını zorunlu kılar — 23 kural, dört mod (Oluştur, Denetle, Düzelt, TR Senkronize), package.json / .csproj / pyproject.toml / SKILL.md'den otomatik proje tipi algılama.</td>
+<td><a href="https://github.com/sametbrr/crypt-sync"><b>crypt-sync</b></a></td>
+<td><code>.env</code> ve gizli dosyaları git içinde şifreli tutar, makineler arasında <a href="https://github.com/FiloSottile/age">age</a> ile senkronize eder — düz metin çalışma dizininden asla çıkmaz. Hem Claude Code plugin'i hem bağımsız npm CLI olarak gelir.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/look-again"><b>look-again</b></a></td>
@@ -92,6 +99,10 @@ LLM'leri geliştirici iş akışlarında birinci sınıf vatandaş yapan araçla
 <tr>
 <td><a href="https://github.com/sametbrr/project-radar"><b>project-radar</b></a></td>
 <td>Günlük GitHub trending ve topluluk keşif radarı — Trending listesinin tamamını çeker, HN, Reddit, Product Hunt, YouTube ve geniş web'i tarar, her projeyi 0–100 kullanışlılık skoruyla değerlendirir ve kalıcı bir watchlist ile Türkçe HTML rapor oluşturur.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/readme-standard"><b>readme-standard</b></a></td>
+<td>Projeler genelinde tutarlı README.md + README.tr.md yapısını zorunlu kılar — 23 kural, dört mod (Oluştur, Denetle, Düzelt, TR Senkronize), package.json / .csproj / pyproject.toml / SKILL.md'den otomatik proje tipi algılama.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/openapi-rest-mcp"><b>openapi-rest-mcp</b></a></td>
@@ -107,6 +118,7 @@ LLM'leri geliştirici iş akışlarında birinci sınıf vatandaş yapan araçla
 | [**AssemblyServiceRegistrar**](https://github.com/sametbrr/AssemblyServiceRegistrar) | .NET'te sıfır boilerplate DI kaydı — marker interface ve attribute'lar, tüm lifetime'lar, open generic desteği. | [![NuGet](https://img.shields.io/nuget/dt/AssemblyServiceRegistrar?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/AssemblyServiceRegistrar) |
 | [**EnvironmentConfigurator**](https://github.com/sametbrr/EnvironmentConfigurator) | ASP.NET Core için tek çağrılık ortam duyarlı config yükleme — publish profilleri ve appsettings otomatik oluşturulur. | [![NuGet](https://img.shields.io/nuget/dt/EnvironmentConfigurator?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/EnvironmentConfigurator) |
 | [**openapi-rest-mcp**](https://github.com/sametbrr/openapi-rest-mcp) | Tek bir tool handler yazmadan herhangi bir REST API'yi MCP sunucusuna dönüştürün. | [![npm](https://img.shields.io/npm/dt/openapi-rest-mcp?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/openapi-rest-mcp) |
+| [**crypt-sync**](https://github.com/sametbrr/crypt-sync) | `.env` dosyalarını git'e güvenle commit'leyin — depoda age ile şifreli, sadece çalışma dizininde çözülmüş. | [![npm](https://img.shields.io/npm/dt/crypt-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/crypt-sync) |
 
 ---
 
