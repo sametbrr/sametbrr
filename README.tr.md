@@ -68,7 +68,7 @@ Aşağıdaki tüm plugin'ler tek bir marketplace üzerinden dağıtılıyor — 
 
 ```bash
 claude plugin marketplace add sametbrr/skill-hub
-claude plugin install llm-wiki-manager@sametbrr/skill-hub
+claude plugin install llm-wiki-manager@skill-hub
 ```
 
 <table>
@@ -107,6 +107,10 @@ claude plugin install llm-wiki-manager@sametbrr/skill-hub
 <tr>
 <td><a href="https://github.com/sametbrr/openapi-rest-mcp"><b>openapi-rest-mcp</b></a></td>
 <td>Herhangi bir OpenAPI/Swagger spec'ini bırakın, tam işlevsel bir MCP sunucusu elde edin — CRUD, endpoint keşfi, fuzzy search ve çoklu auth kutudan çıkar.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/codeagent-sync"><b>codeagent-sync</b></a></td>
+<td>Claude Code ve Codex yapılandırmasını — skill'ler, ayarlar, MCP sunucuları, kancalar — her makinede aynı tutar; R2, S3, GCS ya da WebDAV'da uçtan uca şifreli. Bir araçta olanın diğerinde çalışıp çalışmayacağını değerlendirir, onayla paylaştırır; kancalarla arka planda senkronlar.</td>
 </tr>
 </tbody>
 </table>

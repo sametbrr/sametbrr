@@ -68,7 +68,7 @@ Every plugin below ships through one marketplace — [**skill-hub**](https://git
 
 ```bash
 claude plugin marketplace add sametbrr/skill-hub
-claude plugin install llm-wiki-manager@sametbrr/skill-hub
+claude plugin install llm-wiki-manager@skill-hub
 ```
 
 <table>
@@ -107,6 +107,10 @@ claude plugin install llm-wiki-manager@sametbrr/skill-hub
 <tr>
 <td><a href="https://github.com/sametbrr/openapi-rest-mcp"><b>openapi-rest-mcp</b></a></td>
 <td>Drop any OpenAPI/Swagger spec and get a fully functional MCP server — CRUD, endpoint discovery, fuzzy search, and multi-scheme auth out of the box.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/codeagent-sync"><b>codeagent-sync</b></a></td>
+<td>Keeps Claude Code and Codex configuration — skills, settings, MCP servers, hooks — the same on every machine, end-to-end encrypted in R2, S3, GCS or WebDAV. Judges what one tool has for the other and shares it on approval; syncs in the background through hooks.</td>
 </tr>
 </tbody>
 </table>
