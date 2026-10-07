@@ -462,6 +462,7 @@ export function mountCoreScene(
     window.removeEventListener("pointermove", onPointer);
     geometries.forEach((g) => g.dispose());
     materials.forEach((m) => m.dispose());
+    renderer.resetState(); // leave the reused context clean for the next mount (see portrait-scene)
     renderer.dispose();
   };
 }

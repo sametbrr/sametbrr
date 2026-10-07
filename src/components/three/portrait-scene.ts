@@ -360,6 +360,10 @@ export async function mountPortraitScene(
     photoGeo.dispose();
     photoMat.dispose();
     texture.dispose();
+    // The canvas (and its WebGL context) is reused when the scene remounts after a theme switch.
+    // The photo upload leaves UNPACK_FLIP_Y on; without a reset, the next renderer's empty 3D
+    // textures are uploaded with it and WebGL logs "texImage3D: FLIP_Y … isn't allowed".
+    renderer.resetState();
     renderer.dispose();
   };
 }
