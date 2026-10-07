@@ -149,10 +149,6 @@ claude plugin install llm-wiki-manager@skill-hub
 <td><a href="https://github.com/sametbrr/llm-wiki-manager"><b>llm-wiki-manager</b></a></td>
 <td>A persistent LLM-managed wiki — the model writes and cross-references, you curate sources.</td>
 </tr>
-<tr>
-<td><a href="https://github.com/sametbrr/codeagent-sync"><b>codeagent-sync</b></a></td>
-<td>Keeps Claude Code and Codex configuration — skills, settings, MCP servers, hooks — the same on every machine, end-to-end encrypted in R2, S3, GCS or WebDAV. Judges what one tool has for the other and shares it on approval; syncs in the background through hooks.</td>
-</tr>
 </tbody>
 </table>
 

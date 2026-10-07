@@ -149,10 +149,6 @@ claude plugin install llm-wiki-manager@skill-hub
 <td><a href="https://github.com/sametbrr/llm-wiki-manager"><b>llm-wiki-manager</b></a></td>
 <td>Modelin yazıp çapraz bağladığı, senin kaynak seçtiğin kalıcı LLM wiki'si.</td>
 </tr>
-<tr>
-<td><a href="https://github.com/sametbrr/codeagent-sync"><b>codeagent-sync</b></a></td>
-<td>Claude Code ve Codex yapılandırmasını — skill'ler, ayarlar, MCP sunucuları, kancalar — her makinede aynı tutar; R2, S3, GCS ya da WebDAV'da uçtan uca şifreli. Bir araçta olanın diğerinde çalışıp çalışmayacağını değerlendirir, onayla paylaştırır; kancalarla arka planda senkronlar.</td>
-</tr>
 </tbody>
 </table>
 

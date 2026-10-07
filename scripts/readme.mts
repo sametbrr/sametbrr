@@ -212,7 +212,7 @@ function render(lang: Locale) {
     ``,
     "```bash",
     `claude plugin marketplace add ${profile.handle}/skill-hub`,
-    `claude plugin install llm-wiki-manager@${profile.handle}/skill-hub`,
+    `claude plugin install llm-wiki-manager@skill-hub`,
     "```",
     ``,
     `<table>`,
