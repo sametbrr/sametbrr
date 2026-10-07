@@ -1,0 +1,179 @@
+slug: narpos
+tier: featured
+title: NarPOS
+client: NarPOS
+url: https://narpos.com.tr
+status: live
+period: { tr: 2021 – Günümüz, en: 2021 – Present }
+role: [architecture, development, devops]
+tagline:
+  tr: "Restoranlar için Windows POS: adisyon, masa, mutfak ekranı ve 60+ entegrasyon."
+  en: "A Windows restaurant POS: orders, tables, kitchen screen and 60+ integrations."
+pitch:
+  tr: "Restoranın kalbi: adisyon, masa, mutfak ekranı, el terminali ve yazarkasa tek sistemde. Getir'den Trendyol'a online siparişler, ödeme cihazları ve e-fatura 60+ entegrasyonla aynı ekrana düşüyor."
+  en: "The heart of the restaurant: tickets, tables, kitchen display, handheld terminals and the till in one system. Orders from every delivery platform, payment devices and e-invoicing arrive on one screen through 60+ integrations."
+overview:
+  - tr: NarPOS, restoran, kafe ve yemekhane işletmeleri için geliştirilmiş kapsamlı bir satış noktası ve işletme yönetim yazılımıdır. Adisyondan masa yönetimine, mutfak ekranından el terminaline, stoktan raporlamaya kadar bir restoranın günlük operasyonunun tamamı tek bir sistem üzerinde yürüyor.
+    en: NarPOS is a comprehensive point-of-sale and business management system for restaurants, cafés and cafeterias. From tickets and table management to the kitchen display, handheld terminals, stock and reporting, a restaurant's entire daily operation runs on one system.
+  - tr: Ürünün en güçlü yanı entegrasyon kapasitesi. Delivery Hero, Getir Yemek, Trendyol, Migros Yemek ve Yemeksepeti gibi online sipariş platformlarından gelen siparişler kasaya düşüyor; Ingenico, Pax, Beko ve Pavo gibi ödeme cihazları, terazi sürücüleri, e-fatura ve e-arşiv sağlayıcıları ile Logo, Mikro, Nebim, Paraşüt ve SAP gibi muhasebe sistemleri aynı ekrandan yönetiliyor. Toplamda 60'ı aşkın entegrasyon bulunuyor.
+    en: Its greatest strength is integration. Orders from delivery platforms such as Delivery Hero, Getir Yemek, Trendyol, Migros Yemek and Yemeksepeti land at the till; payment devices like Ingenico, Pax, Beko and Pavo, scale drivers, e-invoice and e-archive providers, and accounting systems such as Logo, Mikro, Nebim, Paraşüt and SAP are all run from the same screen — more than 60 integrations in total.
+  - tr: "Modüler mimarisi sayesinde her işletme ihtiyacı olan parçaları kullanıyor: kasa, el terminali, mutfak ve müşteri ekranları, yemekhane geçiş sistemi, stok uygulaması ve arka planda çalışan Windows servisleri birlikte ya da ayrı ayrı kurulabiliyor. 18 dilde arayüz, sürümlenen veritabanı şeması ve otomatik güncelleyici ile ürün yıllardır sahada kesintisiz çalışıyor. Aynı ekosistemin bulut sürümü NarCloud ile sürdürülüyor."
+    en: "Thanks to its modular architecture, each business uses only the parts it needs: the till, handheld terminal, kitchen and customer displays, cafeteria access system, stock app and background Windows services can be installed together or separately. With a UI in 18 languages, a versioned database schema and an auto-updater, it has run in the field without interruption for years. The ecosystem continues in the cloud as NarCloud."
+problem:
+  tr: Restoranlar siparişi, ödeme cihazını, online sipariş platformlarını ve e-fatura/muhasebe sistemlerini ayrı ayrı yönetmek zorunda kalıyor.
+  en: Restaurants end up handling orders, payment devices, delivery platforms and e-invoice/accounting systems separately.
+solution:
+  tr: Modüler bir WPF masaüstü POS; adisyon, masa, menü, stok ve rapor modüllerini, mutfak ekranını, el terminalini, yazarkasa/ödeme cihazlarını ve online sipariş, e-fatura, ERP entegrasyonlarını tek veritabanında birleştiriyor.
+  en: A modular WPF desktop POS that brings ticket, table, menu, inventory and reporting modules, a kitchen display, handheld terminals, ECR/payment devices and delivery, e-invoice and ERP integrations together on one database.
+highlights:
+  - tr: "Online sipariş katmanı: Delivery Hero, Getir Yemek, Trendyol, Migros Yemek, Yemeksepeti ve diğer platformlardan sipariş alma ve menü eşleme"
+    en: "Online order layer: order intake and menu matching for Delivery Hero, Getir Yemek, Trendyol, Migros Yemek, Yemeksepeti and more"
+  - tr: Yazarkasa/ödeme cihazı (Ingenico, Pax, Beko, Pavo) ve 5 terazi sürücüsü entegrasyonu
+    en: ECR/payment device integrations (Ingenico, Pax, Beko, Pavo) and 5 scale drivers
+  - tr: E-fatura/e-arşiv (Foriba, Uyumsoft, Veriban, Mysoft) ve muhasebe/ERP (Logo, Mikro, Nebim, Paraşüt, SAP) entegrasyonları
+    en: E-invoice/e-archive (Foriba, Uyumsoft, Veriban, Mysoft) and accounting/ERP (Logo, Mikro, Nebim, Paraşüt, SAP) integrations
+  - tr: "Yemekhane uygulaması: QR kodla, kartlı ve kartsız misafir yemek geçişi"
+    en: "Cafeteria app: QR, card-based and cardless guest meal access"
+  - tr: 18 dilde arayüz ve 133 migration ile sürümlenen veritabanı şeması
+    en: UI in 18 languages and a database schema versioned through 133 migrations
+parts:
+  - name: NarPOS POS
+    kind: desktop
+    note:
+      tr: Ana restoran satış uygulaması
+      en: The main restaurant POS
+    detail:
+      tr: Adisyon, masa, menü, kasa, kredi kartı, müşteri ve rapor modüllerinden oluşan WPF masaüstü uygulaması. Modüller ihtiyaca göre yükleniyor.
+      en: A WPF desktop app made of ticket, table, menu, cash, card, customer and reporting modules, loaded as needed.
+  - name: El Terminali
+    kind: mobile
+    note:
+      tr: Garsonun sipariş aldığı terminal
+      en: The waiter's handheld terminal
+    detail:
+      tr: Garsonun masada sipariş alıp doğrudan mutfağa ve kasaya ilettiği terminal uygulaması.
+      en: The terminal app waiters use to take orders at the table and send them straight to the kitchen and the till.
+  - name: Mutfak Ekranı
+    kind: kiosk
+    note:
+      tr: Mutfak sipariş ekranı
+      en: Kitchen order display
+    detail:
+      tr: Siparişleri kâğıt fiş yerine ekranda gösteren, hazırlık durumunu anlık takip eden mutfak ekranı.
+      en: Shows orders on screen instead of paper tickets and tracks preparation in real time.
+  - name: Müşteri Ekranı
+    kind: kiosk
+    note:
+      tr: Müşteriye dönük bilgi ekranı
+      en: Customer-facing display
+    detail:
+      tr: Kasada müşteriye sepeti, tutarı ve kampanyaları gösteren ikinci ekran.
+      en: A second screen at the till showing the customer their basket, total and promotions.
+  - name: Yemekhane
+    kind: desktop
+    note:
+      tr: QR ve kartlı yemek geçişi
+      en: QR and card meal access
+    detail:
+      tr: Kurum yemekhaneleri için QR kodlu, kartlı ve kartsız misafir yemek geçiş uygulaması.
+      en: Meal access for corporate cafeterias via QR codes, cards or cardless guest passes.
+  - name: Stok
+    kind: desktop
+    note:
+      tr: Stok yönetimi uygulaması
+      en: Stock management app
+    detail:
+      tr: Depo, stok hareketleri ve sayımlar için ayrı kurulan stok uygulaması.
+      en: A separately installed app for warehouses, stock movements and counts.
+  - name: Mesajlaşma Sunucusu
+    kind: service
+    note:
+      tr: İstasyonlar arası anlık mesaj
+      en: Real-time messages between stations
+    detail:
+      tr: Kasa, terminal ve mutfak ekranları arasında siparişleri ve durumları anlık ileten mesajlaşma sunucusu.
+      en: Relays orders and status changes between tills, terminals and kitchen displays in real time.
+  - name: Windows Servisleri
+    kind: service
+    note:
+      tr: Veri aktarımı, işler ve REST
+      en: Data transfer, jobs and REST
+    detail:
+      tr: Veri aktarımı, terminal senkronu, zamanlanmış işler ve REST uç noktaları için arka planda çalışan Windows servisleri.
+      en: Background Windows services for data transfer, terminal sync, scheduled jobs and REST endpoints.
+  - name: Entegrasyon Köprüsü
+    kind: service
+    note:
+      tr: Online sipariş, BOSS ve ERP senkronu
+      en: Delivery, BOSS and ERP sync
+    detail:
+      tr: Online sipariş platformları, NarBoss ve muhasebe/ERP sistemleriyle veri alışverişini yöneten köprü uygulamaları.
+      en: Bridge apps handling data exchange with delivery platforms, NarBoss and accounting/ERP systems.
+  - name: Menü Aktarıcı
+    kind: service
+    note:
+      tr: Menü dışa aktarım aracı
+      en: Menu export tool
+    detail:
+      tr: Menüyü harici platformlara ve sistemlere aktaran araç.
+      en: Exports the menu to external platforms and systems.
+  - name: Arka Ofis Araçları
+    kind: admin
+    note:
+      tr: Kasa yükleme, yedek, rapor tasarımı
+      en: Cash load, backup, report design
+    detail:
+      tr: Kasa yükleme, bulut yedekleme, rapor tasarımı, sipariş izleme ve teknik servis araçları.
+      en: Tools for cash loading, cloud backup, report design, order tracing and technical service.
+  - name: Kurulum ve Güncelleyici
+    kind: desktop
+    note:
+      tr: Kurulum ve otomatik güncelleme
+      en: Setup and auto-update
+    detail:
+      tr: Tüm bileşenleri kuran paketler ve sahadaki kurulumları güncel tutan otomatik güncelleyici.
+      en: Installers for every component and an auto-updater that keeps field installations current.
+features: [Modular (Prism/MEF), Layered architecture, Plugin integrations, Real-time messaging, Windows services, Scheduled jobs, Versioned DB migrations, i18n (18 languages)]
+stack: [.NET Framework, C#, WPF + Prism, DevExpress, SQL Server, Dapper, Entity Framework, SignalR, FluentMigrator]
+impact:
+  - { value: "60+", label: { tr: entegrasyon, en: integrations } }
+  - { value: "82", label: { tr: proje tek solution'da, en: projects in one solution } }
+  - { value: "18", label: { tr: arayüz dili, en: UI languages } }
+architectureNotes:
+  - title:
+      tr: Modüler masaüstü
+      en: A modular desktop
+    body:
+      tr: Uygulama Prism ve MEF üzerine kurulu; her işlev ayrı bir modül olarak yükleniyor. İşletmeler yalnızca ihtiyaç duydukları modülleri kullanıyor, yeni özellikler mevcut kodu bozmadan ekleniyor.
+      en: Built on Prism and MEF, each feature loads as its own module. Businesses run only the modules they need, and new features are added without disturbing existing code.
+  - title:
+      tr: Katmanlı mimari
+      en: Layered architecture
+    body:
+      tr: Sunum, servis, kalıcılık, domain ve altyapı katmanları ayrı tutuluyor; entegrasyonlar servis katmanında eklenti olarak yaşıyor.
+      en: Presentation, service, persistence, domain and infrastructure layers are kept apart, and integrations live as plug-ins in the service layer.
+  - title:
+      tr: Eklenti olarak entegrasyonlar
+      en: Integrations as plug-ins
+    body:
+      tr: Her ödeme cihazı, online sipariş platformu ve muhasebe sistemi ayrı bir entegrasyon olarak yazılıyor; 60'ı aşkın entegrasyon aynı sözleşmeyi paylaşıyor.
+      en: Every payment device, delivery platform and accounting system is written as its own integration; more than 60 integrations share the same contract.
+  - title:
+      tr: Sürümlenen şema ve güncelleme
+      en: Versioned schema and updates
+    body:
+      tr: Veritabanı şeması 133 migration ile sürümleniyor; otomatik güncelleyici sahadaki kurulumları yeni sürüme güvenle taşıyor.
+      en: The database schema is versioned through 133 migrations, and the auto-updater moves field installations to new releases safely.
+architecture:
+  nodes:
+    - { id: pos, label: POS Desktop, layer: 0 }
+    - { id: terminal, label: Handheld, layer: 0 }
+    - { id: kitchen, label: Kitchen Screen, layer: 0 }
+    - { id: services, label: Services, layer: 1, core: true }
+    - { id: messaging, label: Messaging, layer: 1 }
+    - { id: modules, label: POS Modules, layer: 2, core: true }
+    - { id: online, label: Online Orders, layer: 2, core: true }
+    - { id: devices, label: ECR / Payment, layer: 2 }
+    - { id: erp, label: E-Invoice & ERP, layer: 2 }
+    - { id: db, label: SQL Server, layer: 3 }
+  edges: [[pos, modules], [pos, messaging], [terminal, services], [kitchen, messaging], [modules, services], [services, online], [services, devices], [services, erp], [services, db], [online, db]]

@@ -1,0 +1,58 @@
+# Tek kaynak: site, README ve CV bu dosyadan beslenir.
+name: Samet Birer
+handle: sametbrr
+url: https://sametbrr.com
+email: sametbrr@gmail.com
+location:
+  tr: İstanbul, Türkiye
+  en: Istanbul, Türkiye
+# Deneyim yılı buradan hesaplanır (ay hassasiyetinde, aşağı yuvarlanır).
+careerStart: "2021-10"
+# Canlı ürünler: hero'daki "N+ canlı ürün" sayacı ve altındaki kayan bant buradan beslenir.
+products: [NarPOS, NarCloud, NarCost, NarBoss, NarGO, NarMenu, Tezgahtar, Ege Çocuk, Giy-Teks, MinimalBlock]
+# GitHub'daki herkese açık proje sayısı; sitede ona aşağı yuvarlanıp "N+" gösterilir (12 → 10+).
+publicRepos: 12
+# Eğitim (Öğrenme yolculuğu) bölümü gizli; education.yaml duruyor, göstermek için true yap.
+showEducation: false
+availability:
+  open: true
+  label:
+    tr: Yeni projelere açık
+    en: Open to new projects
+positioning:
+  # Tek satırlık unvan: sayfa başlığı, JSON-LD jobTitle. Hero'daki roles ile aynı dili konuşur.
+  role:
+    tr: Sistem Mimarı, Teknik Proje Yöneticisi & Yazılım Danışmanı
+    en: Systems Architect, Technical Project Lead & Software Consultant
+  # Hero'da sırayla yuvarlanan unvanlar (ilki varsayılan, SEO için sunucuda render edilir).
+  roles:
+    - { tr: Sistem Mimarı, en: Systems Architect }
+    - { tr: Teknik Proje Yöneticisi, en: Technical Project Lead }
+    - { tr: Yazılım Danışmanı, en: Software Consultant }
+    - { tr: Ürün Geliştirici, en: Product Engineer }
+  headline:
+    tr: Sistem Mimarisi, Uçtan Uca Proje Yönetimi & Yazılım Danışmanlığı
+    en: System Architecture, End‑to‑End Delivery & Software Consulting
+  subhead:
+    tr: LLM-native araçlarla fikirden ölçeklenen ürüne. Mimari, geliştirme ve teknik liderlik tek elden.
+    en: From idea to a product that scales, with LLM-native tooling. Architecture, engineering and technical leadership in one place.
+  manifesto:
+    tr: İşletmelerin gerçek problemlerini çözen, sahada çalışan ve ekiplerin daha az uğraşıp daha çok teslim ettiği sistemler kuruyorum.
+    en: I build systems that solve real business problems, hold up in the field, and let teams spend less effort to ship more.
+  philosophy:
+    tr: Rutini otomatikleştir. Anlamlı olanı mühendislikle inşa et.
+    en: Automate the routine. Engineer the meaningful.
+socials:
+  - { label: LinkedIn, url: "https://www.linkedin.com/in/sametbrr/", handle: "in/sametbrr" }
+  - { label: X, url: "https://x.com/sametbrr", handle: "@sametbrr" }
+  - { label: Instagram, url: "https://www.instagram.com/sametbrr/", handle: "@sametbrr" }
+  - { label: GitHub, url: "https://github.com/sametbrr", handle: "@sametbrr" }
+  - { label: npm, url: "https://www.npmjs.com/~sametbrr", handle: "~sametbrr" }
+  - { label: NuGet, url: "https://www.nuget.org/profiles/sametbrr", handle: "sametbrr" }
+# Cal.com hesabı açılınca doldur (ör. "sametbrr/tanisma"). Boşken CTA forma gider.
+calLink: ""
+private:
+  phone: { value: "+90 541 911 79 23", visibility: pdf-only }
+  birthDate: { value: "24.02.2002", visibility: pdf-only }
+  gender: { value: "Erkek", visibility: pdf-only }
+  maritalStatus: { value: "Bekar", visibility: pdf-only }

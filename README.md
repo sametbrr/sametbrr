@@ -1,70 +1,115 @@
+<!-- Generated from `content/` by `pnpm readme` — the same source as sametbrr.com and the CV. -->
 <div align="center">
 
 # Samet Birer
 
-### Full Stack Developer · Skill & MCP Builder · Enterprise Architect
+### Systems Architect · Technical Project Lead · Software Consultant · Product Engineer
 
-Designing systems where developers work less and deliver more — by putting LLMs where they belong.
+**System Architecture, End‑to‑End Delivery & Software Consulting**
+
+From idea to a product that scales, with LLM-native tooling. Architecture, engineering and technical leadership in one place.
+
+> 🇹🇷 Türkçe için [README.tr.md](README.tr.md)
 
 <p>
   <a href="https://sametbrr.com">
-    <img src="https://img.shields.io/badge/Website-sametbrr.com-0a66c2?style=for-the-badge&logo=google-chrome&logoColor=white">
+    <img src="https://img.shields.io/badge/Website-sametbrr.com-137a43?style=for-the-badge&logo=googlechrome&logoColor=white">
   </a>
   <a href="https://www.linkedin.com/in/sametbrr/">
-    <img src="https://img.shields.io/badge/LinkedIn-sametbrr-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white">
+    <img src="https://img.shields.io/badge/LinkedIn-in%2Fsametbrr-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white">
   </a>
   <a href="https://x.com/sametbrr">
     <img src="https://img.shields.io/badge/X-sametbrr-000000?style=for-the-badge&logo=x&logoColor=white">
   </a>
+  <a href="https://www.instagram.com/sametbrr/">
+    <img src="https://img.shields.io/badge/Instagram-sametbrr-E4405F?style=for-the-badge&logo=instagram&logoColor=white">
+  </a>
   <a href="https://www.npmjs.com/~sametbrr">
-    <img src="https://img.shields.io/badge/npm-sametbrr-CB3837?style=for-the-badge&logo=npm&logoColor=white">
+    <img src="https://img.shields.io/badge/npm-~sametbrr-CB3837?style=for-the-badge&logo=npm&logoColor=white">
   </a>
   <a href="https://www.nuget.org/profiles/sametbrr">
-    <img src="https://img.shields.io/badge/NuGet-packages-004880?style=for-the-badge&logo=nuget&logoColor=white">
+    <img src="https://img.shields.io/badge/NuGet-sametbrr-004880?style=for-the-badge&logo=nuget&logoColor=white">
   </a>
 </p>
 
 <p>
-  <a href="https://minimalblock.com">
-    <img src="https://img.shields.io/badge/MinimalBlock-Blockchain%20%26%20Tech%20Blog-8A2BE2?style=for-the-badge&logo=hashnode&logoColor=white">
+  <a href="https://sametbrr.com/cv/sametbrr-cv-en.pdf">
+    <img src="https://img.shields.io/badge/CV-PDF-137a43?style=for-the-badge&logo=readdotcv&logoColor=white">
   </a>
 </p>
 
-![Profile Views](https://komarev.com/ghpvc/?username=sametbrr&style=for-the-badge&color=7AA2F7&label=PROFILE+VIEWS)
-
-🌐 [Türkçe için tıklayın](README.tr.md)
+![Profile Views](https://komarev.com/ghpvc/?username=sametbrr&style=for-the-badge&color=137a43&label=PROFILE+VIEWS)
 
 </div>
 
 ---
 
-## About Me
+## 👋 About Me
 
 ```txt
-The best developer workflow is the one you barely have to think about.
+Automate the routine. Engineer the meaningful.
 ```
 
-Full Stack Developer with 4+ years of production experience at NarPOS — building and scaling enterprise products with .NET, Angular/React, and NX Monorepo architecture.
+I build systems that solve real business problems, hold up in the field, and let teams spend less effort to ship more.
 
-But what I'm focused on now goes beyond writing code:
-
-* Redesigning developer workflows with LLM-native Skills and MCP servers
-* Building MCP servers that give AI agents real access to production systems
-* Creating Skills that automate the cognitive overhead of engineering work
-* Applying enterprise architecture patterns to AI-integrated systems
-* Building products at the intersection of FinTech, blockchain, and intelligent automation
-
-I share everything I build as open source — because the best ideas compound when they're in the open.
+* 5+ years building production software
+* 10+ live products: NarPOS, NarCloud, NarCost, NarBoss, NarGO, NarMenu, Tezgahtar, Ege Çocuk, Giy-Teks, MinimalBlock
+* Currently: **Senior Full Stack Developer** @ NarPOS Yazılım Tic. A.Ş.
 
 ---
 
-## 🔨 What I Build
+## 🔨 Selected Work
 
-### LLM Tooling & MCP
+<table>
+<thead>
+<tr><th width="180">Project</th><th>What it is</th><th width="170">Built as</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://cofiner.com"><b>Cofiner</b></a><br><sub>2025</sub></td>
+<td>Goodbye, spreadsheets: accounts, credit cards, money between friends and future plans in one view. Every cent lands in a double-entry ledger, so the numbers always add up and nothing ever goes missing.</td>
+<td>Mobile · Web · API · Website</td>
+</tr>
+<tr>
+<td><a href="https://tezgahtar.tr"><b>Tezgahtar</b></a><br><sub>2026</sub></td>
+<td>A next-generation retail POS where cashiers sell without thinking — and without mistakes. Scan, pay, receipt: the flow never stalls, in the browser, on the desktop and at the printer.</td>
+<td>API · Web · Desktop · Website</td>
+</tr>
+<tr>
+<td><a href="https://egecocuk.com.tr"><b>Ege Çocuk</b></a><br><sub>2025</sub></td>
+<td>A publisher platform that brings printed books to life through QR codes. Videos, audiobooks, quizzes and optical forms behind a single scan — and the code in the book keeps working for years.</td>
+<td>Web · Admin</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr"><b>AI Tooling & Open Source</b></a><br><sub>2025</sub></td>
+<td>A toolkit that opens production systems and developer workflows to AI agents. Claude Code skills, an MCP server and npm/NuGet packages — all open source, installed in one command, useful the next day.</td>
+<td>Skill · MCP · npm · NuGet</td>
+</tr>
+<tr>
+<td><a href="https://giytekstasimacilik.com"><b>Giy-Teks</b></a><br><sub>2024</sub></td>
+<td>A company site that puts a Tekstilkent transport cooperative at the top of local searches and turns visitors into WhatsApp quote requests in seconds. No backend, no build — just speed and visibility.</td>
+<td>Website</td>
+</tr>
+<tr>
+<td><a href="https://narpos.com.tr"><b>NarPOS</b></a><br><sub>2021</sub></td>
+<td>The heart of the restaurant: tickets, tables, kitchen display, handheld terminals and the till in one system. Orders from every delivery platform, payment devices and e-invoicing arrive on one screen through 60+ integrations.</td>
+<td>Desktop · Mobile · Kiosk · Admin</td>
+</tr>
+<tr>
+<td><a href="https://minimalblock.com"><b>MinimalBlock</b></a><br><sub>2021</sub></td>
+<td>A tech publication that makes blockchain, the metaverse and AI make sense. Runs on its own CMS — multilingual, multi-author and built for search engines from day one.</td>
+<td>Website · Admin · API</td>
+</tr>
+</tbody>
+</table>
 
-Tools that make LLMs first-class citizens in developer workflows — not assistants you have to prompt carefully, but systems that act.
+**More products:** **NarCost** — An inventory platform that matches POS sales to recipes and stock to reveal true cost · **NarCloud** — NarPOS in the cloud — a POS ecosystem that runs a restaurant's entire operation on one platform · **NarBoss** — Multi-branch, real-time reporting and remote approval app for restaurant owners · **NarGO** — A courier app that dispatches NarPOS delivery orders and tracks them end to end · **NarMenu** — QR menus, table ordering, waiter calls and online payment for restaurants.
 
-Every plugin below ships through one marketplace — [**skill-hub**](https://github.com/sametbrr/skill-hub). Register it once, install anything by name:
+---
+
+## 🧰 Open Source
+
+Claude Code skills and plugins ship through one marketplace — register it once, install anything by name:
 
 ```bash
 claude plugin marketplace add sametbrr/skill-hub
@@ -73,40 +118,36 @@ claude plugin install llm-wiki-manager@skill-hub
 
 <table>
 <thead>
-<tr><th width="200">Project</th><th>What it does</th></tr>
+<tr><th width="200">Project</th><th>What it is</th></tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="https://github.com/sametbrr/llm-wiki-manager"><b>llm-wiki-manager</b></a></td>
-<td>A persistent, LLM-managed personal wiki. The model writes, cross-references, and maintains the knowledge base while you curate sources. Implements <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Karpathy's LLM Wiki pattern</a> with 8 operating modes.</td>
-</tr>
-<tr>
 <td><a href="https://github.com/sametbrr/github-manager"><b>github-manager</b></a></td>
-<td>Audits and fixes a GitHub account end to end — profile fields, profile README, repo descriptions, topics, and project READMEs. Four analyzer agents plus a bundled <a href="https://github.com/sametbrr/readme-standard">readme-standard</a> for the README pass.</td>
+<td>Claude Code plugin that audits and fixes a GitHub account end to end.</td>
 </tr>
 <tr>
-<td><a href="https://github.com/sametbrr/prompt-architect"><b>prompt-architect</b></a></td>
-<td>Turns any rough idea into a domain-classified, quality-reviewed expert prompt — 25-domain taxonomy, model-aware tuning, 11 quality gates, works in TR and EN.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/sametbrr/crypt-sync"><b>crypt-sync</b></a></td>
-<td>Keeps <code>.env</code> and secret files encrypted inside git and synced across machines with <a href="https://github.com/FiloSottile/age">age</a> — plaintext never leaves the working tree. Ships as both a Claude Code plugin and a standalone npm CLI.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/sametbrr/look-again"><b>look-again</b></a></td>
-<td>Saves conversation checkpoints as markdown files and resumes them with full context — decisions, rejected alternatives, and the final plan preserved verbatim. Works on Claude Code and Claude.ai.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/sametbrr/project-radar"><b>project-radar</b></a></td>
-<td>Daily GitHub trending & community discovery radar — pulls the full Trending list, scans HN, Reddit, Product Hunt, YouTube and the wider web, scores each project 0–100 on usefulness, and renders a self-contained Turkish HTML report with a persistent watchlist.</td>
+<td><a href="https://github.com/sametbrr/skill-hub"><b>skill-hub</b></a></td>
+<td>One marketplace for all my Claude Code plugins — register once, install by name.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/readme-standard"><b>readme-standard</b></a></td>
-<td>Enforces a consistent README.md + README.tr.md structure across projects — 23 rules, four modes (Create, Audit, Fix, TR Sync), and auto-detection of project type from package.json / .csproj / pyproject.toml / SKILL.md.</td>
+<td>Claude Code skill that creates, audits and fixes README.md + README.tr.md against 23 rules and keeps the Turkish mirror in sync.</td>
 </tr>
 <tr>
-<td><a href="https://github.com/sametbrr/openapi-rest-mcp"><b>openapi-rest-mcp</b></a></td>
-<td>Drop any OpenAPI/Swagger spec and get a fully functional MCP server — CRUD, endpoint discovery, fuzzy search, and multi-scheme auth out of the box.</td>
+<td><a href="https://github.com/sametbrr/look-again"><b>look-again</b></a></td>
+<td>Claude Code skill that checkpoints a conversation — decisions, rejected options and the final plan — and resumes it with full context.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/project-radar"><b>project-radar</b></a></td>
+<td>A daily radar that scans GitHub trending and community chatter, scores projects 0–100 and renders a Turkish HTML report.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/prompt-architect"><b>prompt-architect</b></a></td>
+<td>Turns a rough idea into a domain-classified, quality-gated expert prompt.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/llm-wiki-manager"><b>llm-wiki-manager</b></a></td>
+<td>A persistent LLM-managed wiki — the model writes and cross-references, you curate sources.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/codeagent-sync"><b>codeagent-sync</b></a></td>
@@ -119,23 +160,21 @@ claude plugin install llm-wiki-manager@skill-hub
 
 | Package | What it solves | Downloads |
 |---------|----------------|-----------|
-| [**AssemblyServiceRegistrar**](https://github.com/sametbrr/AssemblyServiceRegistrar) | Zero-boilerplate DI registration in .NET — marker interfaces and attributes, all lifetimes, open generics supported. | [![NuGet](https://img.shields.io/nuget/dt/AssemblyServiceRegistrar?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/AssemblyServiceRegistrar) |
-| [**EnvironmentConfigurator**](https://github.com/sametbrr/EnvironmentConfigurator) | Single-call environment-aware config loading for ASP.NET Core — publish profiles and appsettings auto-scaffolded. | [![NuGet](https://img.shields.io/nuget/dt/EnvironmentConfigurator?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/EnvironmentConfigurator) |
-| [**openapi-rest-mcp**](https://github.com/sametbrr/openapi-rest-mcp) | Wrap any REST API as an MCP server without writing a single tool handler. | [![npm](https://img.shields.io/npm/dt/openapi-rest-mcp?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/openapi-rest-mcp) |
-| [**crypt-sync**](https://github.com/sametbrr/crypt-sync) | Commit `.env` files to git safely — age-encrypted at rest, decrypted only in your working tree. | [![npm](https://img.shields.io/npm/dt/crypt-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/crypt-sync) |
+| [**codeagent-sync**](https://github.com/sametbrr/codeagent-sync) | Keeps Claude Code and Codex config (skills, MCP servers, hooks) identical on every machine, end-to-end encrypted. | [![npm](https://img.shields.io/npm/dt/codeagent-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/codeagent-sync) |
+| [**crypt-sync**](https://github.com/sametbrr/crypt-sync) | Keeps .env files age-encrypted in git and synced across machines. | [![npm](https://img.shields.io/npm/dt/crypt-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/crypt-sync) |
+| [**openapi-rest-mcp**](https://github.com/sametbrr/openapi-rest-mcp) | A fully working MCP server from any OpenAPI/Swagger spec. | [![npm](https://img.shields.io/npm/dt/openapi-rest-mcp?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/openapi-rest-mcp) |
+| [**AssemblyServiceRegistrar**](https://github.com/sametbrr/AssemblyServiceRegistrar) | Zero-boilerplate DI registration in .NET via marker interfaces and attributes. | [![NuGet](https://img.shields.io/nuget/dt/AssemblyServiceRegistrar?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/AssemblyServiceRegistrar) |
+| [**EnvironmentConfigurator**](https://github.com/sametbrr/EnvironmentConfigurator) | Single-call environment-aware configuration for ASP.NET Core. | [![NuGet](https://img.shields.io/nuget/dt/EnvironmentConfigurator?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/EnvironmentConfigurator) |
 
 ---
 
-## 🎯 Current Focus
+## 🛠 Tech Stack
 
-**LLM-Native Developer Tooling**  
-The next wave of productivity isn't faster editors or smarter autocomplete — it's LLMs that own entire workflows end to end. I'm building the infrastructure layer for that.
-
-**Enterprise AI Integration**  
-Most companies don't need a new AI product. They need their existing systems — monorepos, REST APIs, internal wikis — to become AI-accessible. MCP is the bridge. I'm building on it.
-
-**FinTech & Blockchain**  
-Actively building projects at the intersection of financial technology and blockchain — not just following the space, but experimenting and shipping.
+**AI & LLM Tooling:** MCP · Claude Code · Agent SDK · LLM Entegrasyonu  
+**Frontend:** Angular · React · Next.js · React Native · TypeScript  
+**Backend:** C# / ASP.NET · .NET Web API · Entity Framework · Node.js · Python  
+**Databases:** SQL Server · PostgreSQL · Firebase · Supabase  
+**DevOps & Tooling:** CI/CD · Docker · Dokploy · Graylog · NX Monorepo · Git  
 
 ---
 
@@ -160,8 +199,10 @@ Actively building projects at the intersection of financial technology and block
 
 ---
 
-## Philosophy
+## 💡 Philosophy
 
 > Automate the routine. Engineer the meaningful.
 
-The most valuable thing a senior engineer can do isn't write better code — it's build systems that make the whole team move faster.
+I build systems that solve real business problems, hold up in the field, and let teams spend less effort to ship more.
+
+<sub>Generated from [`content/`](content) by `pnpm readme` — the same source as [sametbrr.com](https://sametbrr.com) and the CV.</sub>

@@ -1,0 +1,433 @@
+@import "tailwindcss";
+
+/* Token values mirror DESIGN.md §2–§5. Change them there first. */
+@theme {
+  --color-void: #050505;
+  --color-surface-1: #0d0d0d;
+  --color-surface-2: #141414;
+  --color-surface-3: #1b1b1b;
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-line-strong: rgb(255 255 255 / 0.14);
+
+  --color-fg: #ededed;
+  --color-fg-muted: #a1a1a1;
+  --color-fg-subtle: #6b6b6b;
+
+  --color-ghost: #d7ffe0;
+  --color-forest: #1f6f43;
+  --color-forest-deep: #0e2a1b;
+  --color-quantum: #2457ff;
+  --color-quantum-hover: #3a6bff;
+
+  /* Primary action color (buttons, focus, interactive highlights).
+     Switch back to Quantum Blue by pointing these at --color-quantum*. */
+  --color-primary: var(--color-ghost);
+  --color-primary-hover: #f0fff3;
+  --color-on-primary: var(--color-void);
+  --color-ice: #dff7ff;
+  /* Theme-dependent helpers (overridden in the light theme below). */
+  --color-glint: #9ff5b6;
+  --color-card-tint: #0c1f15;
+  --color-danger: #fca5a5;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --animate-ping-slow: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+  --animate-marquee-reverse: marquee-reverse var(--marquee-duration, 50s) linear infinite;
+  --animate-scroll-dot: scroll-dot 1.8s var(--ease-in-out) infinite;
+  --animate-gradient-pan: gradient-pan 8s ease-in-out infinite alternate;
+  --animate-caret: caret 1s steps(1) infinite;
+  --animate-eq: eq 0.9s ease-in-out infinite alternate;
+
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @keyframes marquee-reverse {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes scroll-dot {
+    0% { transform: translateY(-100%); opacity: 0; }
+    30% { opacity: 1; }
+    100% { transform: translateY(250%); opacity: 0; }
+  }
+  @keyframes gradient-pan {
+    from { background-position: 0% 50%; }
+    to { background-position: 100% 50%; }
+  }
+  @keyframes caret {
+    50% { opacity: 0; }
+  }
+  @keyframes eq {
+    from { transform: scaleY(0.25); }
+    to { transform: scaleY(1); }
+  }
+}
+
+:root {
+  --glass-bg: rgb(223 247 255 / 0.035);
+  --glass-border: rgb(223 247 255 / 0.1);
+  --glass-blur: 16px;
+  --section-y: clamp(6rem, 12vw, 10rem);
+  color-scheme: dark;
+}
+
+/* Light theme (DESIGN.md §2.1). Set by the inline script in the root layout
+   from localStorage or prefers-color-scheme before first paint. */
+html[data-theme="light"] {
+  color-scheme: light;
+  --color-void: #f6f6f2;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #f0f0ea;
+  --color-surface-3: #e8e8e1;
+  --color-line: rgb(0 0 0 / 0.08);
+  --color-line-strong: rgb(0 0 0 / 0.15);
+  --color-fg: #0b0b0b;
+  --color-fg-muted: #54544e;
+  --color-fg-subtle: #8a8a83;
+  --color-ghost: #137a43;
+  --color-forest: #1f6f43;
+  --color-forest-deep: #e2f6e8;
+  --color-ice: #0d4f73;
+  --color-glint: #2f9e63;
+  --color-card-tint: #e6f5ea;
+  --color-danger: #b91c1c;
+  --color-primary: #0f5c34;
+  --color-primary-hover: #137a43;
+  --color-on-primary: #f4fff7;
+  --glass-bg: rgb(255 255 255 / 0.7);
+  --glass-border: rgb(0 0 0 / 0.08);
+}
+
+@layer base {
+  html {
+    background: var(--color-void);
+    color: var(--color-fg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ghost);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+}
+
+@utility container-site {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1280px;
+  padding-inline: 1.25rem;
+  @variant md {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility section-y {
+  padding-block: var(--section-y);
+}
+
+/* Anchor jumps skip the section's top padding and land its top rule near the viewport top
+   (the nav stays hidden during the jump, so nothing covers it). */
+@utility scroll-mt-section {
+  scroll-margin-top: calc(1.5rem - var(--section-y));
+}
+
+@utility text-display {
+  font-size: clamp(2.75rem, 7.2vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+}
+
+@utility text-h2 {
+  font-size: clamp(2.25rem, 5vw, 4.25rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+@utility text-h3 {
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+@utility text-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@utility glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+}
+
+/* Pointer-following border glow (DESIGN.md S2). --mx/--my are set by GlowCard. */
+@utility glow-card {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(
+      420px circle at var(--mx, -999px) var(--my, -999px),
+      var(--glow-color, color-mix(in srgb, var(--color-ghost) 55%, transparent)),
+      transparent 40%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 200ms var(--ease-out);
+    pointer-events: none;
+    z-index: 1;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      600px circle at var(--mx, -999px) var(--my, -999px),
+      var(--glow-fill, color-mix(in srgb, var(--color-ghost) 6%, transparent)),
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 200ms var(--ease-out);
+    pointer-events: none;
+    z-index: -1;
+  }
+  &:hover::before,
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+@utility mask-fade-x {
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ArchDiagram drawing (W2 on hover, D1 when data-drawn). */
+.arch-edge {
+  stroke: var(--color-ghost);
+  stroke-opacity: 0.55;
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 700ms var(--ease-out);
+}
+.group:hover .arch-edge,
+.group:focus-visible .arch-edge,
+[data-drawn="true"] .arch-edge {
+  stroke-dashoffset: 0;
+}
+[data-drawn] .arch-node {
+  opacity: 0;
+  transform-box: fill-box;
+  transition: opacity 500ms var(--ease-out);
+}
+[data-drawn="true"] .arch-node {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .arch-edge {
+    stroke-dashoffset: 0;
+  }
+  [data-drawn] .arch-node {
+    opacity: 1;
+  }
+}
+
+/* Boot screen (DESIGN.md §6 B1). Hidden before paint when skipped; never blocks more than 5s. */
+html[data-booted] .boot-screen {
+  display: none;
+}
+.boot-screen {
+  animation: boot-failsafe 0.01s 5s forwards;
+}
+/* Once hydrated, JS owns the exit (it may be waiting on the sound choice). */
+.boot-screen.is-live {
+  animation: none;
+}
+@keyframes boot-failsafe {
+  to {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+@keyframes boot-line {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* Hero headline (DESIGN.md §6 H2): ripple on the lead, light sweep on the accent. */
+:root {
+  --shine: rgb(255 255 255 / 0.95);
+}
+html[data-theme="light"] {
+  --shine: #3ddc84;
+}
+.wave-char {
+  display: inline-block;
+}
+.hero-headline.is-waving .wave-char {
+  animation: headline-wave 900ms var(--ease-out) calc(var(--i) * 22ms) both;
+}
+@keyframes headline-wave {
+  0% { transform: translateY(0); color: inherit; }
+  30% { transform: translateY(-0.09em); color: var(--color-ghost); }
+  100% { transform: translateY(0); color: inherit; }
+}
+.headline-accent {
+  background-image:
+    linear-gradient(105deg, transparent 42%, var(--shine) 50%, transparent 58%),
+    linear-gradient(110deg, var(--color-ghost), var(--color-ice) 45%, var(--color-glint) 70%, var(--color-ghost));
+  background-size: 250% 100%, 220% 100%;
+  background-position: 160% 50%, 0% 50%;
+  background-repeat: no-repeat, repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: accent-pan 8s ease-in-out infinite alternate;
+}
+.hero-headline.is-shining .headline-accent {
+  animation:
+    accent-shine 1.6s var(--ease-in-out) 0.35s both,
+    accent-pan 8s ease-in-out infinite alternate;
+}
+@keyframes accent-pan {
+  from { background-position: 160% 50%, 0% 50%; }
+  to { background-position: 160% 50%, 100% 50%; }
+}
+@keyframes accent-shine {
+  from { background-position: 160% 50%, 0% 50%; }
+  to { background-position: -60% 50%, 30% 50%; }
+}
+
+/* Featured product cards and opaque diagram tags. */
+.work-card {
+  transition: transform 600ms var(--ease-out), border-color 300ms;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .work-card:hover {
+    transform: perspective(1400px) rotateX(2deg) rotateY(-4deg);
+  }
+}
+.arch-tag, .arch-label, .work-logo {
+  transition: fill 300ms, stroke 300ms, color 300ms, border-color 300ms;
+}
+.group:hover .arch-tag,
+.group:focus-visible .arch-tag {
+  fill: color-mix(in srgb, var(--color-ghost) 12%, var(--color-void));
+  stroke: var(--color-ghost);
+}
+.group:hover .arch-label,
+.group:focus-visible .arch-label {
+  fill: var(--color-ghost);
+}
+.work-card:hover .work-logo,
+.work-card:focus-visible .work-logo {
+  color: var(--color-ghost);
+  border-color: var(--color-ghost);
+}
+
+.project-flip-inner {
+  transform-style: preserve-3d;
+  transition: transform 650ms var(--ease-out);
+}
+.project-flip[data-back="true"] .project-flip-inner { transform: rotateY(180deg); }
+.project-flip-face { position: absolute; inset: 0; backface-visibility: hidden; }
+.project-flip-back { transform: rotateY(180deg); }
+.project-logo-light { display: none; }
+.project-logo-dark { display: block; }
+html[data-theme="light"] .project-logo-light { display: block; }
+html[data-theme="light"] .project-logo-dark { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .project-flip-inner { transition: none; }
+}
+
+/* ── CV (/cv): always the light palette, so the PDF reads like the site in light mode ── */
+.cv-root {
+  color-scheme: light;
+  --color-void: #ffffff;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #f0f0ea;
+  --color-surface-3: #e8e8e1;
+  --color-line: rgb(0 0 0 / 0.08);
+  --color-line-strong: rgb(0 0 0 / 0.15);
+  --color-fg: #0b0b0b;
+  --color-fg-muted: #54544e;
+  --color-fg-subtle: #8a8a83;
+  --color-ghost: #137a43;
+  --color-card-tint: #e6f5ea;
+  --color-primary: #0f5c34;
+  --color-primary-hover: #137a43;
+  --color-on-primary: #f4fff7;
+}
+/* The CV is a document, not a page of the site: no boot screen, progress bar, footer or floating button. */
+html:has(.cv-root) :is(.boot-screen, .scroll-progress, .back-to-top, .site-footer) {
+  display: none !important;
+}
+/* Page 1 is laid out edge to edge by the sheet itself; later pages need their own top and bottom margin. */
+@page {
+  size: A4;
+  margin: 12mm 0 12mm;
+}
+@page :first {
+  margin-top: 0;
+}
+@media print {
+  html:has(.cv-root),
+  html:has(.cv-root) body {
+    background: #fff !important;
+  }
+  .cv-sheet {
+    width: 210mm !important;
+  }
+}

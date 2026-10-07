@@ -1,0 +1,48 @@
+# Kodda eski adı KirazMenu olarak geçiyor; ürünün yeni adı NarMenu.
+slug: narmenu
+tier: compact
+order: 5
+title: NarMenu
+client: NarPOS
+status: live
+period: { tr: 2023 – Günümüz, en: 2023 – Present }
+role: [architecture, development]
+tagline:
+  tr: Restoranlar için QR menü, masadan sipariş, garson çağırma ve online ödeme.
+  en: QR menus, table ordering, waiter calls and online payment for restaurants.
+problem:
+  tr: Restoranlar basılı menüleri güncel tutmakta, masadaki sipariş ve garson çağrısına hızlı yanıt vermekte ve ödemeyi tek kanaldan almakta zorlanıyordu.
+  en: Restaurants struggled to keep printed menus current, answer table orders and waiter calls quickly, and take payment through one channel.
+solution:
+  tr: Misafir QR'ı okutup menüyü kendi dilinde açıyor; masaya, paket servise ya da teslimata sipariş verip garson çağırıyor, online ödüyor ve puan topluyor. İşletme menüyü, fiyat etiketlerini, alerjenleri ve tasarımı panelden yönetiyor; çağrılar SignalR ile anlık düşüyor.
+  en: Guests scan a QR code to open the menu in their language, order for the table, takeaway or delivery, call a waiter, pay online and earn points. Venues manage menus, price tags, allergens and design from a panel; calls arrive in real time over SignalR.
+highlights:
+  - tr: Her menü için ayrı fiyat etiketi altyapısı (etiket bazlı fiyatlandırma)
+    en: A separate price-tag structure per menu (tag-based pricing)
+  - tr: Masadan siparişte puan kazandıran, çift puanı engelleyen sadakat modülü
+    en: A loyalty module that awards points on table orders and blocks double earning
+  - tr: SignalR ile garson çağrılarının anlık iletilmesi
+    en: Real-time waiter calls over SignalR
+  - tr: Moka, PayTR, Pay.nl, Param ve NarPay ile online ödeme
+    en: Online payment via Moka, PayTR, Pay.nl, Param and NarPay
+parts:
+  - { name: QR Menü, kind: web, note: { tr: "Misafirin sipariş verdiği menü", en: "The guest-facing ordering menu" } }
+  - { name: Yönetim Paneli, kind: admin, note: { tr: "Menü, fiyat ve tasarım yönetimi", en: "Menu, pricing and design admin" } }
+  - { name: QR Web API, kind: api, note: { tr: "Menü, sipariş ve sadakat servisi", en: "Menu, order and loyalty service" } }
+  - { name: Tablet Modu, kind: kiosk, note: { tr: "Masadaki tabletten sipariş", en: "Ordering from a table tablet" } }
+features: [Real-time (SignalR), Tag-based pricing, Loyalty points, Online payments, i18n (6 languages)]
+stack: [ASP.NET Web API, Entity Framework 6, SignalR, Angular, Ionic, Capacitor, PrimeNG]
+impact:
+  - { value: "6", label: { tr: misafir arayüzü dili, en: guest UI languages } }
+  - { value: "5", label: { tr: online ödeme sağlayıcısı, en: payment providers } }
+architecture:
+  nodes:
+    - { id: guest, label: Guest QR Web, layer: 0 }
+    - { id: admin, label: Admin Panel, layer: 0 }
+    - { id: api, label: QR Web API, layer: 1, core: true }
+    - { id: hub, label: SignalR Hub, layer: 1 }
+    - { id: domain, label: Menu / Order / Loyalty, layer: 2, core: true }
+    - { id: db, label: SQL Server, layer: 3 }
+    - { id: pay, label: Payments, layer: 3 }
+    - { id: pos, label: NarPOS, layer: 3 }
+  edges: [[guest, api], [admin, api], [guest, hub], [api, hub], [api, domain], [domain, db], [domain, pay], [domain, pos]]

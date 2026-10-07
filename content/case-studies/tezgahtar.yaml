@@ -1,0 +1,146 @@
+slug: tezgahtar
+tier: featured
+order: 3
+title: Tezgahtar
+client: Tezgahtar
+url: https://tezgahtar.tr
+status: live
+period: { tr: 2026 – Günümüz, en: 2026 – Present }
+confidentiality: public
+role: [architecture, development, product, devops]
+tagline:
+  tr: Kasiyerin düşünmeden, hatasız satış yaptığı yeni nesil perakende POS.
+  en: A next-generation retail POS where cashiers sell without errors — and without thinking.
+pitch:
+  tr: "Kasiyerin düşünmeden, hatasız satış yaptığı yeni nesil perakende POS. Okut, öde, fiş — akış hiç takılmıyor; tarayıcıda, masaüstünde ve yazıcıda aynı hızla çalışıyor."
+  en: "A next-generation retail POS where cashiers sell without thinking — and without mistakes. Scan, pay, receipt: the flow never stalls, in the browser, on the desktop and at the printer."
+overview:
+  - tr: "Tezgahtar, market, şarküteri ve perakende mağazaları için sıfırdan tasarlanmış yeni nesil bir satış noktası (POS) yazılımıdır. Tek bir hedefle geliştirildi: kasiyerin barkodu okutup, miktarı girip, ödemeyi alıp fişi kestiği akışın hiçbir noktada takılmaması."
+    en: "Tezgahtar is a next-generation point-of-sale system built from the ground up for markets, delis and retail stores. It was designed around one goal: the flow of scanning, entering a quantity, taking payment and printing the receipt must never stall."
+  - tr: Ürün, bakımı zorlaşmış eski nesil bir barkod sisteminin yerini almak üzere yeniden yazıldı. Tarayıcıda çalışan web kasası, Windows için masaüstü uygulaması ve ürünü tanıtan web sitesi aynı monorepo içinde, ortak bir tasarım sistemi ve ortak iş kurallarıyla geliştiriliyor. Fiyat, indirim, barkod ve fiş hesapları tek bir test edilmiş pakette tutulduğu için her ekran aynı sonucu üretiyor.
+    en: It replaces a legacy barcode system that had become hard to maintain. The browser-based till, the Windows desktop app and the product website are developed in one monorepo with a shared design system and shared business rules. Pricing, discounts, barcodes and receipts live in a single tested package, so every screen produces the same result.
+  - tr: Çok kiracılı altyapı sayesinde her işletme kendi verisiyle izole çalışıyor; terminal başına tek oturum ve heartbeat takibi, aynı kasanın iki yerde açılmasını engelliyor. Donanım tarafında yazdırma katmanı soyutlandığı için fiş yazıcısı masaüstü uygulamasından, yerel bir ajandan ya da doğrudan tarayıcıdan sürülebiliyor.
+    en: Its multi-tenant backend keeps each business isolated with its own data, and one-session-per-terminal with heartbeat tracking stops the same till being opened twice. On the hardware side, printing is abstracted, so receipt printers can be driven from the desktop app, a local agent or straight from the browser.
+problem:
+  tr: Eski nesil barkodlu satış sistemi (Angular 12 + Ionic + .NET + SQL Server) bakımı zor, genişletmesi pahalı hale gelmişti. Hedef — okut, miktar/fiyat, ödeme, fiş — akışının hiç takılmaması.
+  en: The legacy barcode POS (Angular 12 + Ionic + .NET + SQL Server) had become hard to maintain and costly to extend. The goal — scan, quantity/price, payment, receipt — with zero friction.
+solution:
+  tr: Sıfırdan .NET 10 + PostgreSQL API ve Nx monorepo'da web POS, Electron masaüstü ve tanıtım sitesi. Fiyat, indirim, barkod ve fiş mantığı test edilmiş saf bir paylaşılan pakette; yazdırma port/adapter mimarisiyle Electron, yerel ajan veya tarayıcıya yönlenir.
+  en: A from-scratch .NET 10 + PostgreSQL API and an Nx monorepo with web POS, Electron desktop and marketing site. Pricing, discount, barcode and receipt logic live in a pure, tested shared package; printing routes through a port/adapter layer to Electron, a local agent or the browser.
+highlights:
+  - tr: Terminal başına tek oturum ve heartbeat takibi
+    en: One session per terminal with heartbeat tracking
+  - tr: Kilit ve yedek alarak çalışan migration konteyneri; yıkıcı migration'lar test ile onaya bağlı
+    en: Migrator container that locks and backs up first; destructive migrations gated by a test
+  - tr: Woodpecker CI ile kalite → build → test hattı, Dokploy ile test ortamı
+    en: Woodpecker CI quality → build → test pipeline, Dokploy test environment
+  - tr: 31 bileşenli, tek token kaynağından beslenen tasarım sistemi
+    en: A 31-component design system fed by a single token source
+parts:
+  - name: Tezgahtar API
+    kind: api
+    note:
+      tr: .NET 10 çok kiracılı API
+      en: .NET 10 multi-tenant API
+    detail:
+      tr: Satış, ürün, stok, kasa ve raporlama süreçlerini yöneten API. Komut ve sorgular özel bir mediator üzerinden ayrılıyor; her istek kiracı yetkisiyle denetleniyor.
+      en: The API behind sales, products, stock, tills and reporting. Commands and queries are separated through a custom mediator, and every request is checked for tenant authorization.
+  - name: Web POS
+    kind: web
+    note:
+      tr: Tarayıcıda kasiyer ekranı
+      en: Browser cashier terminal
+    detail:
+      tr: React ve Vite ile geliştirilen kasa ekranı. Ürün kataloğunu önbellekte tutarak bağlantı dalgalanmalarında bile satışın sürmesini sağlıyor.
+      en: The till screen, built with React and Vite. It caches the product catalog so selling continues even when the connection wavers.
+  - name: Masaüstü
+    kind: desktop
+    note:
+      tr: Electron kabuk ve yazdırma köprüsü
+      en: Electron shell and print bridge
+    detail:
+      tr: Windows için Electron uygulaması; pencere, sistem tepsisi, otomatik güncelleme ve fiş yazıcısına doğrudan erişim sağlıyor. Bir watchdog süreci uygulamanın kesintisiz çalışmasını izliyor.
+      en: An Electron app for Windows providing windowing, tray, auto-update and direct receipt-printer access. A watchdog process keeps it running without interruption.
+  - name: tezgahtar.tr
+    kind: site
+    note:
+      tr: Ürün, donanım ve fiyatlar
+      en: Product, hardware and pricing
+    detail:
+      tr: Ürünü, desteklenen donanımları ve fiyatlandırmayı anlatan, uçtan uca testlerle korunan çok sayfalı tanıtım sitesi.
+      en: A multi-page marketing site presenting the product, supported hardware and pricing, covered by end-to-end tests.
+    url: https://tezgahtar.tr
+  - name: Migrator
+    kind: service
+    note:
+      tr: Kilitli ve yedekli migration
+      en: Locked, backed-up migrations
+    detail:
+      tr: Veritabanı değişikliklerini uygulamadan önce kilit alan ve yedek çıkaran konteyner. Veri silen migration'lar ancak test ile onaylanırsa çalışıyor.
+      en: A container that takes a lock and a backup before applying database changes. Destructive migrations only run once a test approves them.
+  - name: "@tezgahtar/shared"
+    kind: library
+    note:
+      tr: Fiyat, barkod ve fiş mantığı
+      en: Pricing, barcode and receipt logic
+    detail:
+      tr: "Tüm uygulamaların kullandığı saf iş kuralları: fiyat ve indirim hesabı, barkod çözümleme, fiş oluşturma ve lisans kontrolü."
+      en: "Pure business rules shared by every app: price and discount calculation, barcode parsing, receipt building and licensing."
+  - name: "@tezgahtar/peripherals"
+    kind: library
+    note:
+      tr: Yazdırma port/adapter katmanı
+      en: Printing ports and adapters
+    detail:
+      tr: Yazıcı ve çevre birimleri için tek bir arayüz; Electron, yerel HTTP ajanı, tarayıcı ve test için ayrı adaptörler.
+      en: One interface for printers and peripherals, with adapters for Electron, a local HTTP agent, the browser and testing.
+  - name: "@tezgahtar/ui"
+    kind: library
+    note:
+      tr: Tasarım sistemi
+      en: Design system
+    detail:
+      tr: Tek bir token kaynağından beslenen 31 bileşenli tasarım sistemi; kasa, masaüstü ve web sitesi aynı görsel dili konuşuyor.
+      en: A 31-component design system fed by a single token source, giving the till, desktop app and website one visual language.
+features: [Nx Monorepo, CQRS (custom mediator), Multi-tenant, Ports & Adapters, Terminal session heartbeat, Guarded migrations, CI pipeline, Auto-update (Electron)]
+stack: [.NET 10, EF Core, PostgreSQL, React 19, Vite, Nx, Electron, Playwright, Vitest, Woodpecker CI, Dokploy]
+impact:
+  - { value: "3", label: { tr: uygulama, en: apps } }
+  - { value: "5", label: { tr: paylaşılan paket, en: shared packages } }
+  - { value: "41", label: { tr: API controller, en: API controllers } }
+  - { value: "31", label: { tr: UI bileşeni, en: UI components } }
+architectureNotes:
+  - title:
+      tr: İş kuralları tek pakette
+      en: Business rules in one package
+    body:
+      tr: Fiyat, indirim ve fiş hesapları arayüzden bağımsız, test edilmiş bir pakette. Web kasası ve masaüstü aynı kodu çalıştırdığı için hesaplar her yerde birebir aynı.
+      en: Pricing, discount and receipt maths live in a tested, UI-free package. The web till and the desktop run the same code, so the numbers match everywhere.
+  - title:
+      tr: Port ve adaptörlerle donanım
+      en: Hardware through ports and adapters
+    body:
+      tr: Uygulama yazıcıyla doğrudan konuşmuyor, bir arayüzle konuşuyor. Ortama göre Electron, yerel ajan ya da tarayıcı adaptörü devreye giriyor; yeni bir donanım eklemek tek bir adaptör yazmak demek.
+      en: The app talks to an interface, not to the printer. Depending on the environment, an Electron, local-agent or browser adapter takes over — supporting new hardware means writing one adapter.
+  - title:
+      tr: Güvenli veritabanı değişiklikleri
+      en: Safe database changes
+    body:
+      tr: Migration'lar ayrı bir konteynerde, kilit ve yedekle çalışıyor. Yıkıcı bir değişiklik test onayı olmadan canlıya ulaşamıyor.
+      en: Migrations run in their own container behind a lock and a backup. A destructive change can't reach production without a test signing off.
+  - title:
+      tr: Otomatik kalite hattı
+      en: An automated quality pipeline
+    body:
+      tr: Her değişiklik kalite kontrolü, derleme ve test adımlarından geçiyor; test ortamına dağıtım otomatik yapılıyor.
+      en: Every change passes quality checks, build and tests, and deploys to the test environment automatically.
+architecture:
+  nodes:
+    - { id: web, label: Web POS, layer: 0 }
+    - { id: desktop, label: Desktop, layer: 0 }
+    - { id: site, label: Website, layer: 0 }
+    - { id: shared, label: Shared Logic, layer: 1, core: true }
+    - { id: periph, label: Peripherals, layer: 1 }
+    - { id: api, label: .NET API, layer: 2, core: true }
+    - { id: pg, label: PostgreSQL, layer: 3 }
+  edges: [[web, shared], [desktop, shared], [desktop, periph], [web, periph], [shared, api], [api, pg]]

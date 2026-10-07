@@ -1,0 +1,121 @@
+slug: cofiner
+tier: featured
+pinned: true
+title: Cofiner
+client: Cofiner
+url: https://cofiner.com
+status: ongoing
+period: { tr: 2025 – Günümüz, en: 2025 – Present }
+role: [architecture, development, product]
+tagline:
+  tr: Hesaplar, kartlar, borçlar ve planlar tek ekranda; her rakam çift girişli deftere dayanıyor.
+  en: Accounts, cards, debts and plans in one view — every number backed by a double-entry ledger.
+pitch:
+  tr: "Excel tablolarına veda: hesaplar, kredi kartları, kişiler arası borçlar ve gelecek planları tek ekranda. Her kuruş çift girişli bir deftere işleniyor; rakamlar her zaman tutuyor, hiçbir kayıt kaybolmuyor."
+  en: "Goodbye, spreadsheets: accounts, credit cards, money between friends and future plans in one view. Every cent lands in a double-entry ledger, so the numbers always add up and nothing ever goes missing."
+overview:
+  - tr: Cofiner, bireylerin bütün finansal hayatını tek bir yerde, tutarlı ve izlenebilir biçimde yönetmesi için tasarlanmış bir kişisel finans asistanıdır. Banka hesapları, kredi kartları, kişiler arası borç ve alacaklar, aylık bütçe ve geleceğe dönük planlar aynı ekranda bir araya gelir.
+    en: Cofiner is a personal finance assistant designed to let people manage their entire financial life in one place — consistently and traceably. Bank accounts, credit cards, money owed between people, monthly budgets and forward-looking plans come together on a single screen.
+  - tr: Ürünün temelinde muhasebe dünyasının en güvenilir yöntemi olan çift girişli kayıt sistemi yatıyor. Her işlem bir yevmiye kaydı olarak deftere yazılır, kaydın toplamı veritabanı seviyesinde sıfıra zorlanır ve hiçbir kayıt silinmez; düzeltmeler iz bırakarak yapılır. Bu sayede kullanıcı gördüğü her rakamın nereden geldiğini sonuna kadar takip edebilir.
+    en: "At its core sits the most trusted method in accounting: double-entry bookkeeping. Every transaction is written to the ledger as a journal entry, each entry is forced to balance at the database level, and nothing is ever deleted — corrections leave a trail. Users can trace every number they see back to its source."
+  - tr: "Mobil uygulama ana kullanım yüzeyi olarak konumlanırken, masaüstü web uygulaması detaylı analiz ve planlama için kullanılıyor. İki istemci de aynı finans motorunu paylaşıyor: kullanıcı bir kayıt girerken sonucu anında önizliyor, API aynı motorla kaydı doğruluyor. Ürün şu anda erken erişim aşamasında geliştirilmeye devam ediyor."
+    en: "The mobile app is the primary surface, while the desktop web app serves deeper analysis and planning. Both clients share the same finance engine: users preview the result as they enter a transaction, and the API validates it with that very engine. The product is in active development, currently in early access."
+problem:
+  tr: Kişisel finans takibi dağınık Excel tablolarında yürüyordu; kart ekstreleri, kişiler arası borçlar ve gelecek projeksiyonu tutarlı ya da izlenebilir değildi.
+  en: Personal finances lived in scattered spreadsheets; card statements, debts between people and projections were neither consistent nor traceable.
+solution:
+  tr: Kuruş hassasiyetli, saf TypeScript bir finans motoru ve çift girişli bir PostgreSQL defteri. Bu çekirdek tek bir API üzerinden mobil ve web uygulamasına hizmet veriyor; iki istemci de aynı paylaşılan kütüphaneleri kullanıyor.
+  en: A cent-precise, pure TypeScript finance engine on a double-entry PostgreSQL ledger, served to the mobile and web apps through one API, with both clients sharing the same libraries.
+highlights:
+  - tr: "Çift girişli defter: her kaydın toplamı veritabanında sıfıra zorlanıyor, kayıtlar silinmiyor, iz yalnız ekleniyor"
+    en: "Double-entry ledger: every entry is forced to balance in the database, nothing is deleted, the trail is append-only"
+  - tr: Tek finans motoru istemcide önizleme, API'de doğrulama yapıyor; Excel ile birebir tutarlılık testleri var
+    en: One finance engine previews on the client and validates on the API, with Excel-parity tests
+  - tr: Çalışma alanı bazlı kiracı izolasyonu ve her istekte bağlam kontrolü
+    en: Workspace-based tenant isolation with a context check on every request
+  - tr: Nx modül sınırlarıyla korunan 4 uygulama ve 7 paylaşılan kütüphane
+    en: 4 apps and 7 shared libraries guarded by Nx module boundaries
+parts:
+  - name: Cofiner Mobile
+    kind: mobile
+    note:
+      tr: Ana kullanım yüzeyi
+      en: The primary surface
+    detail:
+      tr: Expo ve React Native ile iOS ve Android için tek kod tabanından geliştirilen uygulama. Günlük harcama girişi, bakiye takibi ve hızlı işlemler için tasarlandı.
+      en: Built with Expo and React Native for iOS and Android from one codebase, designed for daily expense entry, balance tracking and quick actions.
+  - name: Web Uygulaması
+    kind: web
+    note:
+      tr: Masaüstü panel
+      en: Desktop dashboard
+    detail:
+      tr: Next.js ile geliştirilen ve statik olarak dağıtılan panel. Hesaplar, kartlar, borçlar, aylık görünüm ve plan ekranlarıyla detaylı analiz sunuyor.
+      en: A Next.js dashboard shipped as a static export, offering deep analysis through accounts, cards, debts, monthly view and planning screens.
+  - name: Cofiner API
+    kind: api
+    note:
+      tr: Defter, özetler ve kimlik
+      en: Ledger, summaries and auth
+    detail:
+      tr: Yevmiye kayıtlarını, hesap planını ve özet raporları sunan sürümlü REST API. Her istek çalışma alanı bağlamında doğrulanıyor; kimlik yönetimi Better Auth ile sağlanıyor.
+      en: A versioned REST API serving journal entries, the chart of accounts and summary reports. Every request is checked against its workspace; identity is handled by Better Auth.
+  - name: cofiner.com
+    kind: site
+    note:
+      tr: Tanıtım ve erken erişim
+      en: Marketing and early access
+    detail:
+      tr: Ürünü tanıtan ve erken erişim listesi toplayan pazarlama sitesi.
+      en: The marketing site that presents the product and collects the early-access waitlist.
+    url: https://cofiner.com
+  - name: finance-core
+    kind: library
+    note:
+      tr: Paylaşılan finans motoru
+      en: Shared finance engine
+    detail:
+      tr: Kuruş hassasiyetinde hesaplama yapan, saf TypeScript ile yazılmış motor. Hem istemcide önizleme hem API'de doğrulama için aynı kod çalışıyor; Excel ile birebir tutarlılık testleriyle korunuyor.
+      en: A pure TypeScript engine computing to the cent. The same code previews on the client and validates on the API, guarded by Excel-parity tests.
+features: [Nx Monorepo, Double-entry ledger, Multi-tenant, Module boundaries, Shared core logic, Audit trail]
+stack: [TypeScript, Next.js, React Native, Expo, PostgreSQL, Drizzle ORM, Better Auth, Tailwind CSS]
+impact:
+  - { value: "4", label: { tr: uygulama, en: apps } }
+  - { value: "7", label: { tr: paylaşılan kütüphane, en: shared libraries } }
+  - { value: "13", label: { tr: web ekranı, en: web screens } }
+architectureNotes:
+  - title:
+      tr: Çift girişli defter
+      en: Double-entry ledger
+    body:
+      tr: Bakiyeler saklanmıyor, kayıtlardan hesaplanıyor. Her yevmiye kaydının toplamı ertelenmiş bir veritabanı tetikleyicisiyle sıfıra zorlanıyor; tutarsız bir kayıt veritabanına hiç ulaşamıyor.
+      en: Balances aren't stored — they're derived from entries. A deferred database trigger forces every journal entry to balance, so an inconsistent entry never reaches the database.
+  - title:
+      tr: Tek motor, iki yerde
+      en: One engine, two places
+    body:
+      tr: Finans kuralları tek bir pakette. İstemci aynı paketle anlık önizleme yapıyor, API aynı paketle doğruluyor; iki tarafın farklı sonuç üretmesi mümkün değil.
+      en: Finance rules live in a single package. The client previews with it, the API validates with it — the two sides can't disagree.
+  - title:
+      tr: Çalışma alanı izolasyonu
+      en: Workspace isolation
+    body:
+      tr: Her tablo çalışma alanı kimliği taşıyor; bileşik yabancı anahtarlar farklı çalışma alanlarına ait kayıtların birbirine bağlanmasını veritabanı seviyesinde engelliyor.
+      en: Every table carries a workspace id; composite foreign keys stop records from different workspaces being linked, right in the database.
+  - title:
+      tr: Sınırları zorlanan monorepo
+      en: A monorepo with enforced boundaries
+    body:
+      tr: Nx modül sınırları hangi uygulamanın hangi kütüphaneyi kullanabileceğini lint seviyesinde denetliyor; dört uygulama yedi paylaşılan kütüphane üzerinden kontrollü biçimde kod paylaşıyor.
+      en: Nx module boundaries decide at lint time which app may use which library; four apps share code through seven libraries in a controlled way.
+architecture:
+  nodes:
+    - { id: mobile, label: Mobile, layer: 0 }
+    - { id: web, label: Web App, layer: 0 }
+    - { id: api, label: API v1, layer: 1, core: true }
+    - { id: auth, label: Auth, layer: 2 }
+    - { id: ledger, label: Ledger, layer: 2, core: true }
+    - { id: summary, label: Summaries, layer: 2 }
+    - { id: fincore, label: finance-core, layer: 2, core: true }
+    - { id: pg, label: PostgreSQL, layer: 3 }
+  edges: [[mobile, api], [web, api], [web, fincore], [api, auth], [api, ledger], [api, summary], [ledger, fincore], [summary, fincore], [auth, pg], [ledger, pg], [summary, pg]]

@@ -1,0 +1,82 @@
+# GitHub'daki herkese açık repolar, en yeniden eskiye (oluşturulma tarihi). Profil README reposu (sametbrr) proje sayılmaz.
+# Güncellemek için: gh repo list sametbrr --visibility public --json name,createdAt
+- name: codeagent-sync
+  url: https://github.com/sametbrr/codeagent-sync
+  kind: package
+  registry: { type: npm, id: codeagent-sync }
+  summary:
+    tr: "Claude Code ve Codex ayarlarını (skill, MCP, hook) her makinede uçtan uca şifreli olarak aynı tutar."
+    en: "Keeps Claude Code and Codex config (skills, MCP servers, hooks) identical on every machine, end-to-end encrypted."
+- name: github-manager
+  url: https://github.com/sametbrr/github-manager
+  kind: plugin
+  summary:
+    tr: "GitHub hesabını uçtan uca denetleyip düzelten Claude Code plugin'i."
+    en: "Claude Code plugin that audits and fixes a GitHub account end to end."
+- name: crypt-sync
+  url: https://github.com/sametbrr/crypt-sync
+  kind: package
+  registry: { type: npm, id: crypt-sync }
+  summary:
+    tr: ".env dosyalarını age ile şifreli olarak git'te tutar ve makineler arası senkronlar."
+    en: "Keeps .env files age-encrypted in git and synced across machines."
+- name: skill-hub
+  url: https://github.com/sametbrr/skill-hub
+  kind: plugin
+  featured: true
+  summary:
+    tr: "Tüm Claude Code plugin'lerimin tek marketplace'i — bir kez ekle, ismiyle kur."
+    en: "One marketplace for all my Claude Code plugins — register once, install by name."
+- name: readme-standard
+  url: https://github.com/sametbrr/readme-standard
+  kind: plugin
+  summary:
+    tr: "README.md ve README.tr.md'yi 23 kurala göre oluşturan, denetleyen ve Türkçe kopyayı senkron tutan Claude Code skill'i."
+    en: "Claude Code skill that creates, audits and fixes README.md + README.tr.md against 23 rules and keeps the Turkish mirror in sync."
+- name: look-again
+  url: https://github.com/sametbrr/look-again
+  kind: plugin
+  summary:
+    tr: "Konuşmayı kararlar, elenen seçenekler ve son planla birlikte kaydedip kaldığı yerden sürdüren Claude Code skill'i."
+    en: "Claude Code skill that checkpoints a conversation — decisions, rejected options and the final plan — and resumes it with full context."
+- name: project-radar
+  url: https://github.com/sametbrr/project-radar
+  kind: plugin
+  summary:
+    tr: "GitHub trendlerini ve topluluk gündemini tarayıp projeleri 0–100 puanlayan, Türkçe HTML rapor üreten günlük radar."
+    en: "A daily radar that scans GitHub trending and community chatter, scores projects 0–100 and renders a Turkish HTML report."
+- name: prompt-architect
+  url: https://github.com/sametbrr/prompt-architect
+  kind: plugin
+  summary:
+    tr: "Kaba bir fikri alan sınıflandırmalı, kalite kapılı uzman prompt'a çevirir."
+    en: "Turns a rough idea into a domain-classified, quality-gated expert prompt."
+- name: llm-wiki-manager
+  url: https://github.com/sametbrr/llm-wiki-manager
+  kind: plugin
+  featured: true
+  summary:
+    tr: "Modelin yazıp çapraz bağladığı, senin kaynak seçtiğin kalıcı LLM wiki'si."
+    en: "A persistent LLM-managed wiki — the model writes and cross-references, you curate sources."
+- name: openapi-rest-mcp
+  url: https://github.com/sametbrr/openapi-rest-mcp
+  kind: mcp
+  featured: true
+  registry: { type: npm, id: openapi-rest-mcp }
+  summary:
+    tr: "Herhangi bir OpenAPI/Swagger spec'inden tam işlevli MCP server."
+    en: "A fully working MCP server from any OpenAPI/Swagger spec."
+- name: AssemblyServiceRegistrar
+  url: https://github.com/sametbrr/AssemblyServiceRegistrar
+  kind: package
+  registry: { type: nuget, id: AssemblyServiceRegistrar }
+  summary:
+    tr: ".NET'te sıfır boilerplate DI kaydı — marker interface ve attribute ile."
+    en: "Zero-boilerplate DI registration in .NET via marker interfaces and attributes."
+- name: EnvironmentConfigurator
+  url: https://github.com/sametbrr/EnvironmentConfigurator
+  kind: package
+  registry: { type: nuget, id: EnvironmentConfigurator }
+  summary:
+    tr: "ASP.NET Core için tek çağrıda ortam duyarlı yapılandırma."
+    en: "Single-call environment-aware configuration for ASP.NET Core."

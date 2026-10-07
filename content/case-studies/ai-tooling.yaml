@@ -1,0 +1,116 @@
+slug: ai-tooling
+tier: featured
+order: 5
+title: AI Tooling & Open Source
+client: NarPOS + Open Source
+url: https://github.com/sametbrr
+status: live
+period: { tr: 2025 – Günümüz, en: 2025 – Present }
+confidentiality: public
+role: [architecture, development, ai]
+tagline:
+  tr: Üretim sistemlerini ve geliştirici iş akışlarını AI ajanları için erişilebilir kılmak.
+  en: Making production systems and developer workflows accessible to AI agents.
+pitch:
+  tr: "Üretim sistemlerini ve geliştirici iş akışlarını AI ajanlarına açan araç seti. Claude Code skill'leri, MCP server'ı ve npm/NuGet paketleri açık kaynak; tek komutla kurulup ertesi gün işe yarıyor."
+  en: "A toolkit that opens production systems and developer workflows to AI agents. Claude Code skills, an MCP server and npm/NuGet packages — all open source, installed in one command, useful the next day."
+overview:
+  - tr: AI Tooling & Open Source, üretim sistemlerini ve geliştirici iş akışlarını yapay zeka ajanları için erişilebilir kılan araçlardan oluşan bir çalışma alanı. Şirketlerin çoğu zaman yeni bir yapay zeka ürününe değil, mevcut sistemlerinin — raporlarının, dokümanlarının ve API'lerinin — yapay zeka tarafından güvenle kullanılabilmesine ihtiyacı var.
+    en: AI Tooling & Open Source is a body of work that makes production systems and developer workflows accessible to AI agents. Companies rarely need a brand-new AI product; they need their existing systems — reports, docs and APIs — to be safely usable by AI.
+  - tr: Ürün tarafında bu yaklaşım, mevcut rapor sorgularını araç olarak kullanan, şirket ve şube bazında kota uygulayan bir rapor asistanına ve gece senkronlanan dokümanlar üzerinde kişisel veriyi maskeleyerek çalışan bir teknik destek asistanına dönüştü. Ajanlar yalnızca okuma yetkili araçlarla çalışıyor, sonuçlar SSE ile akıyor.
+    en: Inside products, this became a report assistant that uses existing report queries as tools with per-company and per-branch quotas, and a support assistant that works over nightly-synced docs while masking personal data. Agents use read-only tools, and results stream over SSE.
+  - tr: "Açık kaynak tarafında ise aynı birikim herkesin kullanabileceği araçlara dönüştü: Claude Code skill'leri ve plugin'leri, herhangi bir OpenAPI tanımını MCP server'a çeviren bir paket, secret yönetimi ve ortam senkronizasyonu için npm paketleri, .NET geliştiricileri için NuGet kütüphaneleri. Hepsi GitHub'da açık ve tek komutla kurulabiliyor."
+    en: "On the open-source side, the same experience became tools anyone can use: Claude Code skills and plugins, a package that turns any OpenAPI definition into an MCP server, npm packages for secrets and environment sync, and NuGet libraries for .NET developers. All of it is open on GitHub and installs in one command."
+problem:
+  tr: Şirketlerin yeni bir AI ürününe değil, mevcut sistemlerinin — raporlar, dokümanlar, API'ler — AI tarafından güvenle kullanılabilmesine ihtiyacı var.
+  en: Companies rarely need a new AI product — they need their existing systems (reports, docs, APIs) to be safely usable by AI.
+solution:
+  tr: Ürün içinde rapor asistanı ve dokümantasyon destekli teknik asistan; dışarıda MCP server'ları ve Claude Code plugin'leri ile geliştirici iş akışlarının otomasyonu. Hepsi açık kaynak ve tek marketplace'ten kurulabilir.
+  en: In-product, a report assistant and a docs-grounded technical assistant; outside, MCP servers and Claude Code plugins that automate developer workflows — open source and installable from one marketplace.
+highlights:
+  - tr: "NarZeka: mevcut rapor sorgularını araç olarak kullanan, şirket/şube kotalı AI rapor asistanı"
+    en: "NarZeka: an AI report assistant using existing report queries as tools, with per-company/branch quotas"
+  - tr: Gece senkronlanan dokümanlar, PII maskeleme ve yalnızca okuma araçlarıyla teknik destek asistanı
+    en: A support assistant over nightly-synced docs with PII masking and read-only tools
+  - tr: openapi-rest-mcp — herhangi bir OpenAPI spec'inden MCP server
+    en: openapi-rest-mcp — an MCP server from any OpenAPI spec
+  - tr: skill-hub — wiki, prompt, README, GitHub ve secret yönetimi için Claude Code plugin'leri
+    en: skill-hub — Claude Code plugins for wikis, prompts, READMEs, GitHub and secrets
+parts:
+  - name: Claude Code Skills
+    kind: skill
+    note:
+      tr: 7 skill ve plugin, tek marketplace
+      en: 7 skills and plugins, one marketplace
+    detail:
+      tr: "skill-hub marketplace'i üzerinden kurulan araçlar: kalıcı LLM wiki'si (llm-wiki-manager), uzman prompt mimarı (prompt-architect), GitHub hesap denetçisi (github-manager), README standardı (readme-standard), konuşma kayıt noktaları (look-again) ve günlük proje radarı (project-radar)."
+      en: "Tools installed through the skill-hub marketplace: a persistent LLM wiki (llm-wiki-manager), an expert prompt architect (prompt-architect), a GitHub account auditor (github-manager), a README standard (readme-standard), conversation checkpoints (look-again) and a daily project radar (project-radar)."
+    url: https://github.com/sametbrr/skill-hub
+  - name: MCP Server
+    kind: mcp
+    note:
+      tr: openapi-rest-mcp
+      en: openapi-rest-mcp
+    detail:
+      tr: "Herhangi bir OpenAPI/Swagger tanımını tam işlevli bir MCP server'a dönüştürüyor: CRUD işlemleri, uç nokta keşfi, bulanık arama ve birden çok kimlik doğrulama yöntemi."
+      en: "Turns any OpenAPI/Swagger definition into a fully working MCP server: CRUD operations, endpoint discovery, fuzzy search and multiple auth schemes."
+    url: https://github.com/sametbrr/openapi-rest-mcp
+  - name: npm Paketleri
+    kind: npm
+    note:
+      tr: openapi-rest-mcp, crypt-sync, codeagent-sync
+      en: openapi-rest-mcp, crypt-sync, codeagent-sync
+    detail:
+      tr: crypt-sync .env ve secret dosyalarını age ile şifreli olarak git'te tutup makineler arasında senkronluyor; codeagent-sync Claude Code ve Codex ayarlarını her makinede uçtan uca şifreli olarak aynı tutuyor.
+      en: crypt-sync keeps .env and secret files age-encrypted in git and synced across machines; codeagent-sync keeps Claude Code and Codex settings identical on every machine, end-to-end encrypted.
+    url: https://www.npmjs.com/~sametbrr
+  - name: NuGet Paketleri
+    kind: nuget
+    note:
+      tr: AssemblyServiceRegistrar, EnvironmentConfigurator
+      en: AssemblyServiceRegistrar, EnvironmentConfigurator
+    detail:
+      tr: AssemblyServiceRegistrar .NET servislerini marker interface ve attribute'larla otomatik kaydediyor; EnvironmentConfigurator ASP.NET Core'da ortam duyarlı yapılandırmayı tek çağrıya indiriyor.
+      en: AssemblyServiceRegistrar auto-registers .NET services through marker interfaces and attributes; EnvironmentConfigurator reduces environment-aware configuration in ASP.NET Core to a single call.
+    url: https://www.nuget.org/profiles/sametbrr
+features: [MCP, Function calling, SSE streaming, Read-only tools, PII masking, Usage quotas]
+stack: [MCP, Claude Code, Agent SDK, Function Calling, SSE, TypeScript, Python, .NET]
+impact:
+  - { value: "8+", label: { tr: açık kaynak araç, en: open-source tools } }
+  - { value: "2", label: { tr: üretimde AI asistanı, en: AI assistants in production } }
+  - { value: "5+", label: { tr: yayınlanmış paket, en: published packages } }
+architectureNotes:
+  - title:
+      tr: Mevcut sistem, yeni arayüz
+      en: Existing systems, new interface
+    body:
+      tr: Ajanlar için yeni bir veri katmanı yazılmıyor; mevcut rapor sorguları ve API'ler araç olarak tanımlanıyor. Bilinen, test edilmiş kod yapay zekaya açılıyor.
+      en: No new data layer is written for agents; existing report queries and APIs are exposed as tools. Known, tested code is opened up to AI.
+  - title:
+      tr: Yalnızca okuma ve kota
+      en: Read-only by design, with quotas
+    body:
+      tr: Ajan araçları veri değiştiremiyor; kullanım şirket ve şube bazında kotalarla sınırlanıyor, böylece maliyet ve risk öngörülebilir kalıyor.
+      en: Agent tools can't change data, and usage is capped by per-company and per-branch quotas, keeping cost and risk predictable.
+  - title:
+      tr: Kişisel veri maskeleme
+      en: Personal data masking
+    body:
+      tr: Destek asistanının kullandığı dokümanlar gece senkronlanıyor ve modele gitmeden önce kişisel veriler maskeleniyor.
+      en: Docs used by the support assistant are synced nightly, and personal data is masked before anything reaches the model.
+  - title:
+      tr: Tek komutla kurulum
+      en: One-command install
+    body:
+      tr: Tüm skill'ler tek bir marketplace'ten adıyla kuruluyor; paketler npm ve NuGet üzerinden sürümlenerek dağıtılıyor.
+      en: Every skill installs by name from a single marketplace, and packages ship as versioned releases on npm and NuGet.
+architecture:
+  nodes:
+    - { id: agent, label: AI Agent, layer: 0, core: true }
+    - { id: dev, label: Developer, layer: 0 }
+    - { id: mcp, label: MCP Server, layer: 1, core: true }
+    - { id: skills, label: Skills, layer: 1 }
+    - { id: api, label: REST API, layer: 2 }
+    - { id: reports, label: Reports, layer: 2 }
+    - { id: docs, label: Docs, layer: 3 }
+  edges: [[agent, mcp], [dev, skills], [skills, mcp], [mcp, api], [mcp, reports], [reports, docs]]

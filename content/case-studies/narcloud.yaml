@@ -1,0 +1,66 @@
+slug: narcloud
+tier: compact
+order: 2
+title: NarCloud
+client: NarPOS
+url: https://pos.narpos.com.tr
+status: live
+period: { tr: 2024 – Günümüz, en: 2024 – Present }
+confidentiality: public
+role: [architecture, development, pm, ai]
+tagline:
+  tr: NarPOS'un bulut sürümü; restoranın tüm operasyonunu tek platformda toplayan POS ekosistemi.
+  en: NarPOS in the cloud — a POS ecosystem that runs a restaurant's entire operation on one platform.
+problem:
+  tr: Restoranlar satış, masa, paket servis ve mutfağı tek sistemde yönetmeli; aynı anda yemek platformlarından sipariş almalı, ödeme cihazlarını sürmeli, e-fatura kesmeli ve misafirin QR ile kendi siparişini vermesine izin vermeli.
+  en: Restaurants need to run sales, tables, takeaway and kitchen in one system — while pulling orders from delivery marketplaces, driving payment devices, issuing e-invoices and letting guests order by QR.
+solution:
+  tr: CQRS tabanlı 9 .NET servisi ve tek monorepo'dan beslenen 7 istemci uygulaması (web POS, Android tablet POS, Electron donanım köprüsü, işletme sahibi uygulaması, QR menü, sadakat, rezervasyon). Masa, garson çağrısı ve hesap istekleri SignalR + Redis ile anlık olarak terminallere düşer.
+  en: Nine CQRS-based .NET services and seven client apps from one monorepo (web POS, Android tablet POS, Electron hardware bridge, owner app, QR menu, loyalty, reservations). Table, waiter-call and bill requests reach terminals in real time over SignalR + Redis.
+highlights:
+  - tr: Getir, Trendyol, Yemeksepeti ve Migros sipariş entegrasyonları; kurye atama akışı
+    en: Getir, Trendyol, Yemeksepeti and Migros order integrations; courier assignment flow
+  - tr: Pavo, Hugin, Beko, Inpos ve PAX/Ingenico ödeme cihazlarına Electron üzerinden köprü
+    en: Electron bridge to Pavo, Hugin, Beko, Inpos and PAX/Ingenico payment devices
+  - tr: Masadan QR ile sipariş, garson çağırma, hesap isteme ve alerjen bilgisi (qr.narpos.com.tr)
+    en: QR table ordering, waiter call, bill request and allergen info (qr.narpos.com.tr)
+  - tr: "NarZeka: rapor sorgularının üzerinde function calling ile çalışan, SSE ile akan AI rapor asistanı"
+    en: "NarZeka: an AI report assistant using function calling over existing report queries, streamed via SSE"
+  - tr: Şirket/şube bazlı çok kiracılı yapı, JWT + refresh token, PIN girişi ve servisler arası rate limit
+    en: Company/branch multi-tenancy, JWT + refresh tokens, PIN login and cross-service rate limiting
+parts:
+  - { name: BackOffice API, kind: api, note: { tr: "Menü, şube ve kullanıcı yönetimi", en: "Menu, branch and user management" } }
+  - { name: Transactions API, kind: api, note: { tr: "Satış, adisyon ve mutfak akışı", en: "Sales, tickets and kitchen flow" } }
+  - { name: Reports API, kind: api, note: { tr: "Ciro ve satış raporları", en: "Revenue and sales reports" } }
+  - { name: Credentials API, kind: api, note: { tr: "Kimlik doğrulama ve yetki", en: "Authentication and authorization" } }
+  - { name: Integrations API, kind: api, note: { tr: "ÖKC, e-fatura ve cihaz entegrasyonu", en: "Fiscal, e-invoice and device integrations" } }
+  - { name: Externals API, kind: api, note: { tr: "QR, kiosk ve platform siparişleri", en: "QR, kiosk and marketplace orders" } }
+  - { name: E-Ticaret · Sadakat · Rezervasyon API, kind: api, note: { tr: "Üç ayrı servis", en: "Three separate services" } }
+  - { name: Web POS, kind: web, note: { tr: "Kasiyer ve garson terminali", en: "Cashier and waiter terminal" } }
+  - { name: Tablet POS, kind: mobile, note: { tr: "Android tablet POS", en: "Android tablet POS" } }
+  - { name: Masaüstü POS, kind: desktop, note: { tr: "Electron, ödeme cihazı köprüsü", en: "Electron, payment-device bridge" } }
+  - { name: Kiosk, kind: kiosk, note: { tr: "Müşterinin kendi siparişi", en: "Self-order kiosk" } }
+  - { name: NarBoss · Sadakat, kind: mobile, note: { tr: "Patron ve müşteri uygulamaları", en: "Owner and customer apps" } }
+  - { name: QR Web · Rezervasyon, kind: web, note: { tr: "Masadan sipariş ve rezervasyon", en: "Table ordering and booking" } }
+  - { name: "@narpos/core", kind: library, note: { tr: "Uygulamalar arası ortak çekirdek", en: "Shared core across apps" } }
+features: [Microservices (9 .NET APIs), CQRS (MediatR), Real-time (SignalR + Redis), Branch-scoped auth, Clustered jobs (Quartz), Rate limiting, OTA updates, Shared core package]
+stack: [.NET 10, EF Core, PostgreSQL, Redis, SignalR, MediatR, Elasticsearch, React, React Native, Electron, Docker, Jenkins, Graylog]
+impact:
+  - { value: "7", label: { tr: istemci uygulaması, en: client apps } }
+  - { value: "9", label: { tr: backend servisi, en: backend services } }
+  - { value: "13", label: { tr: entegrasyon modülü, en: integration modules } }
+  - { value: "563", label: { tr: geçen domain testi, en: passing domain tests } }
+architecture:
+  nodes:
+    - { id: pos, label: Web POS, layer: 0 }
+    - { id: tablet, label: Tablet POS, layer: 0 }
+    - { id: qr, label: QR Menü, layer: 0 }
+    - { id: boss, label: NarBoss, layer: 0 }
+    - { id: hub, label: SignalR Hub, layer: 1, core: true }
+    - { id: gw, label: API, layer: 1 }
+    - { id: tx, label: Transactions, layer: 2, core: true }
+    - { id: integ, label: Integrations, layer: 2 }
+    - { id: reports, label: Reports + AI, layer: 2 }
+    - { id: pg, label: PostgreSQL, layer: 3 }
+    - { id: redis, label: Redis, layer: 3 }
+  edges: [[pos, gw], [tablet, gw], [qr, hub], [boss, gw], [pos, hub], [hub, redis], [gw, tx], [gw, integ], [gw, reports], [tx, pg], [integ, pg], [reports, pg]]

@@ -1,0 +1,131 @@
+slug: egecocuk
+tier: featured
+order: 2
+title: Ege Çocuk
+client: Ege Çocuk Yayınları
+url: https://egecocuk.com.tr
+status: live
+period: { tr: 2025 – Günümüz, en: 2025 – Present }
+confidentiality: public
+role: [architecture, development, pm, devops]
+tagline:
+  tr: Basılı kitapları karekodla canlanan dijital içeriğe bağlayan yayınevi platformu.
+  en: A publisher platform that brings printed books to life through QR-linked digital content.
+pitch:
+  tr: "Basılı kitapları karekodla canlanan dijital bir dünyaya bağlayan yayınevi platformu. Video, sesli kitap, quiz ve optik form tek QR'da; kitaptaki kod yıllar sonra bile çalışmaya devam ediyor."
+  en: "A publisher platform that brings printed books to life through QR codes. Videos, audiobooks, quizzes and optical forms behind a single scan — and the code in the book keeps working for years."
+overview:
+  - tr: Ege Çocuk Yayınları için geliştirilen platform, basılı kitapları dijital içerikle buluşturan uçtan uca bir yayıncılık altyapısıdır. Kitapların sayfalarındaki karekodlar okutulduğunda öğrenciyi videolara, sesli kitaplara, e-kitaplara, quizlere, yapbozlara ve optik formlara götürüyor.
+    en: Built for Ege Çocuk Publishing, the platform is an end-to-end publishing infrastructure that connects printed books with digital content. Scanning a QR code on a page takes students to videos, audiobooks, e-books, quizzes, puzzles and optical answer forms.
+  - tr: Basılı bir kitaptaki karekod bir kez basıldıktan sonra değiştirilemez; içerik güncellense bile o kodun yıllarca çalışmaya devam etmesi gerekir. Bu yüzden sistem, hiçbir zaman silinmeyen opak kimlikler üzerine kuruldu. İçerik sürümleniyor, gerektiğinde başka bir sürüme yeniden bağlanabiliyor ve tek tıkla geri alınabiliyor.
+    en: A QR code printed in a book can never change; even when the content is updated, that code must keep working for years. So the system is built on opaque IDs that are never deleted. Content is versioned, can be rebound to another version when needed and rolled back in one click.
+  - tr: "Platform aynı zamanda yayınevinin ticari yüzü: katalog, e-ticaret, PayTR ile ödeme, rol bazlı fiyatlandırma ve bayi onay akışı tek çatı altında. Okuyucu sitesi ile yönetim paneli ortak bir domain çekirdeğini paylaşıyor; her değişiklik sağlık kontrolünden geçmeden yayına alınmıyor."
+    en: "The platform is also the publisher's storefront: catalog, e-commerce, PayTR payments, role-based pricing and dealer approval under one roof. The reader site and the admin panel share one domain core, and no change goes live without passing a health check."
+problem:
+  tr: Basılı kitaplardaki karekodlar kalıcıdır; içerik değişse bile yıllarca çalışmaya devam etmeleri gerekir. Yayınevinin aynı zamanda katalog, içerik yönetimi ve e-ticarete ihtiyacı var.
+  en: QR codes printed in books are permanent — they must keep working for years even as content changes. The publisher also needs a catalog, CMS and e-commerce.
+solution:
+  tr: Silinmeyen opak kimliklerle çalışan bir QR çözümleyici, sürümlenen içerik (yeniden bağlama ve geri alma), web ve admin olarak iki Next.js uygulaması ile ortak bir domain çekirdeği. Push'ta otomatik, sağlık kontrollü dağıtım.
+  en: A QR resolver built on never-deleted opaque IDs, versioned content with rebind and rollback, and two Next.js apps (web + admin) sharing a domain core. Health-gated auto-deploys on push.
+highlights:
+  - tr: 11 içerik türü — video, sesli kitap, e-kitap, quiz, yapboz, kart, optik form ve daha fazlası
+    en: 11 content types — video, audiobook, e-book, quiz, puzzle, flashcards, optical forms and more
+  - tr: Kameradan okunan ve puanlanan optik formlar (SVG/PDF üretimi)
+    en: Optical answer forms generated as SVG/PDF, read from the camera and scored
+  - tr: Kısa ömürlü HMAC imzalı medya bağlantıları; kişisel veri tutmayan tarama analitiği
+    en: Short-lived HMAC-signed media URLs; scan analytics that store no personal data
+  - tr: PayTR ödeme, kaçan bildirimleri kapatan mutabakat taraması, rol bazlı fiyat ve bayi onay akışı
+    en: PayTR payments with a reconciliation sweep for missed callbacks, role-based pricing and dealer approval flow
+parts:
+  - name: egecocuk.com.tr
+    kind: web
+    note:
+      tr: Katalog, mağaza ve karekod içerik
+      en: Catalog, shop and QR content
+    detail:
+      tr: "Next.js ile geliştirilen okuyucu ve müşteri sitesi: yayın kataloğu, sepet ve ödeme, sipariş takibi ve karekodla açılan 11 farklı içerik türü."
+      en: "The reader and customer site built with Next.js: the publication catalog, cart and checkout, order tracking and 11 kinds of QR-linked content."
+    url: https://egecocuk.com.tr
+  - name: Yönetim Paneli
+    kind: admin
+    note:
+      tr: İçerik, sipariş ve bayi yönetimi
+      en: Content, orders and dealers
+    detail:
+      tr: Yayınevi ekibinin içerik yüklediği, karekodları yönettiği, siparişleri ve bayi başvurularını onayladığı panel. Girişler iki adımlı doğrulama (TOTP) ile korunuyor.
+      en: Where the publisher's team uploads content, manages QR codes, and approves orders and dealer applications. Sign-ins are protected by two-factor authentication (TOTP).
+  - name: QR Çözümleyici
+    kind: service
+    note:
+      tr: Kalıcı opak karekod çözümleyici
+      en: Permanent opaque QR resolver
+    detail:
+      tr: Kitaptaki her karekodu doğru içeriğe yönlendiren servis. Kimlikler tahmin edilemez ve hiçbir zaman silinmez; tarama analitiği kişisel veri tutmadan yapılıyor.
+      en: Routes every QR code in a book to the right content. IDs are unguessable and never deleted, and scan analytics store no personal data.
+  - name: Domain Çekirdeği
+    kind: library
+    note:
+      tr: Ortak domain ve ödeme çekirdeği
+      en: Shared domain and commerce core
+    detail:
+      tr: İçerik, ticaret, optik form, quiz, medya ve kimlik modüllerini barındıran ortak paket; site ve panel aynı kurallarla çalışıyor.
+      en: The shared package holding content, commerce, optical forms, quizzes, media and identity, so the site and the panel follow the same rules.
+  - name: UI Kit
+    kind: library
+    note:
+      tr: Token tabanlı ortak bileşenler
+      en: Token-based shared components
+    detail:
+      tr: Tasarım token'larından beslenen ve tasarım kurallarına uyumu otomatik denetlenen ortak bileşen kütüphanesi.
+      en: A shared component library fed by design tokens, with automatic checks that it follows the design rules.
+  - name: Operasyon Betikleri
+    kind: service
+    note:
+      tr: Migration, PayTR mutabakatı, saklama
+      en: Migrations, PayTR sweep, retention
+    detail:
+      tr: Veritabanı migration'larını, kaçan ödeme bildirimlerini kapatan PayTR mutabakat taramasını ve veri saklama sürelerini yöneten zamanlanmış işler.
+      en: Scheduled jobs for database migrations, the PayTR reconciliation sweep that catches missed payment callbacks, and data retention.
+features: [pnpm Monorepo, Next.js App Router, HMAC-signed URLs, Opaque permanent IDs, Transactional outbox, Health-gated deploys, TOTP 2FA, Rate limiting]
+stack: [Next.js, React 19, TypeScript, Tailwind CSS, PostgreSQL, Cloudflare R2, PayTR, Docker, Dokploy]
+impact:
+  - { value: "11", label: { tr: içerik türü, en: content types } }
+  - { value: "29", label: { tr: veritabanı tablosu, en: database tables } }
+  - { value: "6", label: { tr: kullanıcı rolü, en: user roles } }
+  - { value: "~21", label: { tr: yönetim paneli bölümü, en: admin sections } }
+architectureNotes:
+  - title:
+      tr: Silinmeyen opak kimlikler
+      en: Opaque IDs that never die
+    body:
+      tr: Karekodlar içeriğin kendisine değil, kalıcı bir kimliğe işaret ediyor. İçerik değişse de, taşınsa da kitaptaki kod çalışmaya devam ediyor.
+      en: QR codes point to a permanent ID, not to the content itself. Whatever happens to the content, the code in the book keeps working.
+  - title:
+      tr: Sürümlenen içerik
+      en: Versioned content
+    body:
+      tr: Her içerik değişikliği yeni bir sürüm olarak saklanıyor; karekod başka bir sürüme yeniden bağlanabiliyor ve hatalı bir yayın tek adımda geri alınabiliyor.
+      en: Every content change is stored as a new version; a QR code can be rebound to another version and a bad release rolled back in one step.
+  - title:
+      tr: İmzalı medya bağlantıları
+      en: Signed media links
+    body:
+      tr: Video ve ses dosyaları kısa ömürlü, HMAC ile imzalanmış bağlantılarla sunuluyor; içerik doğrudan kopyalanıp paylaşılamıyor.
+      en: Video and audio are served through short-lived, HMAC-signed links, so content can't simply be copied and shared.
+  - title:
+      tr: Güvenilir ödeme ve dağıtım
+      en: Reliable payments and deploys
+    body:
+      tr: Ödeme olayları transactional outbox ile işleniyor, kaçan bildirimler mutabakat taramasıyla yakalanıyor. Yeni sürüm, veritabanı erişimini doğrulayan sağlık kontrolünü geçmeden trafiğe açılmıyor.
+      en: Payment events go through a transactional outbox and missed callbacks are caught by a reconciliation sweep. A new release only takes traffic once a health check confirms database access.
+architecture:
+  nodes:
+    - { id: book, label: Kitap QR, layer: 0 }
+    - { id: web, label: Web, layer: 0 }
+    - { id: admin, label: Admin, layer: 0 }
+    - { id: resolver, label: QR Resolver, layer: 1, core: true }
+    - { id: lib, label: Domain Core, layer: 2, core: true }
+    - { id: pay, label: PayTR, layer: 2 }
+    - { id: pg, label: PostgreSQL, layer: 3 }
+    - { id: r2, label: R2 Media, layer: 3 }
+  edges: [[book, resolver], [web, lib], [admin, lib], [resolver, lib], [lib, pay], [lib, pg], [lib, r2]]

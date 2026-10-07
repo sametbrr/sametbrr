@@ -1,0 +1,48 @@
+slug: narboss
+tier: compact
+order: 3
+title: NarBoss
+client: NarPOS
+status: live
+period: { tr: 2024 – Günümüz, en: 2024 – Present }
+role: [architecture, development]
+tagline:
+  tr: Restoran sahipleri için çok şubeli, anlık rapor ve uzaktan onay uygulaması.
+  en: Multi-branch, real-time reporting and remote approval app for restaurant owners.
+problem:
+  tr: NarPOS kullanan işletme sahipleri şubelerindeki satışı, kasayı ve iptal/ikram işlemlerini sahada olmadan takip edemiyordu.
+  en: Restaurant owners on NarPOS couldn't follow sales, cash and void/gift actions across their branches without being on site.
+solution:
+  tr: POS terminallerinden gelen adisyon ve kasa verisini toplayan bir .NET API ile raporları, push bildirimlerini, uzaktan onayları ve merkezi fiyat yönetimini tek yerde sunan Angular + Capacitor mobil uygulama.
+  en: A .NET API that ingests tickets and cash data from POS terminals, and an Angular + Capacitor app that brings reports, push notifications, remote approvals and central pricing together.
+highlights:
+  - tr: Gün sonu, ürün, departman, personel, kurye ve şube karşılaştırması dahil 20 rapor ekranı
+    en: 20 report screens, including end of day, product, department, staff, courier and branch comparison
+  - tr: POS'tan gelen iptal, ikram ve adisyon iptali talepleri için push bildirimli uzaktan onay
+    en: Remote approval over push notifications for void, gift and ticket-cancel requests from the POS
+  - tr: Şubelere senkronlanan merkezi menü, porsiyon, KDV şablonu ve toplu fiyat yönetimi
+    en: Central menu, portion, VAT template and bulk price management synced to branches
+  - tr: POS veri alımında performans ve hata loglama altyapısı, rapor servisinin yeniden düzenlenmesi
+    en: Performance and error logging for POS ingest, and a refactor of the report service
+parts:
+  - { name: NarBoss Mobile, kind: mobile, note: { tr: "iOS ve Android uygulaması", en: "iOS and Android app" } }
+  - { name: NarBoss API, kind: api, note: { tr: "Rapor ve onay servisi", en: "Reporting and approval service" } }
+  - { name: POS Entegrasyonu, kind: service, note: { tr: "Terminallerden adisyon ve kasa verisi", en: "Ticket and cash data from terminals" } }
+  - { name: Zamanlanmış İşler, kind: service, note: { tr: "Rapor, yedek uyarısı ve temizlik", en: "Reports, backup alerts and cleanup" } }
+features: [Multi-branch, Push notifications, Remote approvals, Scheduled jobs, i18n (5 languages)]
+stack: [.NET 10, EF Core, SQL Server, Quartz.NET, Firebase Cloud Messaging, Angular, Capacitor]
+impact:
+  - { value: "20", label: { tr: mobil rapor ekranı, en: mobile report screens } }
+  - { value: "6", label: { tr: zamanlanmış arka plan işi, en: scheduled background jobs } }
+  - { value: "5", label: { tr: dil, en: languages } }
+architecture:
+  nodes:
+    - { id: mobile, label: NarBoss Mobile, layer: 0 }
+    - { id: pos, label: NarPOS Terminals, layer: 0 }
+    - { id: api, label: NarBoss API, layer: 1, core: true }
+    - { id: reports, label: Reports, layer: 2, core: true }
+    - { id: central, label: Central Pricing, layer: 2 }
+    - { id: approvals, label: Approvals, layer: 2 }
+    - { id: sql, label: SQL Server, layer: 3 }
+    - { id: fcm, label: FCM Push, layer: 3 }
+  edges: [[mobile, api], [pos, api], [api, reports], [api, central], [api, approvals], [reports, sql], [central, sql], [approvals, sql], [approvals, fcm]]

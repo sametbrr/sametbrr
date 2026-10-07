@@ -1,0 +1,98 @@
+slug: minimalblock
+tier: featured
+order: 1
+title: MinimalBlock
+client: Minimal Block
+url: https://minimalblock.com
+status: live
+period: { tr: "2021", en: "2021" }
+role: [architecture, development]
+tagline:
+  tr: Blockchain, metaverse ve yapay zeka üzerine, kendi CMS'iyle çalışan teknoloji yayını.
+  en: A tech publication on blockchain, the metaverse and AI, running on its own CMS.
+pitch:
+  tr: "Blockchain, metaverse ve yapay zekayı anlaşılır kılan teknoloji yayını. Kendi CMS'iyle çok dilli, çok yazarlı ve arama motorları için baştan tasarlandı."
+  en: "A tech publication that makes blockchain, the metaverse and AI make sense. Runs on its own CMS — multilingual, multi-author and built for search engines from day one."
+overview:
+  - tr: MinimalBlock, blockchain, metaverse ve yapay zeka gibi yeni teknolojileri herkesin anlayabileceği bir dille anlatan bir teknoloji yayınıdır. 2021'de kurucu ortaklarından biri olarak yer aldığım projede hedef, dağınık ve teknik bilgiyi düzenli bir dijital ansiklopediye dönüştürmekti.
+    en: MinimalBlock is a tech publication that explains emerging technologies such as blockchain, the metaverse and AI in language anyone can follow. I co-founded it in 2021, with the aim of turning scattered, technical knowledge into an organised digital encyclopedia.
+  - tr: Hazır blog araçları çok dilli, çok yazarlı ve arama motoru odaklı bir yayını yönetmek için yetersiz kaldığı için yayın platformu sıfırdan geliştirildi. Okuyucu sitesi, rol tabanlı bir içerik yönetim paneli ve JWT ile korunan bir REST API aynı servis ve veri katmanını paylaşıyor.
+    en: Off-the-shelf blog tools fell short for a multilingual, multi-author, search-driven publication, so the publishing platform was built from scratch. A reader site, a role-based content management panel and a JWT-protected REST API share the same service and data layer.
+  - tr: "Yazılar arama motorları için baştan tasarlandı: her yazıda yapılandırılmış veri, AMP görünümü ve dinamik site haritası bulunuyor. Görseller yüklenirken otomatik olarak WebP'ye dönüştürülüyor; içerik modeli birden çok dili ve birden çok siteyi destekliyor."
+    en: "Posts were designed for search engines from the start: each carries structured data, an AMP view and a dynamic sitemap. Images are converted to WebP on upload, and the content model supports multiple languages and multiple sites."
+problem:
+  tr: Hazır blog araçlarıyla çok dilli, çok yazarlı ve SEO odaklı bir teknoloji yayınını yönetmek zordu.
+  en: Off-the-shelf blog tools made it hard to run a multilingual, multi-author, SEO-driven tech publication.
+solution:
+  tr: ASP.NET Core ile sıfırdan bir yayın platformu; ortak servis ve veri katmanını kullanan okuyucu sitesi, rol tabanlı yönetim paneli ve JWT ile korunan REST API.
+  en: A publishing platform built from scratch on ASP.NET Core — a reader site, a role-based admin panel and a JWT-protected REST API sharing one service and data layer.
+highlights:
+  - tr: Yazı, kategori, etiket, yazar, revizyon, bülten ve site haritası yönetimi sunan yönetim paneli
+    en: An admin panel for posts, categories, tags, authors, revisions, newsletters and sitemaps
+  - tr: Developer, Admin, CoAdmin, Editor ve User olmak üzere 5 yetki politikası
+    en: 5 authorization policies (Developer, Admin, CoAdmin, Editor, User)
+  - tr: Yazılarda BlogPosting ve BreadcrumbList JSON-LD işaretlemesi, AMP görünümü ve dinamik site haritası
+    en: BlogPosting and BreadcrumbList JSON-LD on posts, an AMP view and a dynamic sitemap
+  - tr: Yüklenen görsellerin otomatik WebP'ye dönüştürülmesi; çok dilli ve çok siteli içerik yapısı
+    en: Images converted to WebP on upload; a multilingual, multi-site content model
+parts:
+  - name: minimalblock.com
+    kind: site
+    note:
+      tr: Yazılar, AMP ve site haritası
+      en: Posts, AMP and sitemap
+    detail:
+      tr: Okuyucuların yazılara, kategorilere ve yazarlara ulaştığı site; her yazı yapılandırılmış veri ve AMP görünümüyle yayınlanıyor.
+      en: Where readers reach posts, categories and authors; every post ships with structured data and an AMP view.
+    url: https://minimalblock.com
+  - name: CMS Paneli
+    kind: admin
+    note:
+      tr: Rol tabanlı içerik yönetimi
+      en: Role-based content management
+    detail:
+      tr: Yazı, kategori, etiket, yazar, revizyon, bülten ve site haritası yönetimi. Developer, Admin, CoAdmin, Editor ve User olmak üzere beş yetki seviyesi var.
+      en: "Manages posts, categories, tags, authors, revisions, newsletters and sitemaps, with five permission levels: Developer, Admin, CoAdmin, Editor and User."
+  - name: REST API
+    kind: api
+    note:
+      tr: JWT korumalı, Swagger belgeli
+      en: JWT-protected, Swagger-documented
+    detail:
+      tr: İçeriği dış istemcilere açan, JWT ile korunan ve Swagger ile belgelenen API.
+      en: Exposes content to external clients, protected by JWT and documented with Swagger.
+features: [Custom CMS, RBAC, Multi-language, Multi-site, SEO (JSON-LD + AMP), WebP pipeline]
+stack: [ASP.NET Core, .NET 5, EF Core, SQL Server, Razor MVC, JWT, Swagger, MailKit]
+impact:
+  - { value: "65", label: { tr: veri varlığı, en: data entities } }
+  - { value: "60", label: { tr: MVC/API controller, en: MVC/API controllers } }
+  - { value: "5", label: { tr: yetki politikası, en: authorization policies } }
+architectureNotes:
+  - title:
+      tr: Ortak servis katmanı
+      en: A shared service layer
+    body:
+      tr: Site, panel ve API aynı servis ve veri katmanını kullanıyor; iş kuralları tek bir yerde tutuluyor.
+      en: The site, panel and API use the same service and data layer, keeping business rules in one place.
+  - title:
+      tr: Rol tabanlı yetki
+      en: Role-based authorization
+    body:
+      tr: Beş ayrı yetki politikası, kimin içerik yazabileceğini, onaylayabileceğini ve yönetebileceğini belirliyor.
+      en: Five authorization policies decide who can write, approve and administer content.
+  - title:
+      tr: Arama motoru için tasarım
+      en: Designed for search
+    body:
+      tr: Yapılandırılmış veri, AMP sayfaları, dinamik site haritası ve WebP görsellerle her yazı arama motorlarında hızlı ve zengin görünüyor.
+      en: Structured data, AMP pages, a dynamic sitemap and WebP images make every post fast and rich in search results.
+architecture:
+  nodes:
+    - { id: readers, label: Readers, layer: 0 }
+    - { id: editors, label: Editors, layer: 0 }
+    - { id: www, label: Public Site, layer: 1 }
+    - { id: admin, label: CMS Panel, layer: 1, core: true }
+    - { id: api, label: REST API, layer: 1 }
+    - { id: service, label: Service Layer, layer: 2, core: true }
+    - { id: db, label: SQL Server, layer: 3 }
+  edges: [[readers, www], [editors, admin], [www, service], [admin, service], [api, service], [service, db]]

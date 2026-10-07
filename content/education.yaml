@@ -1,0 +1,15 @@
+# Logo eklemek için dosyayı public/logos/ altına koyup ilgili satırdaki yorumu kaldır.
+- degree: { tr: Ön Lisans · Bilgisayar Programcılığı, en: Associate · Computer Programming }
+  school: İstanbul Üniversitesi
+  # logo: { src: /logos/istanbul-universitesi.svg, mode: color }
+  start: "2023-09"
+  end: "2027-07"
+  ongoing: true
+- degree: { tr: Lisans · Bilgisayar Mühendisliği, en: Bachelor's · Computer Engineering }
+  school: İstanbul Ticaret Üniversitesi
+  # logo: { src: /logos/istanbul-ticaret.svg, mode: color }
+  start: "2021-09"
+  end: "2023-07"
+- degree: { tr: Lise · Sayısal, en: High School · Science & Mathematics }
+  school: Sâmiha Ayverdi Anadolu Lisesi
+  # logo: { src: /logos/samiha-ayverdi.png, mode: color }

@@ -1,0 +1,50 @@
+slug: nargo
+tier: compact
+order: 4
+title: NarGO
+client: NarPOS
+status: live
+period: { tr: 2023 – Günümüz, en: 2023 – Present }
+role: [architecture, development]
+tagline:
+  tr: NarPOS paket siparişlerini kuryeye atayan, teslimatı uçtan uca izleten kurye uygulaması.
+  en: A courier app that dispatches NarPOS delivery orders and tracks them end to end.
+problem:
+  tr: Paket siparişin hangi kuryede olduğu, teslim edilip edilmediği ve kapıda nasıl tahsil edildiği POS dışında, elle takip ediliyordu.
+  en: Which courier had which order, whether it was delivered and how it was paid at the door were tracked by hand, outside the POS.
+solution:
+  tr: NarPOS'tan anahtar tabanlı entegrasyonla gelen siparişleri alan bir .NET API ve kuryenin siparişi alıp teslim ettiği, durum ve ödemeyi POS'a geri senkronlayan Ionic/Capacitor mobil uygulama.
+  en: A .NET API that receives NarPOS orders through key-based integration, and an Ionic/Capacitor app where couriers take and deliver orders, with status and payment synced back to the POS.
+highlights:
+  - tr: Fişteki QR kodu kamerayla okutup siparişi kuryeye anında atama
+    en: Assigning an order to a courier instantly by scanning the receipt QR code
+  - tr: "NarPOS ile çift yönlü senkron: sipariş kaydetme, değişiklik çekme, kapatma ve otomatik kabul"
+    en: "Two-way NarPOS sync: save, pull changes, close and auto-accept"
+  - tr: Kurye atandı / yolda / teslim edildi durumlarında şubeye özel şablonlarla SMS bildirimi
+    en: Customer SMS on courier assigned / on the way / delivered, with per-branch templates
+  - tr: Harita üzerinde sipariş konumları ve kuryenin gün sonu tahsilat raporu
+    en: Order locations on a map and an end-of-day courier collections report
+  - tr: Firma lisans süresi kontrolü ve uygulama içi sürüm/güncelleme yönetimi
+    en: Company licence checks and in-app version/update management
+parts:
+  - { name: NarGO Mobile, kind: mobile, note: { tr: "Kurye uygulaması (iOS, Android)", en: "Courier app (iOS, Android)" } }
+  - { name: NarGO API, kind: api, note: { tr: "Sipariş ve kurye akışı", en: "Order and courier flow" } }
+  - { name: POS Entegrasyonu, kind: service, note: { tr: "NarPOS ile çift yönlü senkron", en: "Two-way sync with NarPOS" } }
+  - { name: Yönetim, kind: admin, note: { tr: "Firma, lisans ve sürüm yönetimi", en: "Company, licence and version admin" } }
+features: [Two-way POS sync, QR scanning, SMS notifications, Map tracking, Licence management]
+stack: [.NET 6, EF Core, SQL Server, Angular, Ionic, Capacitor, Leaflet, NetGSM]
+impact:
+  - { value: "72", label: { tr: REST uç noktası, en: REST endpoints } }
+  - { value: "19", label: { tr: mobil ekran, en: mobile screens } }
+  - { value: "22", label: { tr: veritabanı tablosu, en: database tables } }
+architecture:
+  nodes:
+    - { id: app, label: NarGO Mobile, layer: 0 }
+    - { id: pos, label: NarPOS, layer: 0 }
+    - { id: api, label: NarGO API, layer: 1, core: true }
+    - { id: posint, label: POS Integration, layer: 1 }
+    - { id: tickets, label: Courier Flow, layer: 2, core: true }
+    - { id: tenancy, label: Company / Licence, layer: 2 }
+    - { id: sql, label: SQL Server, layer: 3 }
+    - { id: sms, label: NetGSM SMS, layer: 3 }
+  edges: [[app, api], [pos, posint], [posint, tickets], [api, tickets], [api, tenancy], [tickets, sql], [tenancy, sql], [tickets, sms]]

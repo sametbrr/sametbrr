@@ -1,0 +1,84 @@
+- role: { tr: Senior Full Stack Developer, en: Senior Full Stack Developer }
+  company: NarPOS Yazılım Tic. A.Ş.
+  logo: { src: /logos/narpos.svg, mode: mono }
+  location: { tr: İstanbul, en: Istanbul }
+  start: "2025-01"
+  end: null
+  tags: [Angular, React, .NET Web API, PostgreSQL, NX Monorepo, CI/CD, Graylog, MCP]
+  bullets:
+    - tags: [fullstack, backend]
+      text:
+        tr: SQL Server ve PostgreSQL üzerinde sorgu optimizasyonu ve sistem kaynak gereksinimlerini minimuma indiren performans iyileştirmeleri gerçekleştirdim.
+        en: Optimized queries on SQL Server and PostgreSQL and delivered performance work that cut system resource requirements to a minimum.
+    - tags: [fullstack, architecture]
+      text:
+        tr: NX Monorepo mimarisinde Angular, React, .NET Web API, Entity Framework ve Node.js bileşenlerini kapsayan uçtan uca projeler inşa ettim.
+        en: Built end-to-end products in an NX monorepo spanning Angular, React, .NET Web API, Entity Framework and Node.js.
+    - tags: [devops, backend]
+      text:
+        tr: Graylog ile merkezi loglama altyapısı kurarak dashboard ve alarm mekanizmaları oluşturdum; hata izleme ve operasyonel raporlamayı otomatikleştirdim.
+        en: Set up centralized logging with Graylog, with dashboards and alerting; automated error tracking and operational reporting.
+    - tags: [devops]
+      text:
+        tr: CI/CD pipeline'larını tasarlayıp işleterek sürüm güvenilirliğini artırdım.
+        en: Designed and ran CI/CD pipelines that made releases more reliable.
+    - tags: [ai]
+      text:
+        tr: Model Context Protocol (MCP) entegrasyonlarıyla AI destekli geliştirici araçları ve otomasyon iş akışları geliştirdim.
+        en: Built AI-assisted developer tooling and automation workflows with Model Context Protocol (MCP) integrations.
+- role: { tr: Chief Technology Officer, en: Chief Technology Officer }
+  company: NarPOS Yazılım Tic. A.Ş.
+  logo: { src: /logos/narpos.svg, mode: mono }
+  location: { tr: İstanbul, en: Istanbul }
+  start: "2024-10"
+  end: "2025-01"
+  tags: [Ekip Liderliği, Proje Yönetimi, Teknik Roadmap, Paydaş İletişimi]
+  bullets:
+    - tags: [pm]
+      text:
+        tr: Mühendislik ekibini yöneterek teknik yol haritasını, faz planlarını ve ölçeklendirme stratejilerini oluşturdum.
+        en: Led the engineering team and owned the technical roadmap, phase plans and scaling strategy.
+    - tags: [pm]
+      text:
+        tr: Paydaşlarla gereksinim toplantıları yürüterek iş ihtiyaçlarını teknik çözüme dönüştürdüm.
+        en: Ran requirements sessions with stakeholders and turned business needs into technical solutions.
+    - tags: [pm]
+      text:
+        tr: Sprint ilerleme raporlarını ve teknik dokümanları düzenli olarak yönetime sundum.
+        en: Reported sprint progress and technical documentation to management on a regular cadence.
+- role: { tr: Full Stack Developer, en: Full Stack Developer }
+  company: NarPOS Yazılım Tic. A.Ş.
+  logo: { src: /logos/narpos.svg, mode: mono }
+  location: { tr: İstanbul, en: Istanbul }
+  start: "2022-07"
+  end: "2024-10"
+  tags: [Angular, React Native, C# / ASP.NET, SQL Server, Agile/Scrum]
+  bullets:
+    - tags: [fullstack]
+      text:
+        tr: Şirketin web, mobil ve masaüstü uygulamalarını (Angular, React Native Expo, .NET WinForms) geliştirdim.
+        en: Developed the company's web, mobile and desktop apps (Angular, React Native Expo, .NET WinForms).
+    - tags: [backend]
+      text:
+        tr: C# / ASP.NET Web API katmanını tasarlayıp geliştirdim; SQL Server'da migration ve şema yönetimi yürüttüm.
+        en: Designed and built the C# / ASP.NET Web API layer; ran migrations and schema management on SQL Server.
+    - tags: [pm]
+      text:
+        tr: Scrum ve Agile metodolojileriyle sprint planlamasına aktif katılım sağladım.
+        en: Took an active part in sprint planning with Scrum and Agile.
+- role: { tr: Müşteri İlişkileri Uzmanı, en: Customer Relations Specialist }
+  company: NarPOS Yazılım Tic. A.Ş.
+  logo: { src: /logos/narpos.svg, mode: mono }
+  location: { tr: İstanbul, en: Istanbul }
+  start: "2021-10"
+  end: "2022-07"
+  tags: [SQL, Network & Donanım, Teknik Destek]
+  bullets:
+    - tags: [support]
+      text:
+        tr: Sahada ve çağrı merkezinde müşterilerin kurulum ve teknik destek ihtiyaçlarını analiz ederek çözüm ürettim.
+        en: Analyzed and solved customer installation and support needs on site and through the call center.
+    - tags: [support, backend]
+      text:
+        tr: SQL ile yoğun veritabanı yönetimi ve script çalışmaları yürüttüm.
+        en: Handled heavy database administration and scripting in SQL.

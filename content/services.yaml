@@ -1,0 +1,52 @@
+- id: ai
+  size: lg
+  accent: ghost
+  title:
+    tr: AI / LLM Entegrasyonu & MCP
+    en: AI / LLM Integration & MCP
+  summary:
+    tr: Mevcut sistemlerinizi — API'ler, monorepo'lar, iç dokümanlar — AI ajanlarının güvenle kullanabileceği hale getiriyorum.
+    en: I make your existing systems — APIs, monorepos, internal docs — safely usable by AI agents.
+  points:
+    - { tr: MCP server tasarımı ve geliştirme, en: MCP server design and development }
+    - { tr: Claude Code skill & plugin'leri ile iş akışı otomasyonu, en: Workflow automation with Claude Code skills & plugins }
+    - { tr: Üretim sistemlerine kontrollü ajan erişimi, en: Controlled agent access to production systems }
+- id: architecture
+  size: md
+  accent: ice
+  title:
+    tr: Mimari Tasarım & MVP'den Ölçeğe
+    en: Architecture & MVP to Scale
+  summary:
+    tr: Doğru sınırlarla başlayan, ilk günden ölçeğe hazır ürün mimarisi.
+    en: Product architecture with the right boundaries, ready to scale from day one.
+  points:
+    - { tr: Monorepo ve çoklu uygulama mimarisi, en: Monorepo and multi-app architecture }
+    - { tr: API ve veri modeli tasarımı, en: API and data model design }
+    - { tr: Offline-first ve çoklu kanal ürünler, en: Offline-first and multi-channel products }
+- id: delivery
+  size: md
+  accent: ghost
+  title:
+    tr: Teknik Proje Yönetimi & Danışmanlık
+    en: Technical Project Management & Consulting
+  summary:
+    tr: İş ihtiyacını teknik yol haritasına, yol haritasını teslimata çeviriyorum.
+    en: I turn business needs into a technical roadmap, and the roadmap into delivery.
+  points:
+    - { tr: Gereksinim analizi ve faz planlama, en: Requirements analysis and phase planning }
+    - { tr: Ekip liderliği ve sprint yönetimi, en: Team leadership and sprint management }
+    - { tr: Paydaş iletişimi ve raporlama, en: Stakeholder communication and reporting }
+- id: quality
+  size: wide
+  accent: ice
+  title:
+    tr: Kod Kalitesi, Güvenlik & Entegrasyonlar
+    en: Code Quality, Security & Integrations
+  summary:
+    tr: Sürdürülebilir kod, güvenilir sürüm hattı ve sorunsuz konuşan sistemler.
+    en: Maintainable code, a reliable release pipeline and systems that talk cleanly.
+  points:
+    - { tr: CI/CD ve sürüm güvenilirliği, en: CI/CD and release reliability }
+    - { tr: Merkezi loglama, izleme ve alarm, en: Centralized logging, monitoring and alerting }
+    - { tr: Üçüncü parti ve ödeme entegrasyonları, en: Third-party and payment integrations }

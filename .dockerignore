@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+.env*
+!.env.example
+cv
+cv-legacy
+*.tsbuildinfo
+next-env.d.ts
+Dockerfile
+.dockerignore

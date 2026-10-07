@@ -1,0 +1,89 @@
+slug: giyteks
+tier: featured
+title: Giy-Teks
+client: S.S. 280 Nolu GİY-TEKS Taşıyıcılar Kooperatifi
+url: https://giytekstasimacilik.com
+status: live
+period: { tr: "2024", en: "2024" }
+role: [architecture, development, product]
+tagline:
+  tr: Tekstilkent'teki bir nakliye kooperatifi için SEO öncelikli tek sayfalık site.
+  en: An SEO-first single-page site for a transport cooperative in Tekstilkent, Istanbul.
+pitch:
+  tr: "Tekstilkent'teki nakliye kooperatifini yerel aramalarda öne çıkaran, ziyaretçiyi saniyeler içinde WhatsApp teklifine taşıyan kurumsal site. Arka uç yok, build yok; sadece hız ve görünürlük."
+  en: "A company site that puts a Tekstilkent transport cooperative at the top of local searches and turns visitors into WhatsApp quote requests in seconds. No backend, no build — just speed and visibility."
+overview:
+  - tr: "Giy-Teks, İstanbul Tekstilkent ve Giyimkent bölgesinde hizmet veren S.S. 280 Nolu GİY-TEKS Taşıyıcılar Kooperatifi'nin kurumsal web sitesidir. Amaç net: bölgede nakliye arayan bir işletmenin kooperatifi arama motorunda ilk sırada bulması ve birkaç saniye içinde teklif isteyebilmesi."
+    en: "Giy-Teks is the company website of S.S. 280 GİY-TEKS Transport Cooperative, serving the Tekstilkent and Giyimkent districts of Istanbul. The goal is simple: a business looking for transport in the area should find the cooperative at the top of search results and request a quote within seconds."
+  - tr: Site, arama motoru görünürlüğü öncelikli olarak kurgulandı. İçerik, kooperatifin öncelikli 20 anahtar kelimesini doğal bir dağılımla taşıyor; arama motorlarına firmayı, hizmetleri, sık sorulan soruları ve teklif kataloğunu anlatan 16 farklı schema.org türüyle zengin yapılandırılmış veri sunuluyor.
+    en: The site was built search-first. Its copy carries the cooperative's 20 priority keywords in a natural spread, and rich structured data in 16 schema.org types describes the company, its services, FAQs and offer catalog to search engines.
+  - tr: "Teknik tarafta bilinçli olarak sade bir yol seçildi: build adımı olmayan, Tailwind tabanlı statik bir tek sayfa. Teklif formu arka uç gerektirmeden WhatsApp'a bağlanıyor, telefon, harita ve form etkileşimleri GA4 olaylarıyla ölçülüyor. Sonuç; hızlı açılan, bakımı kolay ve ölçülebilir bir kurumsal varlık."
+    en: "Technically, a deliberately lean path was chosen: a build-free static single page on Tailwind. The quote form hands off to WhatsApp without a backend, and phone, map and form interactions are measured with GA4 events. The result is a fast, easy-to-maintain and measurable company presence."
+problem:
+  tr: Tekstilkent ve Giyimkent'teki kooperatifin yerel nakliye aramalarında görünür olacağı ve hızlı teklif alabileceği bir web sitesi yoktu.
+  en: The cooperative had no website that ranked for local transport searches or brought in quote requests quickly.
+solution:
+  tr: Build adımı olmayan, Tailwind tabanlı statik bir tek sayfa; zengin JSON-LD, öncelikli anahtar kelimeleri hedefleyen içerik ve WhatsApp'a bağlı teklif formu. Dönüşümler GA4 olaylarıyla ölçülüyor.
+  en: A build-free static single page on Tailwind with rich JSON-LD, content aimed at priority keywords and a quote form that hands off to WhatsApp. Conversions are measured with GA4 events.
+highlights:
+  - tr: MovingCompany, FAQPage, OfferCatalog ve Service dahil 16 schema.org türüyle yapılandırılmış veri
+    en: Structured data with 16 schema.org types, including MovingCompany, FAQPage, OfferCatalog and Service
+  - tr: Arka uç gerektirmeyen, wa.me üzerinden çalışan WhatsApp teklif formu
+    en: A WhatsApp quote form via wa.me, with no backend
+  - tr: Teklif, telefon, WhatsApp, harita ve form için 5 özel GA4 olayı
+    en: 5 custom GA4 events for quote, phone, WhatsApp, map and form
+  - tr: WebP görseller, lazy loading, ön yüklenen hero görseli ve azaltılmış hareket desteği
+    en: WebP images, lazy loading, a preloaded hero image and reduced-motion support
+parts:
+  - name: giytekstasimacilik.com
+    kind: site
+    note:
+      tr: Tek sayfa, SEO öncelikli
+      en: Single page, SEO-first
+    detail:
+      tr: Hakkımızda, neden biz, hizmetler, filo, sık sorulan sorular ve iletişim bölümlerinden oluşan tek sayfalık site. Görseller WebP olarak, gecikmeli yükleniyor; hero görseli öncelikli yükleniyor.
+      en: A single page with about, why us, services, fleet, FAQ and contact sections. Images load lazily as WebP, with the hero image preloaded.
+    url: https://giytekstasimacilik.com
+  - name: WhatsApp Teklif Formu
+    kind: service
+    note:
+      tr: Arka uçsuz teklif akışı
+      en: Backend-free quote flow
+    detail:
+      tr: Ziyaretçinin doldurduğu form, hazır bir mesajla WhatsApp'a aktarılıyor; kooperatif teklif taleplerini doğrudan telefonundan yanıtlıyor.
+      en: The visitor's form is handed to WhatsApp as a prefilled message, so the cooperative answers quote requests straight from the phone.
+features: [SEO-first, Structured data (JSON-LD), Conversion tracking, No build step, Performance budget]
+stack: [HTML, Tailwind CSS, JavaScript, Schema.org, Google Analytics 4]
+impact:
+  - { value: "16", label: { tr: schema.org türü, en: schema.org types } }
+  - { value: "20", label: { tr: hedef anahtar kelime, en: target keywords } }
+  - { value: "5", label: { tr: GA4 dönüşüm olayı, en: GA4 conversion events } }
+architectureNotes:
+  - title:
+      tr: Build adımı yok
+      en: No build step
+    body:
+      tr: Site saf HTML, CSS ve JavaScript'ten oluşuyor; herhangi bir sunucuda ya da doğrudan dosya olarak açılabiliyor. Bakım için geliştirme ortamı gerekmiyor.
+      en: The site is plain HTML, CSS and JavaScript; it runs on any server or straight from disk. No development setup is needed to maintain it.
+  - title:
+      tr: Yapılandırılmış veri
+      en: Structured data
+    body:
+      tr: Firma, hizmetler, teklif kataloğu ve SSS, arama motorlarının doğrudan okuyabildiği JSON-LD ile tanımlanıyor.
+      en: The company, services, offer catalog and FAQ are described in JSON-LD that search engines read directly.
+  - title:
+      tr: Ölçülebilir dönüşüm
+      en: Measurable conversion
+    body:
+      tr: Teklif, telefon, WhatsApp, harita ve form etkileşimleri ayrı GA4 olayları olarak izleniyor; hangi kanalın iş getirdiği görülebiliyor.
+      en: Quote, phone, WhatsApp, map and form interactions are tracked as separate GA4 events, showing which channel brings in business.
+architecture:
+  nodes:
+    - { id: visitor, label: Visitors / Search, layer: 0 }
+    - { id: page, label: Single Page, layer: 1, core: true }
+    - { id: js, label: UI · Form · Tracking, layer: 2 }
+    - { id: seo, label: JSON-LD · Sitemap, layer: 2, core: true }
+    - { id: whatsapp, label: WhatsApp, layer: 3 }
+    - { id: ga4, label: GA4, layer: 3 }
+    - { id: maps, label: Google Maps, layer: 3 }
+  edges: [[visitor, page], [page, js], [page, seo], [js, whatsapp], [js, ga4], [page, maps]]

@@ -1,0 +1,51 @@
+slug: narcost
+tier: compact
+order: 1
+title: NarCost
+client: NarPOS
+url: https://cost.narpos.com.tr
+status: live
+period: { tr: 2025 – Günümüz, en: 2025 – Present }
+confidentiality: public
+role: [architecture, development, ai]
+tagline:
+  tr: POS satışlarını reçete ve stokla eşleyip gerçek maliyeti çıkaran envanter platformu.
+  en: An inventory platform that matches POS sales to recipes and stock to reveal true cost.
+problem:
+  tr: Restoran ve gıda işletmeleri stok, reçete, üretim, tedarikçi siparişi ve faturayı ayrı yerlerde tutunca maliyet ve kârlılık görünmez hale geliyor.
+  en: When stock, recipes, production, supplier orders and invoices live in separate places, cost and profitability become invisible.
+solution:
+  tr: Şube ve depo bazlı yetkili çok kiracılı bir .NET API, Angular arayüz; POS satışları eşleştirme ve mutabakat ile içeri alınır, e-fatura ve muhasebe sistemleriyle senkron çalışır. Ağır işler RabbitMQ ve zamanlanmış işlerde.
+  en: A multi-tenant .NET API with branch/warehouse-scoped permissions and an Angular UI; POS sales come in with item matching and reconciliation, synced with e-invoice and accounting systems. Heavy work runs on RabbitMQ and scheduled jobs.
+highlights:
+  - tr: Reçete maliyetlendirme, üretim, kasap ve stok dönüşümü, sayım, min/max stok, kâr-zarar
+    en: Recipe costing, production, butcher and stock transformation, cycle counts, min/max stock, P&L
+  - tr: Veriban e-fatura, Paraşüt ve Logo entegrasyonları
+    en: Veriban e-invoice, Paraşüt and Logo integrations
+  - tr: Dead-letter ve retry kuyruklu, circuit breaker korumalı RabbitMQ tüketicileri
+    en: RabbitMQ consumers with dead-letter/retry queues and a circuit breaker
+  - tr: Claude ve DeepSeek arasında değiştirilebilir AI sağlayıcı katmanı
+    en: A pluggable AI provider layer switching between Claude and DeepSeek
+parts:
+  - { name: NarCost Web, kind: web, note: { tr: "Maliyet ve stok paneli", en: "Cost and inventory app" } }
+  - { name: Yönetim, kind: admin, note: { tr: "Şirket ve kullanıcı yönetimi", en: "Company and user admin" } }
+  - { name: NarCost API, kind: api, note: { tr: ".NET REST API", en: ".NET REST API" } }
+  - { name: Kuyruk Tüketicileri, kind: service, note: { tr: "RabbitMQ işlem tüketicileri", en: "RabbitMQ transaction consumers" } }
+  - { name: Zamanlanmış İşler, kind: service, note: { tr: "Fatura ve SLA işleri", en: "Invoice and SLA jobs" } }
+  - { name: Fatura Entegrasyonu, kind: library, note: { tr: "e-Fatura, Logo, Paraşüt", en: "e-Invoice, Logo, Paraşüt" } }
+features: [Multi-company, Message queue (RabbitMQ), Scheduled jobs (Quartz), Real-time (SignalR), Pluggable AI providers, Observability, e-Invoice integrations, i18n (TR/EN)]
+stack: [.NET, EF Core, SQL Server, RabbitMQ, SignalR, Angular, PrimeNG, Prometheus, Graylog]
+impact:
+  - { value: "78", label: { tr: API controller, en: API controllers } }
+  - { value: "45", label: { tr: domain modülü, en: domain modules } }
+  - { value: "128", label: { tr: veri varlığı, en: data entities } }
+architecture:
+  nodes:
+    - { id: web, label: Angular Web, layer: 0 }
+    - { id: pos, label: NarPOS Cloud, layer: 0 }
+    - { id: api, label: .NET API, layer: 1, core: true }
+    - { id: mq, label: RabbitMQ, layer: 2 }
+    - { id: jobs, label: Jobs, layer: 2 }
+    - { id: einv, label: E-Fatura, layer: 2 }
+    - { id: sql, label: SQL Server, layer: 3 }
+  edges: [[web, api], [pos, mq], [mq, api], [api, jobs], [jobs, einv], [api, sql]]
