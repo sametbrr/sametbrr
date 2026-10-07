@@ -3,7 +3,7 @@ tier: compact
 order: 2
 title: NarCloud
 client: NarPOS
-url: https://pos.narpos.com.tr
+url: https://pos.narpos.com.tr/login
 status: live
 period: { tr: 2024 – Günümüz, en: 2024 – Present }
 confidentiality: public

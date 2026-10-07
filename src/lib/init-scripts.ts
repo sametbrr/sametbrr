@@ -7,10 +7,10 @@ export const THEME_STORAGE_KEY = "theme";
 export const BOOT_SESSION_KEY = "booted";
 
 /**
- * Runs in <head> before first paint: stored choice, else the OS preference.
+ * Runs in <head> before first paint: the visitor's stored choice, else light (the OS preference is ignored).
  * Kept as a string so it can be inlined without a network request (no theme flash).
  */
-export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_STORAGE_KEY}");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="dark"}})();`;
+export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_STORAGE_KEY}");document.documentElement.dataset.theme=t==="dark"?"dark":"light"}catch(e){document.documentElement.dataset.theme="light"}})();`;
 
 /**
  * Runs in <head> before first paint: if the boot screen already ran this session, or the

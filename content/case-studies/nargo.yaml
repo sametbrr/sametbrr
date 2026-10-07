@@ -3,6 +3,7 @@ tier: compact
 order: 4
 title: NarGO
 client: NarPOS
+url: https://nargo.narpos.com.tr
 status: live
 period: { tr: 2023 – Günümüz, en: 2023 – Present }
 role: [architecture, development]

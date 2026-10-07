@@ -3,6 +3,7 @@ tier: compact
 order: 3
 title: NarBoss
 client: NarPOS
+url: https://boss.narpos.com.tr
 status: live
 period: { tr: 2024 – Günümüz, en: 2024 – Present }
 role: [architecture, development]

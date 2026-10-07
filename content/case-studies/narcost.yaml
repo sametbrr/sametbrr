@@ -3,7 +3,7 @@ tier: compact
 order: 1
 title: NarCost
 client: NarPOS
-url: https://cost.narpos.com.tr
+url: https://narcost.narpos.com.tr/login
 status: live
 period: { tr: 2025 – Günümüz, en: 2025 – Present }
 confidentiality: public

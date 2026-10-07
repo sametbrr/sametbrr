@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 import { THEME_STORAGE_KEY as STORAGE_KEY } from "@/lib/init-scripts";
 
 export type Theme = "dark" | "light";
@@ -21,18 +21,9 @@ export function useTheme(): Theme | null {
 /** Reads a design token from CSS so canvas colours follow the active theme. */
 export const cssToken = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
-/** Sun/moon toggle. Follows the OS until the user picks a theme explicitly. */
+/** Sun/moon toggle. The site opens in light until the user picks a theme explicitly. */
 export function ThemeToggle({ labels }: { labels: { light: string; dark: string } }) {
   const theme = useTheme();
-
-  useEffect(() => {
-    const mq = matchMedia("(prefers-color-scheme: light)");
-    const follow = () => {
-      if (!localStorage.getItem(STORAGE_KEY)) document.documentElement.dataset.theme = mq.matches ? "light" : "dark";
-    };
-    mq.addEventListener("change", follow);
-    return () => mq.removeEventListener("change", follow);
-  }, []);
 
   function toggle() {
     const next: Theme = readTheme() === "dark" ? "light" : "dark";

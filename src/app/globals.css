@@ -83,7 +83,7 @@
 }
 
 /* Light theme (DESIGN.md §2.1). Set by the inline script in the root layout
-   from localStorage or prefers-color-scheme before first paint. */
+   from localStorage (default light) before first paint. */
 html[data-theme="light"] {
   color-scheme: light;
   --color-void: #f6f6f2;

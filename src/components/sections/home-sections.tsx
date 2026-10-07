@@ -3,6 +3,7 @@ import { RollCounter } from "@/components/motion/slot";
 import { EffectText } from "@/components/motion/text-effects";
 import { Reveal } from "@/components/motion/reveal";
 import { WordReveal } from "@/components/motion/word-reveal";
+import { ClickableCard } from "@/components/sections/clickable-card";
 import { ProjectVisual } from "@/components/sections/project-visual";
 import { ContactForm } from "@/components/sections/contact-form";
 import { HorizontalWork } from "@/components/sections/horizontal-work";
@@ -282,8 +283,10 @@ function CaseCard({
 }) {
   const target = workTarget(study, locale);
   const types = productKinds(study).map((k) => dict.work.kinds[k]);
-  return (
-    <article className="work-card group flex w-full shrink-0 flex-col gap-5 rounded-xl border border-line bg-surface-1 p-6 hover:border-line-strong md:w-[min(78vw,620px)] md:p-8">
+  const cardClass =
+    "work-card group flex w-full shrink-0 flex-col gap-5 rounded-xl border border-line bg-surface-1 p-6 hover:border-line-strong md:w-[min(78vw,620px)] md:p-8";
+  const body = (
+    <>
       <div className="flex items-center justify-between font-mono text-xs text-fg-subtle">
         <div className="flex items-center gap-4">
           <span>/{pad(index + 1)}</span>
@@ -339,7 +342,14 @@ function CaseCard({
           </WorkLink>
         )}
       </div>
-    </article>
+    </>
+  );
+  // The whole card opens the project; the "Read case" link stays the accessible path to it.
+  if (!target) return <article className={cardClass}>{body}</article>;
+  return (
+    <ClickableCard href={target.href} external={target.external} slug={study.slug} className={cardClass}>
+      {body}
+    </ClickableCard>
   );
 }
 

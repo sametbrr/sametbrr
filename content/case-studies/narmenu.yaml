@@ -4,6 +4,7 @@ tier: compact
 order: 5
 title: NarMenu
 client: NarPOS
+url: https://qr.narpos.com.tr
 status: live
 period: { tr: 2023 – Günümüz, en: 2023 – Present }
 role: [architecture, development]
