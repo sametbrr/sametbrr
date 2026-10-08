@@ -1,8 +1,8 @@
 "use client";
 
-import { useInView, useReducedMotion } from "motion/react";
+import { useInView } from "motion/react";
 import { useEffect, useRef, useSyncExternalStore, type RefObject } from "react";
-import { armSound, isSoundOn, playSound, setSoundOn, subscribeSound, type SoundName } from "@/lib/sound";
+import { armSound, isSoundOn, playSound, playRevealSound, setSoundOn, subscribeSound, type SoundName } from "@/lib/sound";
 
 const useSoundOn = () => useSyncExternalStore(subscribeSound, isSoundOn, () => true);
 
@@ -10,8 +10,8 @@ const typing = (el: EventTarget | null) =>
   el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
 
 /**
- * Global wiring: arms the audio context, plays `data-sound` on click (only elements that opt in),
- * and toggles sound with the M key.
+ * Global wiring: arms audio, adds quiet pointer tones and click confirmations to
+ * interactive elements, and toggles sound with the M key.
  */
 export function SoundEffects() {
   useEffect(() => {
@@ -19,16 +19,26 @@ export function SoundEffects() {
     const onClick = (e: MouseEvent) => {
       const el = (e.target as Element | null)?.closest<HTMLElement>("[data-sound]");
       if (el) playSound(el.dataset.sound as SoundName);
+      else if ((e.target as Element | null)?.closest("a,button") && !(e.target as Element).closest(".boot-screen,[data-umami-event='sound-toggle']")) playSound("tap");
+    };
+    const onHover = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
+      const el = (e.target as Element | null)?.closest<HTMLElement>("a,button,[data-sound]");
+      if (!el || el.closest(".boot-screen") || el.matches(":disabled,[aria-disabled=true]")) return;
+      if (e.relatedTarget instanceof Node && el.contains(e.relatedTarget)) return;
+      if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) playSound("hover");
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key.toLowerCase() !== "m" || e.metaKey || e.ctrlKey || e.altKey || typing(e.target)) return;
       setSoundOn(!isSoundOn());
     };
     document.addEventListener("click", onClick, true);
+    document.addEventListener("pointerover", onHover, true);
     window.addEventListener("keydown", onKey);
     return () => {
       disarm();
       document.removeEventListener("click", onClick, true);
+      document.removeEventListener("pointerover", onHover, true);
       window.removeEventListener("keydown", onKey);
     };
   }, []);
@@ -36,21 +46,16 @@ export function SoundEffects() {
 }
 
 /**
- * Plays once when the element scrolls into view — but only if it started off-screen,
- * matching the reveal effects (text already visible on load stays silent).
+ * Plays on the first visible heading, independently of motion preference; never replays.
  */
 export function useRevealSound(ref: RefObject<Element | null>, name: SoundName, amount = 0.8) {
   const inView = useInView(ref, { once: true, amount });
-  const reduce = useReducedMotion();
-  const armed = useRef(false);
-
+  const consumed = useRef(false);
   useEffect(() => {
-    armed.current = !!ref.current && ref.current.getBoundingClientRect().top >= window.innerHeight;
-  }, [ref]);
-
-  useEffect(() => {
-    if (inView && armed.current && !reduce) playSound(name);
-  }, [inView, name, reduce]);
+    if (!inView || consumed.current) return;
+    consumed.current = true;
+    playRevealSound(name);
+  }, [inView, name]);
 }
 
 /** Speaker toggle with live EQ bars while sound is on. */

@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { slotText } from "slot-text";
 import { announceBooted } from "@/components/motion/slot";
-import { isSoundOn, isSoundUnlocked, playSound, setSoundOn } from "@/lib/sound";
+import { isSoundOn, muteSoundForSession, playSound, setSoundOn } from "@/lib/sound";
 import { BOOT_SESSION_KEY as SESSION_KEY } from "@/lib/init-scripts";
 import { track } from "@/lib/analytics";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 const DURATION = 2700;
 /** Nobody is trapped behind the sound question: without an answer the boot runs on, muted. */
@@ -30,77 +31,103 @@ export function BootScreen({ name, year, dict }: { name: string; year: number; d
   const [leaving, setLeaving] = useState(false);
   const [gone, setGone] = useState(false);
 
-  // Decide once on mount: skipped this session → done; sound wanted but still locked → ask.
-  useEffect(() => {
-    const root = document.documentElement;
-    if (root.dataset.booted) {
-      announceBooted();
-      return;
+  const reduce = useReducedMotion();
+  const bootRef = useRef<HTMLDivElement>(null);
+  const completed = useRef(false);
+  const previousOverflow = useRef("");
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const finishBoot = useCallback(() => {
+    if (completed.current) return;
+    completed.current = true;
+    timers.current.forEach(clearTimeout);
+    const moveFocus = bootRef.current?.contains(document.activeElement);
+    try { sessionStorage.setItem(SESSION_KEY, "1"); } catch {}
+    document.documentElement.style.overflow = previousOverflow.current;
+    setGone(true);
+    announceBooted();
+    if (moveFocus) {
+      const main = document.querySelector<HTMLElement>("main");
+      main?.setAttribute("tabindex", "-1");
+      main?.focus({ preventScroll: true });
     }
-    root.style.overflow = "hidden";
-    const id = requestAnimationFrame(() => setPhase(isSoundOn() && !isSoundUnlocked() ? "ask" : "run"));
-    return () => {
-      cancelAnimationFrame(id);
-      root.style.overflow = "";
-    };
   }, []);
 
   useEffect(() => {
-    if (phase !== "ask") return;
-    soundButtonRef.current?.focus();
-    const timer = setTimeout(() => setPhase("run"), ASK_TIMEOUT_MS);
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && choose(false);
-    window.addEventListener("keydown", onKey);
+    const root = document.documentElement;
+    const pendingTimers = timers.current;
+    previousOverflow.current = root.style.overflow;
+    if (root.dataset.booted) { announceBooted(); return; }
+    root.style.overflow = "hidden";
+    const id = setTimeout(() => setPhase(isSoundOn() ? "ask" : "run"), 0);
     return () => {
-      clearTimeout(timer);
-      window.removeEventListener("keydown", onKey);
+      clearTimeout(id);
+      pendingTimers.forEach(clearTimeout);
+      root.style.overflow = previousOverflow.current;
     };
-  }, [phase]);
+  }, []);
+
+  useEffect(() => { if (reduce) finishBoot(); }, [reduce, finishBoot]);
 
   useEffect(() => {
-    if (phase !== "run") return;
-    const root = document.documentElement;
+    if (phase !== "ask" || reduce) return;
+    soundButtonRef.current?.focus();
+    const timer = setTimeout(() => { muteSoundForSession(); setPhase("run"); }, ASK_TIMEOUT_MS);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { setSoundOn(false); setPhase("run"); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => { clearTimeout(timer); window.removeEventListener("keydown", onKey); };
+  }, [phase, reduce]);
+
+  useEffect(() => {
+    if (phase !== "run" || reduce || completed.current) return;
+    const pendingTimers = timers.current;
     const counter = counterRef.current ? slotText(counterRef.current, "000") : null;
     const start = performance.now();
-    // Mostly linear with a 25% ease-in-out blend: the percentage and the log lines advance with time
-    // (lines ~0.4–0.5s apart), and the counter still eases off at both ends.
     const eased = (now: number) => {
       const t = Math.min(1, (now - start) / DURATION);
       const inOut = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
       return 0.75 * t + 0.25 * inOut;
     };
     let shown = 0;
-    // The counter rolls on a fixed 140ms beat so every roll lands before the next one starts.
     const beat = setInterval(() => {
       const value = Math.round(eased(performance.now()) * 100);
-      if (value === shown) return;
+      if (value === shown || value >= 100) return;
       shown = value;
-      counter?.set(String(value).padStart(3, "0"), { stagger: 20, duration: 200 });
+      counter?.set(String(value).padStart(3, "0"), { stagger: 12, duration: 100 });
       playSound("tick", 1 + value / 125);
     }, 140);
+    let didComplete = false;
+    const complete = () => {
+      if (didComplete) return;
+      didComplete = true;
+      clearInterval(beat);
+      setProgress(1);
+      counter?.set("100", { stagger: 12, duration: 100 });
+      playSound("ting");
+      pendingTimers.push(setTimeout(() => {
+        setLeaving(true);
+        playSound("whoosh");
+        pendingTimers.push(setTimeout(finishBoot, 1050));
+      }, 380));
+    };
+    // Finish even when a background tab pauses animation frames.
+    pendingTimers.push(setTimeout(complete, DURATION));
     let frame = requestAnimationFrame(function tick(now) {
+      if (didComplete) return;
       const e = eased(now);
       setProgress(e);
       if (e < 1) frame = requestAnimationFrame(tick);
-      else {
-        clearInterval(beat);
-        counter?.set("100", { stagger: 20, duration: 200 });
-        playSound("ting");
-        setTimeout(() => {
-          sessionStorage.setItem(SESSION_KEY, "1");
-          root.style.overflow = "";
-          setLeaving(true);
-          playSound("whoosh");
-          announceBooted();
-        }, 380);
-      }
+      else complete();
     });
     return () => {
       cancelAnimationFrame(frame);
       clearInterval(beat);
+      pendingTimers.forEach(clearTimeout);
       counter?.destroy();
     };
-  }, [phase]);
+  }, [phase, reduce, finishBoot]);
 
   function choose(sound: boolean) {
     setSoundOn(sound);
@@ -116,8 +143,11 @@ export function BootScreen({ name, year, dict }: { name: string; year: number; d
 
   return (
     <div
+      ref={bootRef}
+      data-phase={phase ?? "pending"}
+      data-leaving={leaving}
       aria-hidden={!asking}
-      onTransitionEnd={(e) => e.target === e.currentTarget && leaving && setGone(true)}
+      onTransitionEnd={(e) => { if (e.target === e.currentTarget && ["transform", "translate"].includes(e.propertyName) && leaving) finishBoot(); }}
       className={`boot-screen fixed inset-0 z-[100] flex flex-col justify-between bg-void p-5 text-fg transition-transform duration-[900ms] ease-[var(--ease-in-out)] md:p-10 ${
         phase ? "is-live" : ""
       } ${leaving ? "-translate-y-full" : ""}`}

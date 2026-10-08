@@ -1,6 +1,8 @@
 "use client";
 
-import { useInView, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
+
+import { useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 const QUESTION = { tr: "\"Dün en çok satan 5 ürün?\"", en: "\"Top 5 products yesterday?\"" };

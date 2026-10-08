@@ -205,7 +205,7 @@ Bir AI ajanının MCP üzerinden araçları çağırmasını görselleştirir; k
 
 ## 8. Ses efektleri
 
-Kısa, kısık, tek ses ailesi (cam + dijital). Müzik ve uzun ses yok; her efekt ≤ ~350 ms.
+Kısa, belirgin dijital terminal tonları. Açılış ve onaylar orta seviyede; hover ve başlıklar daha düşük. Müzik veya uzun ses yok; her efekt ≤ 300 ms.
 Hepsi Web Audio ile kodda sentezlenir (`src/lib/sound.ts`), ses dosyası yok.
 
 - **Varsayılan açık**, tercih `localStorage.sound`'da. Nav'daki EQ düğmesi veya `M` tuşu açar/kapatır.
@@ -215,16 +215,17 @@ Hepsi Web Audio ile kodda sentezlenir (`src/lib/sound.ts`), ses dosyası yok.
   *"Bu deneyim sesli tasarlandı."* → **Sesli başlat** (odaklı; Enter) / **Sessiz devam** (Esc).
   Bu tıklama tarayıcının ses kilidini açar; sayaç ancak seçimden sonra döner ve sesli seçilirse en baştan duyulur.
   "Sessiz devam" kalıcıdır (sonraki oturumlarda sorulmaz, nav düğmesiyle geri açılır).
-  12 sn cevap gelmezse açılış sessiz devam eder ve tercih kaydedilmez. JS açılınca 5 sn'lik CSS yedeği devre dışı kalır.
-- Hover'da, sayfadaki odometre sayaçlarında ve harf başına ses **yok** (tik yalnızca açılış sayacında). Aynı ses 80 ms içinde tekrar çalmaz. Reduced-motion'da başlık sesleri susar.
+  6 sn cevap gelmezse açılış sessiz devam eder; sekme oturumuna geçici susturma yazılır, kalıcı tercih değiştirilmez. Ses düğmesinden yeniden açılabilir. JS açılınca 5 sn'lik CSS yedeği devre dışı kalır.
+- Mouse hover: hafif `hover` bipi (150 ms sınır); tıklama: ayrı `tap` onayı. Dokunmatik cihazlarda hover sesi yok. Sayfadaki odometreler ve harfler ayrı ayrı ses üretmez. Aynı ses en az 80 ms aralıkla çalar. Başlık grubu 250 ms aralıkla, başlık başına yalnız ilk görünüşte çalar; bekleyen ses kuyruğu yok. Ses tercihi hareket tercihinden bağımsızdır.
 
 | An | Ses |
 |---|---|
 | Açılış sayacı her artışta | `tick` — perdesi ilerlemeyle yükselir |
-| Açılış sayacı 100% | `ting` — cam tınısı |
-| Açılış paneli kalkar | `whoosh` |
+| Açılış sayacı 100% | `ting` — çift terminal onayı |
+| Açılış paneli kalkar | `whoosh` — kısa tonal geçiş |
 | Portrede tarama çizgisi başlar | `scan` — tonal "zip" |
-| Bölüm başlığı (decode / rise / type / flip / focus·blur / pop) | `decode` · `rise` · `type` · `flip` · `swell` · `pop` — başlık başına bir kez, yalnızca ekran dışından gelince |
+| Bölüm başlığı (decode / rise / type / flip / focus·blur / pop) | `decode` · `rise` · `type` · `flip` · `swell` · `pop` — başlık başına bir kez, aynı anda görünen başlıklar çakışmadan |
+| Link / düğme / proje kartı üzerine gelme | `hover` — düşük seviyede |
 | Nav linkleri, CTA'lar, form gönder | `tap` — tıklamada (`data-sound`) |
 | Tema / ses düğmesi | `toggle` |
 | E-posta kopyala, form başarılı | `success` |
@@ -243,3 +244,7 @@ Hepsi Web Audio ile kodda sentezlenir (`src/lib/sound.ts`), ses dosyası yok.
 - Lighthouse hedefi: performance ≥ 90 (mobil), accessibility ≥ 95.
 - İlk JS (3D chunk hariç) ≤ 170 KB gz. Cal.com embed'i yalnızca tıklamayla yüklenir.
 - Fontlar `next/font` ile self-host, `display: swap`.
+
+### 8.1 Onaylanan hareket davranışı (8 Ekim 2026)
+
+Sayaçlı açılış sekme oturumunda bir kez: 2700 ms sayaç, 380 ms bekleme, 900 ms çıkış. Boot tamamlandı olayı ancak çıkış bitince yayınlanır. Yatay sabitlenen projeler, teknik başlık efektleri ve kart dönüşleri korunur. Hareketi azalt tercihi açıkken sayaç ve 3D çalışmaz, projeler ızgara olur, başlıklar 160 ms solmayla okunur ve kart yüzleri dönüş yerine 160 ms solmayla değişir. Tercih değişiklikleri yeniden yükleme istemez.

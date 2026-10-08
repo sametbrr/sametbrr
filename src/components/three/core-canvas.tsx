@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { cssToken, useTheme } from "@/components/ui/theme";
 
 type Nav = Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
@@ -21,10 +22,11 @@ export function CoreCanvas({ children, scrollPull = false }: { children: React.R
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ready, setReady] = useState(false);
   const theme = useTheme();
+  const reduce = useReducedMotion();
 
   // Remounts on theme change so the scene picks up the new palette and blending.
   useEffect(() => {
-    if (!theme || !canRun3D()) return;
+    if (!theme || reduce || !canRun3D()) return;
     let cleanup: (() => void) | undefined;
     let cancelled = false;
 
@@ -46,7 +48,7 @@ export function CoreCanvas({ children, scrollPull = false }: { children: React.R
         } catch {
           // No WebGL or a software renderer: the poster stays.
         }
-      });
+      }).catch(() => { /* Static poster remains if the chunk fails. */ });
 
     const idle = window.requestIdleCallback
       ? window.requestIdleCallback(start, { timeout: 2500 })
@@ -59,16 +61,16 @@ export function CoreCanvas({ children, scrollPull = false }: { children: React.R
       cleanup?.();
       setReady(false);
     };
-  }, [theme, scrollPull]);
+  }, [theme, scrollPull, reduce]);
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
-      <div className={`absolute inset-0 transition-opacity duration-700 ${ready ? "opacity-0" : "opacity-100"}`}>
+      <div className={`absolute inset-0 transition-opacity duration-700 ${ready && !reduce ? "opacity-0" : "opacity-100"}`}>
         {children}
       </div>
       <canvas
         ref={canvasRef}
-        className={`absolute inset-0 size-full transition-opacity duration-[800ms] ${ready ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 size-full transition-opacity duration-[800ms] ${ready && !reduce ? "opacity-100" : "opacity-0"}`}
       />
     </div>
   );

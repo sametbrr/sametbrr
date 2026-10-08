@@ -11,7 +11,7 @@ export function Marquee({
   className?: string;
 }) {
   const row = (hidden: boolean) => (
-    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center">
+    <ul aria-hidden={hidden || undefined} className={`marquee-row flex shrink-0 items-center ${hidden ? "marquee-copy" : ""}`}>
       {items.map((item, i) => (
         <li key={i} className="flex items-center">
           <span className="px-6 md:px-10">{item}</span>
@@ -22,10 +22,10 @@ export function Marquee({
   );
 
   return (
-    <div className={`group mask-fade-x flex overflow-hidden ${className}`}>
+    <div className={`marquee-wrap group mask-fade-x flex overflow-hidden ${className}`}>
       <div
         style={{ "--marquee-duration": `${duration}s` } as React.CSSProperties}
-        className={`flex w-max ${reverse ? "animate-marquee-reverse" : "animate-marquee"} group-hover:[animation-play-state:paused]`}
+        className={`marquee-track flex w-max ${reverse ? "animate-marquee-reverse" : "animate-marquee"} group-hover:[animation-play-state:paused]`}
       >
         {row(false)}
         {row(true)}

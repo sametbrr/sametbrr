@@ -1,6 +1,8 @@
 "use client";
 
-import { useInView, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
+
+import { useInView } from "motion/react";
 import { useEffect, useRef } from "react";
 import { slotText } from "slot-text";
 
@@ -22,6 +24,7 @@ export function whenBooted(cb: () => void) {
   return () => window.removeEventListener(BOOT_EVENT, cb);
 }
 export const announceBooted = () => {
+  if (document.documentElement.dataset.booted) return;
   document.documentElement.dataset.booted = "1";
   window.dispatchEvent(new Event(BOOT_EVENT));
 };
@@ -60,7 +63,7 @@ export function RollReveal({ text, className }: { text: string; className?: stri
   }, [text, reduce]);
 
   useEffect(() => {
-    if (!inView || !slots.current.length) return;
+    if (reduce || !inView || !slots.current.length) return;
     let offset = 0;
     const timers = slots.current.map((sl, i) => {
       const word = words[i];
@@ -71,13 +74,13 @@ export function RollReveal({ text, className }: { text: string; className?: stri
     return () => timers.forEach(clearTimeout);
     // `words` derives from text.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView, text]);
+  }, [inView, text, reduce]);
 
   return (
     <span className={className}>
       <SrText text={text} />
-      <span ref={wrapRef} aria-hidden>
-        {words.map((w, i) => (
+      <span ref={wrapRef} aria-hidden key={reduce ? "static" : "roll"}>
+        {reduce ? text : words.map((w, i) => (
           <span key={i}>
             <span data-word={w}>{w}</span>
             {i < words.length - 1 ? " " : ""}
@@ -154,7 +157,7 @@ export function RollCounter({
   return (
     <span className={className}>
       <SrText text={display} />
-      <span ref={ref} aria-hidden className="tabular-nums">
+      <span ref={ref} aria-hidden key={reduce ? "static" : "roll"} className="tabular-nums">
         {display}
       </span>
     </span>
@@ -188,7 +191,7 @@ export function RollCycle({ items, interval = 2600, className }: { items: string
   return (
     <span className={className}>
       <SrText text={items.join(" · ")} />
-      <span ref={ref} aria-hidden>
+      <span ref={ref} aria-hidden key={reduce ? "static" : "roll"}>
         {items[0]}
       </span>
     </span>
@@ -220,7 +223,7 @@ export function RollLabel({ text, className }: { text: string; className?: strin
       <SrText text={text} />
       {/* The roll swaps its glyph nodes mid-press; with pointer events on them, mousedown and
           mouseup land on different nodes and the browser drops the click. */}
-      <span ref={ref} aria-hidden className="pointer-events-none">
+      <span ref={ref} aria-hidden key={reduce ? "static" : "roll"} className="pointer-events-none">
         {text}
       </span>
     </span>

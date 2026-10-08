@@ -1,6 +1,8 @@
 "use client";
 
-import { m, useMotionValue, useReducedMotion, useSpring } from "motion/react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
+
+import { m, useMotionValue, useSpring } from "motion/react";
 import Link from "next/link";
 import type { ComponentProps, PointerEvent } from "react";
 
@@ -17,7 +19,7 @@ export function MagneticLink({
   const y = useSpring(useMotionValue(0), { stiffness: 300, damping: 30 });
 
   function move(e: PointerEvent<HTMLSpanElement>) {
-    if (reduce) return;
+    if (reduce || e.pointerType !== "mouse") return;
     const r = e.currentTarget.getBoundingClientRect();
     x.set(((e.clientX - r.left) / r.width - 0.5) * 2 * PULL);
     y.set(((e.clientY - r.top) / r.height - 0.5) * 2 * PULL);
@@ -28,7 +30,7 @@ export function MagneticLink({
   }
 
   return (
-    <m.span style={{ x, y }} onPointerMove={move} onPointerLeave={reset} className="inline-flex">
+    <m.span style={reduce ? undefined : { x, y }} onPointerMove={move} onPointerLeave={reset} className="inline-flex">
       <Link className={`group ${className}`} {...rest}>
         {children}
       </Link>

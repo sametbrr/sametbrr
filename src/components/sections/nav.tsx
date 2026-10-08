@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { SoundToggle } from "@/components/ui/sound";
 import { ThemeToggle } from "@/components/ui/theme";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { RollLabel } from "@/components/motion/slot";
 
 type NavItem = { id: string; label: string };
@@ -38,6 +39,7 @@ export function Nav({
   menuLabels: { open: string; close: string };
 }) {
   const { scrollY } = useScroll();
+  const reduce = useReducedMotion();
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
@@ -96,7 +98,7 @@ export function Nav({
   return (
     <m.header
       initial={false}
-      animate={{ y: hidden && !menuOpen ? -96 : 0 }}
+      animate={{ y: !reduce && hidden && !menuOpen ? -96 : 0 }}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       className="fixed inset-x-0 top-0 z-50 px-3 pt-3"
     >

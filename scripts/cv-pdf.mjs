@@ -8,7 +8,7 @@
  * Needs a Chromium-based browser; set CHROME_PATH if it isn't in a standard location.
  */
 import { existsSync, mkdirSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { chromium } from "playwright-core";
 import { parse } from "yaml";
 
@@ -29,22 +29,49 @@ if (!executablePath) {
   process.exit(1);
 }
 
-const { handle } = parse(await readFile("content/profile.yaml", "utf8"));
+const { handle, private: privateFields } = parse(await readFile("content/profile.yaml", "utf8"));
 mkdirSync("public/cv", { recursive: true });
 
 const browser = await chromium.launch({ executablePath, headless: true });
 try {
+  const outputs = [];
   for (const [lang, path] of [["tr", "/cv"], ["en", "/en/cv"]]) {
     const context = await browser.newContext({ locale: lang === "tr" ? "tr-TR" : "en-US" });
     const page = await context.newPage();
     const res = await page.goto(`${BASE_URL}${path}`, { waitUntil: "networkidle" });
     if (!res?.ok()) throw new Error(`${path} returned ${res?.status()}`);
-    await page.evaluate(() => document.fonts.ready);
+    // pdf-only contact data never ships in the CV page's HTML.
+    await page.evaluate(async (phone) => {
+      if (phone.visibility === "pdf-only" && phone.value) {
+        const row = document.querySelector("[data-cv-phone]");
+        const link = document.createElement("a");
+        link.href = `tel:${phone.value.replace(/\s/g, "")}`;
+        link.textContent = phone.value;
+        row.append(link);
+        row.hidden = false;
+      }
+      await document.fonts.ready;
+      await Promise.all([...document.querySelectorAll(".cv-sheet img")].map((img) => img.decode()));
+    }, privateFields.phone);
     await page.emulateMedia({ media: "print" });
+    const fit = await page.evaluate(() => {
+      const sheet = document.querySelector(".cv-sheet");
+      const footer = sheet.querySelector(".cv-document-footer").getBoundingClientRect();
+      const height = sheet.getBoundingClientRect().height;
+      const contentBottom = Math.max(...[...sheet.querySelectorAll(".cv-section")].map((el) => el.getBoundingClientRect().bottom));
+      return { height, contentBottom, footerTop: footer.top };
+    });
+    if (fit.height > 1122.6 + 1 || fit.contentBottom > fit.footerTop - 4) {
+      throw new Error(`${path} exceeds the one-page CV layout: ${JSON.stringify(fit)}. Adjust content or spacing before exporting.`);
+    }
     const out = `public/cv/${handle}-cv-${lang}.pdf`;
-    await page.pdf({ path: out, format: "A4", printBackground: true, preferCSSPageSize: true });
-    console.log(`✓ ${out}`);
+    outputs.push({ out, buffer: await page.pdf({ format: "A4", printBackground: true, preferCSSPageSize: true }) });
     await context.close();
+  }
+  // Validate both languages before replacing either downloadable file.
+  for (const { out, buffer } of outputs) {
+    await writeFile(out, buffer);
+    console.log(`✓ ${out}`);
   }
 } finally {
   await browser.close();

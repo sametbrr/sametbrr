@@ -2,6 +2,7 @@
 
 import { m, useInView, type HTMLMotionProps } from "motion/react";
 import { useRef } from "react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
@@ -13,13 +14,14 @@ type RevealProps = HTMLMotionProps<"div"> & {
 
 /** One-shot entrance when 20% visible (DESIGN.md §5). */
 export function Reveal({ delay = 0, variant = "up", children, ...rest }: RevealProps) {
-  const from = variant === "scale" ? { opacity: 0, scale: 0.96 } : { opacity: 0, y: 24 };
+  const reduce = useReducedMotion();
+  const from = reduce ? { opacity: 0 } : variant === "scale" ? { opacity: 0, scale: 0.96 } : { opacity: 0, y: 24 };
   return (
     <m.div
       initial={from}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, delay, ease: EASE_OUT }}
+      transition={{ duration: reduce ? 0.16 : 0.7, delay: reduce ? 0 : delay, ease: EASE_OUT }}
       {...rest}
     >
       {children}
@@ -33,7 +35,9 @@ export function RiseWords({ text, className }: { text: string; className?: strin
   // counts as in view and would stay hidden forever.
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
+  const reduce = useReducedMotion();
   const words = text.split(" ");
+  if (reduce) return <m.span ref={ref} className={className} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.16 }}>{text}</m.span>;
   return (
     <span ref={ref} className={className} aria-label={text}>
       {words.map((word, i) => (

@@ -4,17 +4,20 @@ import { useState } from "react";
 import type { CaseStudy } from "@/lib/content/schema";
 import { ProjectLogo } from "@/components/ui/project-logo";
 import { ArchDiagram } from "./arch-diagram";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 export function ProjectVisual({ study, locale }: { study: CaseStudy; locale: "tr" | "en" }) {
   const [hovered, setHovered] = useState(false);
   const [pinned, setPinned] = useState(false);
-  const back = pinned || hovered;
+  const reduce = useReducedMotion();
+  const back = pinned || (!reduce && hovered);
   return (
     <div className="rounded-lg border border-line bg-void p-4">
       <div
         className="project-flip relative h-[15rem] [perspective:1200px]"
         data-back={back}
-        onPointerEnter={(event) => { if (event.pointerType === "mouse") setHovered(true); }}
+        data-reduced={reduce ? "true" : "false"}
+        onPointerEnter={(event) => { if (!reduce && event.pointerType === "mouse" && window.matchMedia("(hover: hover) and (pointer: fine)").matches) setHovered(true); }}
         onPointerLeave={() => setHovered(false)}
       >
         <div className="project-flip-inner absolute inset-0">
@@ -26,7 +29,7 @@ export function ProjectVisual({ study, locale }: { study: CaseStudy; locale: "tr
           </div>
         </div>
       </div>
-      <button type="button" aria-pressed={pinned} onClick={() => { setPinned(!back); setHovered(false); }} className="mx-auto mt-3 flex items-center gap-2 rounded-full border border-line-strong px-3 py-1.5 font-mono text-xs text-fg-muted transition-colors hover:border-ghost hover:text-ghost focus-visible:outline-2 focus-visible:outline-ghost">
+      <button type="button" aria-pressed={back} onClick={() => { setPinned(!back); setHovered(false); }} className="mx-auto mt-3 flex items-center gap-2 rounded-full border border-line-strong px-3 py-1.5 font-mono text-xs text-fg-muted transition-colors hover:border-ghost hover:text-ghost focus-visible:outline-2 focus-visible:outline-ghost">
         <span aria-hidden>↻</span>
         {locale === "tr" ? (back ? "Logoyu göster" : "Mimariyi göster") : (back ? "Show logo" : "Show architecture")}
       </button>

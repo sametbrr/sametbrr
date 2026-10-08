@@ -2,12 +2,15 @@
 
 import { m, useScroll, useTransform, type MotionValue } from "motion/react";
 import { useRef } from "react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 /** Manifesto: each word goes 0.15 → 1 opacity as the paragraph scrolls through (A1). */
 export function WordReveal({ text, className }: { text: string; className?: string }) {
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.45"] });
+  const reduce = useReducedMotion();
   const words = text.split(" ");
+  if (reduce) return <m.p ref={ref} className={className} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.16 }}>{text}</m.p>;
 
   return (
     <p ref={ref} className={className} aria-label={text}>

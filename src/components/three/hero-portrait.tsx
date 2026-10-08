@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { whenBooted } from "@/components/motion/slot";
 import { cssToken, useTheme } from "@/components/ui/theme";
 import { playSound } from "@/lib/sound";
@@ -27,9 +28,10 @@ export function HeroPortrait({ src, alt }: { src: string; alt: string }) {
   const revealedRef = useRef(false);
   const [mode, setMode] = useState<Mode>("pending");
   const theme = useTheme();
+  const reduce = useReducedMotion();
 
   useEffect(() => {
-    if (!theme) return;
+    if (!theme || reduce) return;
     let cleanup: (() => void) | undefined;
     let cancelled = false;
     const fallBack = () => {
@@ -50,7 +52,7 @@ export function HeroPortrait({ src, alt }: { src: string; alt: string }) {
     const mount = () =>
       scene!
         .then(({ mountPortraitScene }) =>
-          mountPortraitScene(canvasRef.current!, {
+          cancelled || !canvasRef.current ? () => {} : mountPortraitScene(canvasRef.current, {
             imageUrl: src,
             theme: {
               mode: theme,
@@ -84,7 +86,7 @@ export function HeroPortrait({ src, alt }: { src: string; alt: string }) {
       else clearTimeout(idle);
       cleanup?.();
     };
-  }, [theme, src]);
+  }, [theme, src, reduce]);
 
   return (
     <div className="relative aspect-[4/5] w-full">
@@ -101,7 +103,7 @@ export function HeroPortrait({ src, alt }: { src: string; alt: string }) {
         sizes="(min-width: 1024px) 560px, 90vw"
         // Same framing as the particle scene: square photo, full height, cropped at the sides.
         className={`hero-portrait-img absolute top-0 left-1/2 h-full [mask-image:linear-gradient(to_bottom,#000_86%,transparent)] w-auto max-w-none -translate-x-1/2 transition-opacity duration-700 ${
-          mode === "static" ? "opacity-100" : "opacity-0"
+          reduce || mode === "static" ? "opacity-100" : "opacity-0"
         }`}
       />
       <noscript>
@@ -110,7 +112,7 @@ export function HeroPortrait({ src, alt }: { src: string; alt: string }) {
       <canvas
         ref={canvasRef}
         aria-hidden
-        className={`absolute inset-0 size-full [mask-image:linear-gradient(to_bottom,#000_86%,transparent)] transition-opacity duration-500 ${mode === "live" ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 size-full [mask-image:linear-gradient(to_bottom,#000_86%,transparent)] transition-opacity duration-500 ${!reduce && mode === "live" ? "opacity-100" : "opacity-0"}`}
       />
       {/* Viewfinder corners framing the render */}
       <span aria-hidden className="pointer-events-none absolute inset-0">

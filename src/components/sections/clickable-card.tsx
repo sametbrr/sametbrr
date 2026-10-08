@@ -32,7 +32,7 @@ export function ClickableCard({
   }
 
   return (
-    <article onClick={open} className={`${className} cursor-pointer`}>
+    <article data-sound="tap" onClick={open} className={`${className} cursor-pointer`}>
       {children}
     </article>
   );

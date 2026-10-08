@@ -1,6 +1,8 @@
 "use client";
 
-import { m, useInView, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
+
+import { m, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { useRevealSound } from "@/components/ui/sound";
 import type { SoundName } from "@/lib/sound";
@@ -38,6 +40,8 @@ export function EffectText({ text, effect }: { text: string; effect: TextEffect 
 }
 
 function EffectBody({ text, effect }: { text: string; effect: TextEffect }) {
+  const reduce = useReducedMotion();
+  if (reduce) return <m.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.16 }}>{text}</m.span>;
   switch (effect) {
     case "decode":
       return <RollReveal text={text} />;

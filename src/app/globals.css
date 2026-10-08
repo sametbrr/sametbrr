@@ -281,7 +281,7 @@ html[data-theme="light"] {
   }
 }
 
-/* Boot screen (DESIGN.md §6 B1). Hidden before paint when skipped; never blocks more than 5s. */
+/* Boot: skipped before paint; the 5s failsafe only applies without hydrated JS. */
 html[data-booted] .boot-screen {
   display: none;
 }
@@ -379,7 +379,7 @@ html[data-theme="light"] {
 
 .project-flip-inner {
   transform-style: preserve-3d;
-  transition: transform 650ms var(--ease-out);
+  transition: transform 520ms var(--ease-out);
 }
 .project-flip[data-back="true"] .project-flip-inner { transform: rotateY(180deg); }
 .project-flip-face { position: absolute; inset: 0; backface-visibility: hidden; }
@@ -395,7 +395,7 @@ html[data-theme="light"] .project-logo-dark { display: none; }
 /* ── CV (/cv): always the light palette, so the PDF reads like the site in light mode ── */
 .cv-root {
   color-scheme: light;
-  --color-void: #ffffff;
+  --color-void: #f6f6f2;
   --color-surface-1: #ffffff;
   --color-surface-2: #f0f0ea;
   --color-surface-3: #e8e8e1;
@@ -409,18 +409,90 @@ html[data-theme="light"] .project-logo-dark { display: none; }
   --color-primary: #0f5c34;
   --color-primary-hover: #137a43;
   --color-on-primary: #f4fff7;
+  --cv-header-bg: #0e2a1b;
+  --cv-header-fg: #d7ffe0;
 }
 /* The CV is a document, not a page of the site: no boot screen, progress bar, footer or floating button. */
 html:has(.cv-root) :is(.boot-screen, .scroll-progress, .back-to-top, .site-footer) {
   display: none !important;
 }
-/* Page 1 is laid out edge to edge by the sheet itself; later pages need their own top and bottom margin. */
+.cv-viewport { overflow-x: auto; }
+.cv-sheet {
+  position: relative;
+  width: 595.276pt;
+  min-height: 841.89pt;
+  margin-inline: auto;
+  background: var(--color-void);
+  color: var(--color-fg-muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8.5pt;
+  line-height: 1.32;
+  box-shadow: 0 12px 40px rgb(0 0 0 / .12);
+}
+.cv-header {
+  display: flex;
+  align-items: center;
+  gap: 13pt;
+  height: 84pt;
+  padding: 14pt 30pt;
+  background: var(--cv-header-bg);
+  color: #fff;
+}
+.cv-portrait {
+  width: 56pt; height: 56pt; flex-shrink: 0;
+  overflow: hidden; border-radius: 50%;
+  border: 1.1pt solid var(--cv-header-fg);
+  background: var(--color-card-tint);
+}
+.cv-portrait img { width: 100%; height: 100%; object-fit: contain; }
+.cv-header h1 { font-size: 23pt; font-weight: 700; line-height: 1.2; margin-bottom: 5pt; }
+.cv-header p { color: var(--cv-header-fg); font-size: 9.1pt; line-height: 1.28; }
+.cv-columns { display: grid; grid-template-columns: 152pt 1fr; min-height: 757.89pt; }
+.cv-sidebar { padding: 15pt 12pt 24pt; background: #fff; border-right: .6pt solid #d9e0d9; }
+.cv-main { padding: 15pt 17pt 14pt; }
+.cv-section { margin-bottom: 12pt; break-inside: avoid; }
+.cv-section:last-child { margin-bottom: 0; }
+.cv-main .cv-section { margin-bottom: 10pt; }
+.cv-main .cv-section:last-child { margin-bottom: 0; }
+.cv-section h2 {
+  color: var(--color-primary); font-size: 7.2pt; font-weight: 700;
+  line-height: 1; text-transform: uppercase;
+  padding-bottom: 5pt; border-bottom: .9pt solid var(--color-primary); margin-bottom: 8pt;
+}
+.cv-sheet h3, .cv-sheet h4 { color: var(--color-fg); font-weight: 700; }
+.cv-sidebar h3 { font-size: 7.9pt; }
+.cv-contacts { font-size: 7.8pt; color: var(--color-fg); }
+.cv-contacts li { position: relative; padding-left: 9pt; margin-bottom: 5pt; }
+.cv-contacts li::before { content: ""; position: absolute; left: 0; top: .45em; width: 3pt; height: 3pt; border-radius: 50%; background: var(--color-ghost); }
+.cv-contacts li[hidden] { display: none; }
+.cv-chips { display: flex; flex-wrap: wrap; gap: 3pt; }
+.cv-chips li { padding: 2pt 4.5pt; background: var(--color-card-tint); color: var(--color-primary); font-size: 6.9pt; font-weight: 700; line-height: 7.7pt; }
+.cv-skills > div { margin-bottom: 7pt; }
+.cv-skills h3 { margin-bottom: 4pt; }
+.cv-education > li { margin-bottom: 8pt; }
+.cv-education h3 { font-size: 7.7pt; margin-bottom: 2pt; }
+.cv-education .cv-accent { font-size: 7.4pt; margin-bottom: 2pt; }
+.cv-accent { color: var(--color-primary); }
+.cv-date { color: var(--color-fg-muted); font-size: 7.2pt; }
+.cv-packages > li { margin-bottom: 6pt; }
+.cv-packages h3 { font-size: 7.5pt; margin-bottom: 1pt; }
+.cv-packages p { font-size: 6.8pt; }
+.cv-company > h3 { font-size: 10pt; margin-bottom: 2pt; }
+.cv-company-meta { color: var(--color-primary); font-size: 7.6pt; font-weight: 700; margin-bottom: 9pt; }
+.cv-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8pt; }
+.cv-row .cv-date { flex-shrink: 0; }
+.cv-experience > li { margin-bottom: 6pt; }
+.cv-experience h4 { font-size: 9.1pt; margin-bottom: 3pt; }
+.cv-experience ul > li { margin-bottom: 1.3pt; }
+.cv-projects > li { margin-bottom: 8pt; }
+.cv-projects > li:last-child { margin-bottom: 0; }
+.cv-projects h3 { font-size: 8.9pt; margin-bottom: 2pt; }
+.cv-project-link { color: var(--color-primary); font-size: 6.7pt; font-weight: 700; flex-shrink: 0; }
+.cv-project-meta { color: var(--color-primary); font-size: 7pt; margin-bottom: 2pt; }
+.cv-document-footer { position: absolute; left: 169pt; bottom: 7pt; color: var(--color-primary); font-size: 6.8pt; }
 @page {
   size: A4;
-  margin: 12mm 0 12mm;
-}
-@page :first {
-  margin-top: 0;
+  margin: 0;
 }
 @media print {
   html:has(.cv-root),
@@ -429,5 +501,26 @@ html:has(.cv-root) :is(.boot-screen, .scroll-progress, .back-to-top, .site-foote
   }
   .cv-sheet {
     width: 210mm !important;
+    box-shadow: none;
   }
+  .cv-viewport { overflow: visible; }
+  .cv-root { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}
+
+/* Reduced motion retains only short opacity transitions and fully readable static content. */
+[data-reduced-work="true"] .work-card { width: 100%; min-width: 0; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  .marquee-wrap { display: block; overflow: visible; mask-image: none; }
+  .marquee-track { width: 100%; animation: none !important; transform: none !important; }
+  .marquee-row { width: 100%; flex-wrap: wrap; justify-content: center; gap: 1rem 0; }
+  .marquee-copy { display: none; }
+  .glow-card::before, .glow-card::after { display: none; }
+  .project-flip-inner { transform: none !important; transition: none; }
+  .project-flip-face { transform: none !important; transition: opacity 160ms ease-out !important; }
+  .project-flip-face:first-child { opacity: 1; }
+  .project-flip-back { opacity: 0; pointer-events: none; }
+  .project-flip[data-back="true"] .project-flip-face:first-child { opacity: 0; pointer-events: none; }
+  .project-flip[data-back="true"] .project-flip-back { opacity: 1; pointer-events: auto; }
+  .hero-portrait-img { transition: opacity 160ms ease-out !important; }
 }
