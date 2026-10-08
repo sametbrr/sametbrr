@@ -166,7 +166,7 @@ claude plugin install llm-wiki-manager@skill-hub
 
 ## 🛠 Tech Stack
 
-**AI & LLM Tooling:** MCP · Claude Code · Agent SDK · LLM Entegrasyonu  
+**AI & LLM Tooling:** MCP · Claude Code · Agent SDK · LLM Integration  
 **Frontend:** Angular · React · Next.js · React Native · TypeScript  
 **Backend:** C# / ASP.NET · .NET Web API · Entity Framework · Node.js · Python  
 **Databases:** SQL Server · PostgreSQL · Firebase · Supabase  
@@ -190,15 +190,9 @@ claude plugin install llm-wiki-manager@skill-hub
 ## 📈 Contribution Activity
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=sametbrr&theme=tokyo-night&hide_border=true&area=true" alt="Activity Graph" width="100%" />
+  <img src="https://streak-stats.demolab.com/?user=sametbrr&theme=tokyonight&hide_border=true" alt="GitHub Streak" />
 </p>
 
 ---
-
-## 💡 Philosophy
-
-> Automate the routine. Engineer the meaningful.
-
-I build systems that solve real business problems, hold up in the field, and let teams spend less effort to ship more.
 
 <sub>Generated from [`content/`](content) by `pnpm readme` — the same source as [sametbrr.com](https://sametbrr.com) and the CV.</sub>

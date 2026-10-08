@@ -41,7 +41,6 @@ const tagEnglish: Record<string, string> = {
   "Proje Yönetimi": "Project management",
   "Teknik Roadmap": "Technical roadmap",
   "Paydaş İletişimi": "Stakeholder communication",
-  "LLM Entegrasyonu": "LLM Integration",
 };
 const projectSlugs = ["egecocuk", "tezgahtar", "narpos", "ai-tooling"];
 const skillOrder = ["Frontend", "Backend", "Databases", "DevOps & Tooling", "AI & LLM Tooling"];

@@ -68,12 +68,12 @@ Rutini otomatikleştir. Anlamlı olanı mühendislikle inşa et.
 <tr>
 <td><a href="https://cofiner.com"><b>Cofiner</b></a><br><sub>2025</sub></td>
 <td>Excel tablolarına veda: hesaplar, kredi kartları, kişiler arası borçlar ve gelecek planları tek ekranda. Her kuruş çift girişli bir deftere işleniyor; rakamlar her zaman tutuyor, hiçbir kayıt kaybolmuyor.</td>
-<td>Mobil · Web · API · Website</td>
+<td>Mobil · Web · API · Web sitesi</td>
 </tr>
 <tr>
 <td><a href="https://tezgahtar.tr"><b>Tezgahtar</b></a><br><sub>2026</sub></td>
 <td>Kasiyerin düşünmeden, hatasız satış yaptığı yeni nesil perakende POS. Okut, öde, fiş — akış hiç takılmıyor; tarayıcıda, masaüstünde ve yazıcıda aynı hızla çalışıyor.</td>
-<td>API · Web · Masaüstü · Website</td>
+<td>API · Web · Masaüstü · Web sitesi</td>
 </tr>
 <tr>
 <td><a href="https://egecocuk.com.tr"><b>Ege Çocuk</b></a><br><sub>2025</sub></td>
@@ -88,7 +88,7 @@ Rutini otomatikleştir. Anlamlı olanı mühendislikle inşa et.
 <tr>
 <td><a href="https://giytekstasimacilik.com"><b>Giy-Teks</b></a><br><sub>2024</sub></td>
 <td>Tekstilkent'teki nakliye kooperatifini yerel aramalarda öne çıkaran, ziyaretçiyi saniyeler içinde WhatsApp teklifine taşıyan kurumsal site. Arka uç yok, build yok; sadece hız ve görünürlük.</td>
-<td>Website</td>
+<td>Web sitesi</td>
 </tr>
 <tr>
 <td><a href="https://narpos.com.tr"><b>NarPOS</b></a><br><sub>2021</sub></td>
@@ -98,7 +98,7 @@ Rutini otomatikleştir. Anlamlı olanı mühendislikle inşa et.
 <tr>
 <td><a href="https://minimalblock.com"><b>MinimalBlock</b></a><br><sub>2021</sub></td>
 <td>Blockchain, metaverse ve yapay zekayı anlaşılır kılan teknoloji yayını. Kendi CMS'iyle çok dilli, çok yazarlı ve arama motorları için baştan tasarlandı.</td>
-<td>Website · Yönetim · API</td>
+<td>Web sitesi · Yönetim · API</td>
 </tr>
 </tbody>
 </table>
@@ -166,7 +166,7 @@ claude plugin install llm-wiki-manager@skill-hub
 
 ## 🛠 Teknolojiler
 
-**AI & LLM Tooling:** MCP · Claude Code · Agent SDK · LLM Entegrasyonu  
+**AI & LLM Araçları:** MCP · Claude Code · Agent SDK · LLM Integration  
 **Frontend:** Angular · React · Next.js · React Native · TypeScript  
 **Backend:** C# / ASP.NET · .NET Web API · Entity Framework · Node.js · Python  
 **Veritabanı:** SQL Server · PostgreSQL · Firebase · Supabase  
@@ -177,12 +177,12 @@ claude plugin install llm-wiki-manager@skill-hub
 ## 📊 GitHub İstatistikleri
 
 <p align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=sametbrr&theme=tokyonight" width="100%" alt="Profile Details" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=sametbrr&theme=tokyonight" width="100%" alt="Profil Detayları" />
 </p>
 
 <p align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=sametbrr&theme=tokyonight" width="49%" alt="Repos Per Language" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=sametbrr&theme=tokyonight" width="49%" alt="Most Commit Language" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=sametbrr&theme=tokyonight" width="49%" alt="Dile Göre Repolar" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=sametbrr&theme=tokyonight" width="49%" alt="En Çok Commit Edilen Dil" />
 </p>
 
 ---
@@ -190,15 +190,9 @@ claude plugin install llm-wiki-manager@skill-hub
 ## 📈 Katkı Aktivitesi
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=sametbrr&theme=tokyo-night&hide_border=true&area=true" alt="Activity Graph" width="100%" />
+  <img src="https://streak-stats.demolab.com/?user=sametbrr&theme=tokyonight&hide_border=true" alt="GitHub Serisi" />
 </p>
 
 ---
-
-## 💡 Felsefe
-
-> Rutini otomatikleştir. Anlamlı olanı mühendislikle inşa et.
-
-İşletmelerin gerçek problemlerini çözen, sahada çalışan ve ekiplerin daha az uğraşıp daha çok teslim ettiği sistemler kuruyorum.
 
 <sub>Bu dosya [`content/`](content) klasöründen `pnpm readme` ile üretilir — [sametbrr.com](https://sametbrr.com) ve CV ile aynı kaynak.</sub>

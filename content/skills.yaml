@@ -1,5 +1,5 @@
-- name: { tr: AI & LLM Tooling, en: AI & LLM Tooling }
-  items: [MCP, Claude Code, Agent SDK, LLM Entegrasyonu]
+- name: { tr: AI & LLM Araçları, en: AI & LLM Tooling }
+  items: [MCP, Claude Code, Agent SDK, LLM Integration]
 - name: { tr: Frontend, en: Frontend }
   items: [Angular, React, Next.js, React Native, TypeScript]
 - name: { tr: Backend, en: Backend }
