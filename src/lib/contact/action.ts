@@ -3,6 +3,7 @@
 import { headers } from "next/headers";
 import { Resend } from "resend";
 import { z } from "zod";
+import { contactHtml, contactSubject, contactText, type ContactMail } from "./email";
 
 export type ContactState = {
   status: "idle" | "success" | "invalid" | "error";
@@ -33,9 +34,6 @@ function limited(ip: string) {
   return recent.length > LIMIT;
 }
 
-const escape = (s: string) =>
-  s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
-
 export async function sendContact(_prev: ContactState, form: FormData): Promise<ContactState> {
   // Honeypot: bots fill the hidden field; pretend success.
   if (form.get("website")) return { status: "success" };
@@ -59,17 +57,16 @@ export async function sendContact(_prev: ContactState, form: FormData): Promise<
     return { status: "error", values };
   }
 
-  const { name, email, company, message, locale } = parsed.data;
+  const mail: ContactMail = { ...parsed.data, page: h.get("referer"), sentAt: new Date() };
   const resend = new Resend(RESEND_API_KEY);
   const { error } = await resend.emails.send({
     from: CONTACT_FROM,
     to: CONTACT_TO,
-    replyTo: email,
-    subject: `sametbrr.com · ${name}${company ? ` (${company})` : ""}`,
-    text: `${message}\n\n— ${name} <${email}>${company ? ` · ${company}` : ""} · ${locale.toUpperCase()}`,
-    html: `<p style="white-space:pre-wrap">${escape(message)}</p><hr><p>${escape(name)} &lt;${escape(email)}&gt;${
-      company ? ` · ${escape(company)}` : ""
-    } · ${locale.toUpperCase()}</p>`,
+    replyTo: mail.email,
+    subject: contactSubject(mail),
+    text: contactText(mail),
+    html: contactHtml(mail),
+    tags: [{ name: "source", value: "contact-form" }],
   });
 
   if (error) {
