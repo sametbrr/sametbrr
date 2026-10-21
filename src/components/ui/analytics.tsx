@@ -8,7 +8,7 @@ import { track } from "@/lib/analytics";
  * Elements with `data-umami-event` are skipped — Umami's own tracker already sends those.
  *
  * - download        files                     { file }
- * - outbound-link   any other site            { host, url }
+ * - outbound-link   any other site            { host }
  *
  * Page and section changes need nothing here: Umami already records them as page views.
  */
@@ -21,7 +21,7 @@ export function AnalyticsClicks() {
       if (a.hasAttribute("download") || /\.(pdf|zip)$/i.test(url.pathname)) {
         track("download", { file: url.pathname.split("/").pop() ?? url.pathname });
       } else if (url.host !== location.host) {
-        track("outbound-link", { host: url.host.replace(/^www\./, ""), url: `${url.host}${url.pathname}` });
+        track("outbound-link", { host: url.host.replace(/^www\./, "") });
       }
     };
     document.addEventListener("click", onClick, true);

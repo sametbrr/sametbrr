@@ -59,22 +59,7 @@ const coarse = () => window.matchMedia("(pointer: coarse)").matches;
 /** Play time in coarse ranges, so Umami's property breakdown reads like a histogram. */
 const bucket = (s: number) => (s < 30 ? "<30s" : s < 60 ? "30s-1m" : s < 180 ? "1-3m" : s < 600 ? "3-10m" : "10m+");
 
-type Round = { seconds: number; live: boolean; attempt: number; input: "keyboard" | "touch" };
-
-/** Event properties shared by arcade-over and arcade-quit. */
-function roundData(game: GameSlug, round: Round, hud: Hud, score = hud.score) {
-  const duration = Math.round(round.seconds);
-  const data: Record<string, string | number> = {
-    game,
-    score,
-    duration,
-    bucket: bucket(duration),
-    attempt: round.attempt,
-    input: round.input,
-  };
-  if (hud.level !== undefined) data.level = hud.level;
-  return data;
-}
+type Round = { seconds: number; live: boolean };
 
 /** Swipe tuning in CSS pixels / milliseconds. */
 const SWIPE_STEP = 22;
@@ -97,10 +82,9 @@ export function ArcadePlayer({
   const screenRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Game | null>(null);
   const pausedRef = useRef(false);
-  /* Analytics for the current round: active play time (pauses excluded), last HUD, and
+  /* Analytics for the current round: active play time (pauses excluded) and
      whether the round is still open (so leaving mid-game is reported once as a quit). */
-  const playRef = useRef<Round>({ seconds: 0, live: false, attempt: 0, input: "keyboard" });
-  const hudRef = useRef<Hud>({ score: 0 });
+  const playRef = useRef<Round>({ seconds: 0, live: false });
   const touchRef = useRef<{ id: number; x0: number; y0: number; ax: number; ay: number; t0: number; moved: boolean } | null>(
     null,
   );
@@ -120,7 +104,7 @@ export function ArcadePlayer({
     const quit = () => {
       if (!playRef.current.live) return;
       playRef.current.live = false;
-      track("arcade-quit", roundData(slug, playRef.current, hudRef.current));
+      track("arcade-quit", { game: slug });
     };
     window.addEventListener("pagehide", quit);
     return () => {
@@ -138,10 +122,7 @@ export function ArcadePlayer({
     const game = FACTORIES[slug](
       {
         sfx,
-        hud: (h) => {
-          hudRef.current = h;
-          setHud(h);
-        },
+        hud: setHud,
         reduceMotion: reduce,
         end: ({ score }) => {
           const previous = readBest(slug);
@@ -155,7 +136,7 @@ export function ArcadePlayer({
           setRecord(isRecord);
           setStatus("over");
           playRef.current.live = false;
-          track("arcade-over", { ...roundData(slug, playRef.current, hudRef.current, score), record: isRecord });
+          track("arcade-over", { game: slug, score, bucket: bucket(Math.round(playRef.current.seconds)) });
         },
       },
       { demo, locale },
@@ -228,14 +209,12 @@ export function ArcadePlayer({
     resumeSound();
     sfx("start");
     setHud({ score: 0 });
-    hudRef.current = { score: 0 };
     setRecord(false);
     setRun((r) => r + 1);
     setStatus("playing");
     const touch = coarse();
-    const attempt = playRef.current.attempt + 1;
-    playRef.current = { seconds: 0, live: true, attempt, input: touch ? "touch" : "keyboard" };
-    track("arcade-start", { game: slug, attempt, input: playRef.current.input });
+    playRef.current = { seconds: 0, live: true };
+    track("arcade-start");
     if (touch && !immersive) enterImmersive();
     canvasRef.current?.focus({ preventScroll: true });
   }

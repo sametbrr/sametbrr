@@ -3,7 +3,6 @@
 import { AnimatePresence, m, useMotionValueEvent, useScroll, useSpring } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { playSound } from "@/lib/sound";
-import { track } from "@/lib/analytics";
 
 /** 1px Ghost Green scroll progress bar (G2). */
 export function ScrollProgress() {
@@ -80,7 +79,6 @@ export function CopyButton({ value, label, done }: { value: string; label: strin
     await navigator.clipboard.writeText(value);
     setCopied(true);
     playSound("success");
-    track("copy-email");
     clearTimeout(timer.current);
     timer.current = setTimeout(() => setCopied(false), 1800);
   }
