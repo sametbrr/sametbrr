@@ -2,13 +2,43 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { announceBooted } from "@/components/motion/slot";
-import { isSoundOn, muteSoundForSession, playSound, setSoundOn } from "@/lib/sound";
+import { isSoundOn, muteSoundForSession, scheduleSound, setSoundOn, whenSoundReady } from "@/lib/sound";
 import { BOOT_SESSION_KEY as SESSION_KEY } from "@/lib/init-scripts";
 import { track } from "@/lib/analytics";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 const DURATION = 1500;
 const EXIT_MS = 600;
+/** Fill curve: 75% linear + 25% ease-in-out, shared by the picture and the tick schedule. */
+const ease = (t: number) => 0.75 * t + 0.25 * (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+/** Time (ms) at which the fill reaches `value` (0–1); the curve is monotonic, so bisect it. */
+function timeAt(value: number) {
+  let lo = 0;
+  let hi = 1;
+  for (let i = 0; i < 24; i++) {
+    const mid = (lo + hi) / 2;
+    if (ease(mid) < value) lo = mid;
+    else hi = mid;
+  }
+  return hi * DURATION;
+}
+
+/**
+ * Where the glyph ink of "100%" sits inside its (tight, 0.8 line-height) box, as fractions from the top.
+ * Clipping the box linearly would fill empty leading first, so the fill would lag the ticks.
+ */
+function inkBounds(el: HTMLElement) {
+  const box = el.getBoundingClientRect().height;
+  const g = document.createElement("canvas").getContext("2d");
+  if (!g || !box) return { top: 0, bottom: 1 };
+  const cs = getComputedStyle(el);
+  g.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const m = g.measureText(el.textContent || "100%");
+  const baseline = (box - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2 + m.fontBoundingBoxAscent;
+  const top = (baseline - m.actualBoundingBoxAscent) / box;
+  const bottom = (baseline + m.actualBoundingBoxDescent) / box;
+  return top < bottom && top > -1 && bottom < 2 ? { top, bottom } : { top: 0, bottom: 1 };
+}
 /** Nobody is trapped behind the sound question: without an answer the boot runs on, muted. */
 const ASK_TIMEOUT_MS = 3000;
 
@@ -25,6 +55,7 @@ type Phase = "ask" | "run";
  */
 export function BootScreen({ name, year, dict }: { name: string; year: number; dict: BootDict }) {
   const soundButtonRef = useRef<HTMLButtonElement>(null);
+  const fillRef = useRef<HTMLSpanElement>(null);
   const [phase, setPhase] = useState<Phase | null>(null);
   const [progress, setProgress] = useState(0);
   const [leaving, setLeaving] = useState(false);
@@ -82,40 +113,50 @@ export function BootScreen({ name, year, dict }: { name: string; year: number; d
   useEffect(() => {
     if (phase !== "run" || reduce || completed.current) return;
     const pendingTimers = timers.current;
-    const start = performance.now();
-    const eased = (now: number) => {
-      const t = Math.min(1, (now - start) / DURATION);
-      const inOut = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-      return 0.75 * t + 0.25 * inOut;
-    };
-    // One tick per 10% step of the fill, rising in pitch.
-    let step = 0;
+    let cancelled = false;
+    let frame = 0;
     let didComplete = false;
+    const fill = fillRef.current;
+    const clip = (top: number) => {
+      if (fill) fill.style.clipPath = `inset(${(Math.min(1, Math.max(0, top)) * 100).toFixed(2)}% 0 0 0)`;
+    };
     const complete = () => {
       if (didComplete) return;
       didComplete = true;
+      clip(0);
       setProgress(1);
-      playSound("ting");
-      // No hold at 100%: the panel lifts right away.
+      // No hold at 100%: the panel lifts right away (ting + whoosh are already scheduled for this moment).
       setLeaving(true);
-      playSound("whoosh");
       pendingTimers.push(setTimeout(finishBoot, EXIT_MS + 150));
     };
-    // Finish even when a background tab pauses animation frames.
-    pendingTimers.push(setTimeout(complete, DURATION));
-    let frame = requestAnimationFrame(function tick(now) {
-      if (didComplete) return;
-      const e = eased(now);
-      setProgress(e);
-      const next = Math.floor(e * 10);
-      if (next > step && next < 10) {
-        step = next;
-        playSound("tick", 1 + next / 12.5);
-      }
-      if (e < 1) frame = requestAnimationFrame(tick);
-      else complete();
-    });
+
+    /*
+     * Sound leads, picture follows: once audio is running, every tick (one per 10% of the fill,
+     * rising in pitch), the ting and the whoosh are scheduled on the audio clock in one go, and
+     * the fill starts late by the output latency so each tick is heard as its step is drawn.
+     */
+    const begin = (latency: number) => {
+      if (cancelled) return;
+      const ink = fill ? inkBounds(fill) : { top: 0, bottom: 1 };
+      for (let k = 1; k < 10; k++) scheduleSound("tick", timeAt(k / 10) / 1000, 1 + k / 12.5);
+      scheduleSound("ting", DURATION / 1000);
+      scheduleSound("whoosh", DURATION / 1000 + 0.05);
+      const start = performance.now() + latency * 1000;
+      // Finish even when a background tab pauses animation frames.
+      pendingTimers.push(setTimeout(complete, DURATION + latency * 1000));
+      frame = requestAnimationFrame(function tick(now) {
+        if (didComplete) return;
+        const e = ease(Math.min(1, Math.max(0, (now - start) / DURATION)));
+        clip(ink.bottom - e * (ink.bottom - ink.top));
+        setProgress(e);
+        if (now - start < DURATION) frame = requestAnimationFrame(tick);
+        else complete();
+      });
+    };
+    // Wait (briefly) for the AudioContext the sound button just resumed, and for the font the ink is measured in.
+    void Promise.all([whenSoundReady(400), document.fonts?.ready]).then(([latency]) => begin(latency));
     return () => {
+      cancelled = true;
       cancelAnimationFrame(frame);
       pendingTimers.forEach(clearTimeout);
     };
@@ -214,10 +255,7 @@ export function BootScreen({ name, year, dict }: { name: string; year: number; d
           {/* Outlined "100%" with a solid copy clipped from the bottom up by the progress. */}
           <p className="relative text-[clamp(4.5rem,16vw,13rem)] leading-[0.8] font-semibold tracking-[-0.05em] tabular-nums">
             <span className="text-transparent [-webkit-text-stroke:1px_var(--color-line-strong)]">100%</span>
-            <span
-              className="absolute inset-0"
-              style={{ clipPath: `inset(${((1 - progress) * 100).toFixed(2)}% 0 0 0)` }}
-            >
+            <span ref={fillRef} className="absolute inset-0" style={{ clipPath: "inset(100% 0 0 0)" }}>
               100<span className="text-ghost">%</span>
             </span>
           </p>
