@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   // content/ is read with fs at build time; keep it in the traced output too.
   outputFileTracingIncludes: { "/**": ["./content/**/*"] },
   poweredByHeader: false,
+  // app/global-not-found.tsx: the root layout lives under [lang], so unmatched URLs need their own 404.
+  experimental: { globalNotFound: true },
 };
 
 export default nextConfig;

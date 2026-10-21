@@ -5,6 +5,7 @@ import { MotionProvider } from "@/components/motion/motion-provider";
 import { Footer } from "@/components/sections/footer";
 import { BackToTop, ScrollProgress } from "@/components/ui/client-bits";
 import { SoundEffects } from "@/components/ui/sound";
+import { KonamiCode } from "@/components/arcade/konami";
 import { AnalyticsClicks } from "@/components/ui/analytics";
 import { UMAMI } from "@/lib/analytics";
 import Script from "next/script";
@@ -74,6 +75,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         </a>
         <BootScreen name={profile.name} year={new Date().getFullYear()} dict={dict.boot} />
         <SoundEffects />
+        <KonamiCode target={href(lang, "/arcade/runner")} />
         <AnalyticsClicks />
         <Script
           src={UMAMI.src}

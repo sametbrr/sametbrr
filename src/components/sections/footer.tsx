@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { LocalClock } from "@/components/ui/client-bits";
-import type { Locale } from "@/i18n/config";
+import { href, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Profile } from "@/lib/content/schema";
 
@@ -10,10 +11,20 @@ export function Footer({ profile, dict, locale }: { profile: Profile; dict: Dict
         <p>
           © {new Date().getFullYear()} {profile.name}. {dict.footer.rights}
         </p>
-        <p className="flex items-center gap-2">
-          <span className="size-1.5 rounded-full bg-ghost" aria-hidden />
-          {dict.footer.local} · <LocalClock locale={locale} />
-        </p>
+        <div className="flex items-center gap-6">
+          <Link
+            href={href(locale, "/arcade")}
+            data-umami-event="arcade-open"
+            data-umami-event-from="footer"
+            className="transition-colors hover:text-ghost"
+          >
+            ▶ {dict.arcade.label.toLowerCase()}
+          </Link>
+          <p className="flex items-center gap-2">
+            <span className="size-1.5 rounded-full bg-ghost" aria-hidden />
+            {dict.footer.local} · <LocalClock locale={locale} />
+          </p>
+        </div>
       </div>
     </footer>
   );

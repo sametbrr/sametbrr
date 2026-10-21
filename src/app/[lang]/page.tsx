@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Hero } from "@/components/sections/hero";
 import {
   About,
+  ArcadeTeaser,
   Contact,
   ExperienceList,
   MarqueeBand,
@@ -79,6 +80,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Work cases={cases} dict={dict} locale={lang} />
         <Process dict={dict} />
         <OpenSource projects={oss} dict={dict} locale={lang} />
+        <ArcadeTeaser dict={dict} locale={lang} />
         <ExperienceList items={getExperience()} education={education} dict={dict} locale={lang} />
         <Contact profile={profile} dict={dict} locale={lang} />
       </main>
