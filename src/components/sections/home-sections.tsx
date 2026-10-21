@@ -3,6 +3,8 @@ import { RollCounter } from "@/components/motion/slot";
 import { EffectText } from "@/components/motion/text-effects";
 import { Reveal } from "@/components/motion/reveal";
 import { WordReveal } from "@/components/motion/word-reveal";
+import { GAMES } from "@/components/arcade/catalog";
+import { LazyArcadePreview } from "@/components/arcade/lazy";
 import { ClickableCard } from "@/components/sections/clickable-card";
 import { ProjectVisual } from "@/components/sections/project-visual";
 import { ContactForm } from "@/components/sections/contact-form";
@@ -456,6 +458,79 @@ export function OpenSource({ projects, dict, locale }: { projects: OssProject[];
         ))}
       </ul>
     </Section>
+  );
+}
+
+/* Arcade teaser: a self-playing cabinet that leads to /arcade (unnumbered break between sections) */
+export function ArcadeTeaser({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+  const a = dict.arcade;
+  return (
+    <section aria-labelledby="arcade-title" className="py-16 md:py-24">
+      <div className="container-site">
+        <div className="grid items-center gap-10 overflow-hidden rounded-xl border border-line bg-surface-1 p-6 md:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+          <div className="flex flex-col gap-6">
+            <p className="text-label flex items-center gap-3 text-fg-muted">
+              <span className="text-ghost">▶</span>
+              {a.label}
+            </p>
+            <h2 id="arcade-title" className="text-h2 text-balance">
+              <EffectText text={a.title} effect="decode" />
+            </h2>
+            <p className="max-w-md text-fg-muted">{a.text}</p>
+            <ul className="flex flex-wrap gap-2">
+              {GAMES.map((g) => (
+                <li key={g.slug}>
+                  <Link
+                    href={href(locale, `/arcade/${g.slug}`)}
+                    data-umami-event="arcade-open"
+                    data-umami-event-game={g.slug}
+                    data-umami-event-from="home"
+                    className="inline-flex items-center gap-2 rounded-full border border-line-strong px-3.5 py-2 font-mono text-xs transition-colors hover:border-ghost/60 hover:text-ghost"
+                  >
+                    {g.title[locale]}
+                    <span className="text-fg-subtle">· {g.genre[locale]}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href={href(locale, "/arcade")}
+              data-umami-event="arcade-open"
+              data-umami-event-from="home"
+              className="group inline-flex w-fit items-center gap-3 rounded-full bg-primary px-5 py-3 text-sm font-medium text-on-primary transition-colors hover:bg-primary-hover"
+            >
+              {a.enter}
+              <ArrowIcon className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+          <Link
+            href={href(locale, "/arcade/runner")}
+            aria-label={`${a.play}: ${GAMES[0].title[locale]}`}
+            data-umami-event="arcade-open"
+            data-umami-event-game="runner"
+            data-umami-event-from="home-screen"
+            className="group relative block overflow-hidden rounded-lg border border-line-strong bg-[#06120c] shadow-[0_0_80px_-24px_color-mix(in_srgb,var(--color-ghost)_45%,transparent)]"
+          >
+            <LazyArcadePreview slug="runner" locale={locale} />
+            <div aria-hidden className="crt-overlay pointer-events-none absolute inset-0" />
+            <span
+              aria-hidden
+              className="absolute inset-x-0 bottom-4 text-center font-mono text-xs tracking-[0.3em] text-[#ffd166] motion-safe:animate-[caret_1.2s_steps(1)_infinite] group-hover:animate-none"
+            >
+              {a.insertCoin}
+            </span>
+            <span
+              aria-hidden
+              className="absolute inset-0 grid place-items-center bg-[#020604]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+            >
+              <span className="rounded-full bg-[#d7ffe0] px-5 py-2.5 font-mono text-sm font-semibold text-[#050505]">
+                ▶ {a.play}
+              </span>
+            </span>
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }
 

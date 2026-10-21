@@ -71,7 +71,7 @@ export function armSound() {
   return () => events.forEach((event) => window.removeEventListener(event, unlock, true));
 }
 
-type Tone = { f0: number; f1?: number; at?: number; dur: number; gain: number; type?: OscillatorType };
+export type Tone = { f0: number; f1?: number; at?: number; dur: number; gain: number; type?: OscillatorType };
 function tone(c: AudioContext, { f0, f1 = f0, at = 0, dur, gain, type = "triangle" }: Tone) {
   const t = c.currentTime + at;
   const osc = c.createOscillator();
@@ -135,3 +135,17 @@ export function playRevealSound(name: SoundName) {
   lastReveal = now;
   return true;
 }
+
+/**
+ * Game voice: plays a chord/sequence of tones as-is (no throttling) through the same muted,
+ * limited output. Returns the audio clock so a sequencer can schedule ahead, or null when silent.
+ */
+export function playTones(tones: Tone[]) {
+  if (!ctx || ctx.state !== "running" || !isSoundOn()) return false;
+  tones.forEach((t) => tone(ctx!, t));
+  return true;
+}
+/** Current audio time while sound can play; null when locked or muted. */
+export const audioTime = () => (ctx && ctx.state === "running" && isSoundOn() ? ctx.currentTime : null);
+/** Called from a user gesture (Start button) so games can sound on the very first press. */
+export const resumeSound = () => void ensureContext()?.resume();

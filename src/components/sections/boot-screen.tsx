@@ -1,16 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { slotText } from "slot-text";
 import { announceBooted } from "@/components/motion/slot";
 import { isSoundOn, muteSoundForSession, playSound, setSoundOn } from "@/lib/sound";
 import { BOOT_SESSION_KEY as SESSION_KEY } from "@/lib/init-scripts";
 import { track } from "@/lib/analytics";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
-const DURATION = 2700;
+const DURATION = 1500;
+const EXIT_MS = 600;
 /** Nobody is trapped behind the sound question: without an answer the boot runs on, muted. */
-const ASK_TIMEOUT_MS = 6000;
+const ASK_TIMEOUT_MS = 3000;
 
 type BootDict = { title: string; label: string; logs: string[]; soundAsk: string; soundOn: string; soundOff: string };
 
@@ -18,13 +18,12 @@ type BootDict = { title: string; label: string; logs: string[]; soundAsk: string
 type Phase = "ask" | "run";
 
 /**
- * Full-screen "system booting" screen (DESIGN.md §6 B1, keremcan.net reference): a rolling
- * 000 → 100% counter, boot log lines and a progress rule, then the panel lifts away.
+ * Full-screen "system booting" screen (DESIGN.md §6 B1, keremcan.net reference): a large outlined
+ * "100%" fills from the bottom up, with boot log lines and a progress rule, then the panel lifts away.
  * Server-rendered so it is there on the first frame; the hero intro waits for `site:booted`.
  * The boot is the main sound moment, so it first asks for sound (DESIGN.md §8).
  */
 export function BootScreen({ name, year, dict }: { name: string; year: number; dict: BootDict }) {
-  const counterRef = useRef<HTMLSpanElement>(null);
   const soundButtonRef = useRef<HTMLButtonElement>(null);
   const [phase, setPhase] = useState<Phase | null>(null);
   const [progress, setProgress] = useState(0);
@@ -83,34 +82,24 @@ export function BootScreen({ name, year, dict }: { name: string; year: number; d
   useEffect(() => {
     if (phase !== "run" || reduce || completed.current) return;
     const pendingTimers = timers.current;
-    const counter = counterRef.current ? slotText(counterRef.current, "000") : null;
     const start = performance.now();
     const eased = (now: number) => {
       const t = Math.min(1, (now - start) / DURATION);
       const inOut = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
       return 0.75 * t + 0.25 * inOut;
     };
-    let shown = 0;
-    const beat = setInterval(() => {
-      const value = Math.round(eased(performance.now()) * 100);
-      if (value === shown || value >= 100) return;
-      shown = value;
-      counter?.set(String(value).padStart(3, "0"), { stagger: 12, duration: 100 });
-      playSound("tick", 1 + value / 125);
-    }, 140);
+    // One tick per 10% step of the fill, rising in pitch.
+    let step = 0;
     let didComplete = false;
     const complete = () => {
       if (didComplete) return;
       didComplete = true;
-      clearInterval(beat);
       setProgress(1);
-      counter?.set("100", { stagger: 12, duration: 100 });
       playSound("ting");
-      pendingTimers.push(setTimeout(() => {
-        setLeaving(true);
-        playSound("whoosh");
-        pendingTimers.push(setTimeout(finishBoot, 1050));
-      }, 380));
+      // No hold at 100%: the panel lifts right away.
+      setLeaving(true);
+      playSound("whoosh");
+      pendingTimers.push(setTimeout(finishBoot, EXIT_MS + 150));
     };
     // Finish even when a background tab pauses animation frames.
     pendingTimers.push(setTimeout(complete, DURATION));
@@ -118,14 +107,17 @@ export function BootScreen({ name, year, dict }: { name: string; year: number; d
       if (didComplete) return;
       const e = eased(now);
       setProgress(e);
+      const next = Math.floor(e * 10);
+      if (next > step && next < 10) {
+        step = next;
+        playSound("tick", 1 + next / 12.5);
+      }
       if (e < 1) frame = requestAnimationFrame(tick);
       else complete();
     });
     return () => {
       cancelAnimationFrame(frame);
-      clearInterval(beat);
       pendingTimers.forEach(clearTimeout);
-      counter?.destroy();
     };
   }, [phase, reduce, finishBoot]);
 
@@ -148,7 +140,7 @@ export function BootScreen({ name, year, dict }: { name: string; year: number; d
       data-leaving={leaving}
       aria-hidden={!asking}
       onTransitionEnd={(e) => { if (e.target === e.currentTarget && ["transform", "translate"].includes(e.propertyName) && leaving) finishBoot(); }}
-      className={`boot-screen fixed inset-0 z-[100] flex flex-col justify-between bg-void p-5 text-fg transition-transform duration-[900ms] ease-[var(--ease-in-out)] md:p-10 ${
+      className={`boot-screen fixed inset-0 z-[100] flex flex-col justify-between bg-void p-5 text-fg transition-transform duration-[600ms] ease-[var(--ease-in-out)] md:p-10 ${
         phase ? "is-live" : ""
       } ${leaving ? "-translate-y-full" : ""}`}
     >
@@ -219,9 +211,15 @@ export function BootScreen({ name, year, dict }: { name: string; year: number; d
             {dict.title}
             <span className="animate-caret ml-1 text-ghost">_</span>
           </p>
-          <p className="text-[clamp(4.5rem,16vw,13rem)] leading-[0.8] font-semibold tracking-[-0.05em] tabular-nums">
-            <span ref={counterRef}>000</span>
-            <span className="text-ghost">%</span>
+          {/* Outlined "100%" with a solid copy clipped from the bottom up by the progress. */}
+          <p className="relative text-[clamp(4.5rem,16vw,13rem)] leading-[0.8] font-semibold tracking-[-0.05em] tabular-nums">
+            <span className="text-transparent [-webkit-text-stroke:1px_var(--color-line-strong)]">100%</span>
+            <span
+              className="absolute inset-0"
+              style={{ clipPath: `inset(${((1 - progress) * 100).toFixed(2)}% 0 0 0)` }}
+            >
+              100<span className="text-ghost">%</span>
+            </span>
           </p>
         </div>
         <div className="h-px w-full bg-line">

@@ -132,7 +132,7 @@ Maviye geri dönmek için bu üç token'ı `--color-quantum*` ve beyaz metne çe
 | G1 | Tüm sayfa | Lenis yumuşak kaydırma (`lerp 0.1`) | — | — | Kapalı, native scroll |
 | G2 | Sayfa üstü | 1px Ghost Green kaydırma ilerleme çubuğu (`scaleX`) | Scroll | Anlık | Gizli |
 | G3 | Nav | Cam hap; 80px sonra belirir, aşağı kaydırınca gizlenir, yukarı kaydırınca gelir; aktif bölüm göstergesi kayar | Scroll | `fast` / `ease-out` | Sabit, göstergesiz |
-| B1 | Açılış ekranı | Tam ekran: `000 → 100%` yuvarlanan sayaç (140 ms ritim, %75 doğrusal + %25 ease-in-out), bölüm sırasıyla 5 satır boot log (profil → hizmetler → projeler → kariyer → hazır) (0–100% arasına eşit dağılır, `✓ sistem hazır` tam 100%'de), ilerleme çizgisi; ardından panel yukarı kalkar (900 ms) ve `site:booted` olayı yayınlanır | İlk ziyaret (oturum başına bir kez), ses seçiminden sonra | 2,7 sn + 0,4 sn bekleme + 0,9 sn | Hiç gösterilmez (`<head>` script'i boyamadan önce atlar); JS çalışmazsa CSS 5 sn sonra kaldırır |
+| B1 | Açılış ekranı | Tam ekran: büyük, ana hatlı `100%` alttan yukarı dolar (%75 doğrusal + %25 ease-in-out; her %10 adımda bir tik), bölüm sırasıyla 5 satır boot log (profil → hizmetler → projeler → kariyer → hazır) (0–100% arasına eşit dağılır, `✓ sistem hazır` tam 100%'de), ilerleme çizgisi; %100 olunca beklemeden panel yukarı kalkar (600 ms) ve `site:booted` olayı yayınlanır | İlk ziyaret (oturum başına bir kez), ses seçiminden sonra | 1,5 sn + 0,6 sn | Hiç gösterilmez (`<head>` script'i boyamadan önce atlar); JS çalışmazsa CSS 5 sn sonra kaldırır |
 | H2 | Hero — H1 | **İlk karede tam görünür (LCP).** Beyaz kısım: harf harf ilerleyen dalga (−0,09em kalkış + Ghost Green flaş, 22 ms/harf); gradyan kısım: üzerinden geçen ışık bandı + yavaş gradyan kayması. Hover'da dalga tekrar oynar | Açılış bitince · hover | 900 ms + 22 ms/harf · parlama 1,6 sn | Statik gradyan |
 | H3 | Hero — alt başlık + CTA | Fade-up (`y 24 → 0`) | Mount | `slow`, 120ms gecikme | Anında görünür |
 | H4 | Hero — durum çipi | "Yeni projelere açık" + yeşil ping noktası | Sürekli | 2s | Statik nokta |
@@ -215,7 +215,7 @@ Hepsi Web Audio ile kodda sentezlenir (`src/lib/sound.ts`), ses dosyası yok.
   *"Bu deneyim sesli tasarlandı."* → **Sesli başlat** (odaklı; Enter) / **Sessiz devam** (Esc).
   Bu tıklama tarayıcının ses kilidini açar; sayaç ancak seçimden sonra döner ve sesli seçilirse en baştan duyulur.
   "Sessiz devam" kalıcıdır (sonraki oturumlarda sorulmaz, nav düğmesiyle geri açılır).
-  6 sn cevap gelmezse açılış sessiz devam eder; sekme oturumuna geçici susturma yazılır, kalıcı tercih değiştirilmez. Ses düğmesinden yeniden açılabilir. JS açılınca 5 sn'lik CSS yedeği devre dışı kalır.
+  3 sn cevap gelmezse açılış sessiz devam eder; sekme oturumuna geçici susturma yazılır, kalıcı tercih değiştirilmez. Ses düğmesinden yeniden açılabilir. JS açılınca 5 sn'lik CSS yedeği devre dışı kalır.
 - Mouse hover: hafif `hover` bipi (150 ms sınır); tıklama: ayrı `tap` onayı. Dokunmatik cihazlarda hover sesi yok. Sayfadaki odometreler ve harfler ayrı ayrı ses üretmez. Aynı ses en az 80 ms aralıkla çalar. Başlık grubu 250 ms aralıkla, başlık başına yalnız ilk görünüşte çalar; bekleyen ses kuyruğu yok. Ses tercihi hareket tercihinden bağımsızdır.
 
 | An | Ses |
@@ -247,4 +247,4 @@ Hepsi Web Audio ile kodda sentezlenir (`src/lib/sound.ts`), ses dosyası yok.
 
 ### 8.1 Onaylanan hareket davranışı (8 Ekim 2026)
 
-Sayaçlı açılış sekme oturumunda bir kez: 2700 ms sayaç, 380 ms bekleme, 900 ms çıkış. Boot tamamlandı olayı ancak çıkış bitince yayınlanır. Yatay sabitlenen projeler, teknik başlık efektleri ve kart dönüşleri korunur. Hareketi azalt tercihi açıkken sayaç ve 3D çalışmaz, projeler ızgara olur, başlıklar 160 ms solmayla okunur ve kart yüzleri dönüş yerine 160 ms solmayla değişir. Tercih değişiklikleri yeniden yükleme istemez.
+Sayaçlı açılış sekme oturumunda bir kez: 1500 ms sayaç, beklemesiz 600 ms çıkış. Boot tamamlandı olayı ancak çıkış bitince yayınlanır. Yatay sabitlenen projeler, teknik başlık efektleri ve kart dönüşleri korunur. Hareketi azalt tercihi açıkken sayaç ve 3D çalışmaz, projeler ızgara olur, başlıklar 160 ms solmayla okunur ve kart yüzleri dönüş yerine 160 ms solmayla değişir. Tercih değişiklikleri yeniden yükleme istemez.
