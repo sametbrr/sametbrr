@@ -8,7 +8,8 @@ import { ThemeToggle } from "@/components/ui/theme";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { RollLabel } from "@/components/motion/slot";
 
-type NavItem = { id: string; label: string };
+/** Section anchors on the home page; an item with `href` is a separate page (the arcade). */
+type NavItem = { id: string; label: string; href?: string };
 
 /**
  * Glass pill nav (G3): appears after 80px, hides while scrolling down,
@@ -25,6 +26,7 @@ export function Nav({
   themeLabels,
   soundLabels,
   menuLabels,
+  current,
 }: {
   items: NavItem[];
   switchHref: string;
@@ -37,12 +39,14 @@ export function Nav({
   themeLabels: { light: string; dark: string };
   soundLabels: { on: string; off: string };
   menuLabels: { open: string; close: string };
+  /** Page item to mark active on sub-pages (e.g. "arcade"). */
+  current?: string;
 }) {
   const { scrollY } = useScroll();
   const reduce = useReducedMotion();
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
+  const [active, setActive] = useState<string | null>(current ?? null);
   const [indicator, setIndicator] = useState<{ x: number; width: number; opacity: number } | null>(null);
   const listRef = useRef<HTMLUListElement>(null);
   /** Hamburger menu below lg, where the section tabs don't fit. */
@@ -88,7 +92,8 @@ export function Nav({
       },
       { rootMargin: "-45% 0px -50% 0px" },
     );
-    for (const { id } of items) {
+    for (const { id, href } of items) {
+      if (href) continue;
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     }
@@ -150,17 +155,35 @@ export function Nav({
           />
           {items.map((item) => (
             <li key={item.id} data-id={item.id}>
-              <a
-                href={`${sectionBase}#${item.id}`}
-                onClick={sectionBase ? undefined : jump}
-                aria-current={active === item.id ? "true" : undefined}
-                data-sound="tap"
-                className={`relative z-10 block rounded-full px-2 py-1.5 text-sm whitespace-nowrap xl:px-3 transition-colors duration-200 ${
-                  active === item.id ? "text-fg" : "text-fg-muted hover:text-fg"
-                }`}
-              >
-                <RollLabel text={item.label} />
-              </a>
+              {item.href ? (
+                <Link
+                  href={item.href}
+                  aria-current={active === item.id ? "page" : undefined}
+                  data-sound="tap"
+                  data-umami-event="arcade-open"
+                  data-umami-event-from="nav"
+                  className={`relative z-10 flex items-center gap-1.5 rounded-full px-2 py-1.5 text-sm whitespace-nowrap xl:px-3 transition-colors duration-200 ${
+                    active === item.id ? "text-fg" : "text-fg-muted hover:text-fg"
+                  }`}
+                >
+                  <span aria-hidden className="text-[0.6rem] text-ghost">
+                    ▶
+                  </span>
+                  <RollLabel text={item.label} />
+                </Link>
+              ) : (
+                <a
+                  href={`${sectionBase}#${item.id}`}
+                  onClick={sectionBase ? undefined : jump}
+                  aria-current={active === item.id ? "true" : undefined}
+                  data-sound="tap"
+                  className={`relative z-10 block rounded-full px-2 py-1.5 text-sm whitespace-nowrap xl:px-3 transition-colors duration-200 ${
+                    active === item.id ? "text-fg" : "text-fg-muted hover:text-fg"
+                  }`}
+                >
+                  <RollLabel text={item.label} />
+                </a>
+              )}
             </li>
           ))}
         </ul>
@@ -178,13 +201,14 @@ export function Nav({
           >
             {switchTo}
           </Link>
+          {/* Hidden between lg and xl, where the section tabs need the room (Contact is a tab there). */}
           <a
             href={`${sectionBase}#contact`}
             onClick={sectionBase ? undefined : jump}
             data-sound="tap"
             data-umami-event="cta-start-project"
             data-umami-event-from="nav"
-            className="hidden rounded-full bg-primary px-4 py-2 text-sm font-medium whitespace-nowrap text-on-primary transition-colors duration-200 hover:bg-primary-hover sm:block"
+            className="hidden rounded-full bg-primary px-4 py-2 text-sm font-medium whitespace-nowrap text-on-primary transition-colors duration-200 hover:bg-primary-hover sm:block lg:hidden xl:block"
           >
             <RollLabel text={ctaLabel} />
           </a>
@@ -209,23 +233,42 @@ export function Nav({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: 0.03 * i, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <a
-                    href={`${sectionBase}#${item.id}`}
-                    onClick={() => {
-                      setMenuOpen(false);
-                      if (!sectionBase) jump();
-                    }}
-                    aria-current={active === item.id ? "true" : undefined}
-                    data-sound="tap"
-                    className={`flex items-center justify-between rounded-2xl px-4 py-3 text-lg transition-colors duration-200 hover:bg-fg/[0.06] ${
-                      active === item.id ? "bg-fg/[0.07] text-fg" : "text-fg-muted hover:text-fg"
-                    }`}
-                  >
-                    <RollLabel text={item.label} />
-                    <span aria-hidden className="font-mono text-xs text-fg-subtle">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                  </a>
+                  {item.href ? (
+                    <Link
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      aria-current={active === item.id ? "page" : undefined}
+                      data-sound="tap"
+                      data-umami-event="arcade-open"
+                      data-umami-event-from="menu"
+                      className={`flex items-center justify-between rounded-2xl px-4 py-3 text-lg transition-colors duration-200 hover:bg-fg/[0.06] ${
+                        active === item.id ? "bg-fg/[0.07] text-fg" : "text-fg-muted hover:text-fg"
+                      }`}
+                    >
+                      <RollLabel text={item.label} />
+                      <span aria-hidden className="font-mono text-xs text-ghost">
+                        ▶
+                      </span>
+                    </Link>
+                  ) : (
+                    <a
+                      href={`${sectionBase}#${item.id}`}
+                      onClick={() => {
+                        setMenuOpen(false);
+                        if (!sectionBase) jump();
+                      }}
+                      aria-current={active === item.id ? "true" : undefined}
+                      data-sound="tap"
+                      className={`flex items-center justify-between rounded-2xl px-4 py-3 text-lg transition-colors duration-200 hover:bg-fg/[0.06] ${
+                        active === item.id ? "bg-fg/[0.07] text-fg" : "text-fg-muted hover:text-fg"
+                      }`}
+                    >
+                      <RollLabel text={item.label} />
+                      <span aria-hidden className="font-mono text-xs text-fg-subtle">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </a>
+                  )}
                 </m.li>
               ))}
             </ul>

@@ -22,6 +22,7 @@ const LAYOUTS = [
   ["?2222222222?", "2..........2", "2.11?11?11.2", "2..........2", "222222222222"],
 ];
 const ROW_COLORS = [PAL.bug, PAL.coin, PAL.quantumLight, PAL.glint, PAL.ice];
+const CODES = ["404", "500", "ERR", "NAN", "NUL", "403", "502", "BUG", "418", "503", "401"];
 const ROW_DARK = [PAL.bugDark, PAL.coinDark, PAL.quantum, PAL.forest, "#7aa9bd"];
 
 const MUSIC: Track = {
@@ -67,8 +68,10 @@ export const createBreakout: GameFactory = (host, { demo, locale }) => {
 
   let bricksTotal = 0;
 
-  const pw = () => (wide > 0 ? 54 : 36);
-  const speed = () => Math.min(210, 130 + level * 12 + (bricksTotal - bricks.length) * 0.6);
+  // Difficulty ramps by level: a slow ball and a wide paddle on level 1, faster and narrower later.
+  const pw = () => Math.max(30, 44 - (level - 1) * 3) + (wide > 0 ? 18 : 0);
+  const speed = () =>
+    Math.min(175, 88 + (level - 1) * 10 + (bricksTotal ? (1 - bricks.length / bricksTotal) * 22 : 0));
 
   const report = () => !demo && host.hud({ score, lives, level, extra: `${text.bugs} ${bricks.length}` });
 
@@ -170,6 +173,8 @@ export const createBreakout: GameFactory = (host, { demo, locale }) => {
       clearT -= dt;
       if (clearT <= 0) {
         level++;
+        // Every cleared level is worth an extra life.
+        lives = Math.min(lives + 1, 9);
         loadLevel();
         if (!demo) music.start();
       }
@@ -265,10 +270,11 @@ export const createBreakout: GameFactory = (host, { demo, locale }) => {
       }
       if (br.power) drawText(g, "?", br.x + 8, br.y + 1, Math.floor(t * 4) % 2 ? PAL.white : PAL.black);
       else {
-        // Two little bug eyes
-        g.fillStyle = PAL.black;
-        g.fillRect(br.x + 6, br.y + 2, 1, 2);
-        g.fillRect(br.x + 11, br.y + 2, 1, 2);
+        // Each bug brick is labelled with an error code.
+        const code = CODES[(Math.round((br.x - LEFT) / BW) * 3 + br.row * 5) % CODES.length];
+        g.globalAlpha = hard ? 1 : 0.6;
+        drawText(g, code, br.x + 4, br.y + 1, hard ? ROW_COLORS[br.row] : PAL.black);
+        g.globalAlpha = 1;
       }
     }
 
@@ -298,7 +304,7 @@ export const createBreakout: GameFactory = (host, { demo, locale }) => {
     if (clearT > 0) {
       g.fillStyle = "rgb(2 6 4 / 0.6)";
       g.fillRect(0, 60, W, 22);
-      const sub = `${text.level} ${level + 1}`;
+      const sub = `${text.level} ${level + 1}  +1UP`;
       drawText(g, sub, Math.round(W / 2 - (sub.length * 4) / 2), 69, PAL.glint);
     }
   }

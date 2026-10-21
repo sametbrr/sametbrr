@@ -16,7 +16,13 @@ export type Sfx =
   | "wall"
   | "power"
   | "start"
-  | "pause";
+  | "pause"
+  | "flap"
+  | "shoot"
+  | "boom"
+  | "rotate"
+  | "lock"
+  | "line";
 
 const sq = (f0: number, dur: number, gain = 0.12, at = 0, f1?: number): Tone => ({ f0, f1, at, dur, gain, type: "square" });
 const tri = (f0: number, dur: number, gain = 0.2, at = 0, f1?: number): Tone => ({ f0, f1, at, dur, gain, type: "triangle" });
@@ -43,6 +49,12 @@ const SFX: Record<Sfx, (pitch: number) => Tone[]> = {
   power: () => [sq(392, 0.3, 0.09, 0, 1568), sq(523, 0.3, 0.05, 0.05, 2093)],
   start: () => [523, 784, 1047].map((f, i) => sq(f, 0.08, 0.1, i * 0.08)),
   pause: () => [sq(988, 0.05, 0.08), sq(740, 0.08, 0.08, 0.07)],
+  flap: () => [sq(520, 0.09, 0.08, 0, 820)],
+  shoot: () => [sq(1400, 0.07, 0.06, 0, 500)],
+  boom: (pitch) => [tri(180 * pitch, 0.16, 0.28, 0, 50), sq(300 * pitch, 0.08, 0.06, 0, 90)],
+  rotate: () => [sq(660, 0.035, 0.07)],
+  lock: () => [tri(140, 0.06, 0.25, 0, 90)],
+  line: (pitch) => [0, 4, 7, 12].map((n, i) => sq(523 * pitch * 2 ** (n / 12), 0.06, 0.08, i * 0.045)),
 };
 
 export function sfx(name: Sfx, pitch = 1) {
