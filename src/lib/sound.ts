@@ -11,6 +11,8 @@ let out: GainNode | null = null;
 let sessionMuted = false;
 let lastReveal = -Infinity;
 let lastInteraction = -Infinity;
+/** Extra delay applied by scheduleSound while a recipe builds its tones. */
+let offset = 0;
 
 export function isSoundOn() {
   try { return !sessionMuted && sessionStorage.getItem(SESSION_MUTE_KEY) !== "1" && localStorage.getItem(STORAGE_KEY) !== "off"; }
@@ -73,7 +75,7 @@ export function armSound() {
 
 export type Tone = { f0: number; f1?: number; at?: number; dur: number; gain: number; type?: OscillatorType };
 function tone(c: AudioContext, { f0, f1 = f0, at = 0, dur, gain, type = "triangle" }: Tone) {
-  const t = c.currentTime + at;
+  const t = c.currentTime + offset + at;
   const osc = c.createOscillator();
   const env = c.createGain();
   osc.type = type;
@@ -149,3 +151,30 @@ export function playTones(tones: Tone[]) {
 export const audioTime = () => (ctx && ctx.state === "running" && isSoundOn() ? ctx.currentTime : null);
 /** Called from a user gesture (Start button) so games can sound on the very first press. */
 export const resumeSound = () => void ensureContext()?.resume();
+
+/**
+ * Plays a sound `delay` seconds from now on the audio clock: sample-accurate and unthrottled,
+ * for sequences that must line up with an animation (the boot fill).
+ */
+export function scheduleSound(name: SoundName, delay: number, pitch = 1) {
+  if (!ctx || ctx.state !== "running" || !isSoundOn()) return false;
+  offset = Math.max(0, delay);
+  try { RECIPES[name](ctx, Math.min(2, Math.max(0.5, pitch))); } finally { offset = 0; }
+  return true;
+}
+/**
+ * Resolves once audio is running (or after timeoutMs) with the output latency in seconds,
+ * so a visual can start late by that much and land on the same frame the sound is heard.
+ */
+export function whenSoundReady(timeoutMs: number) {
+  const latency = () => (ctx ? (ctx.baseLatency || 0) + (ctx.outputLatency || 0) : 0);
+  if (!isSoundOn()) return Promise.resolve(0);
+  const c = ensureContext();
+  if (!c) return Promise.resolve(0);
+  if (c.state === "running") return Promise.resolve(latency());
+  return Promise.race([
+    c.resume().then(latency, () => 0),
+    new Promise<number>((resolve) => setTimeout(() => resolve(0), timeoutMs)),
+  ]);
+}
+

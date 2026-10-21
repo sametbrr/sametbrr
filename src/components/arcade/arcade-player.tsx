@@ -7,7 +7,7 @@ import { useReducedMotion } from "@/lib/use-reduced-motion";
 import type { GameSlug } from "./catalog";
 import { sfx } from "./engine/audio";
 import { Input, KEYMAP, runLoop, type Button, type Game, type Hud } from "./engine/core";
-import { FACTORIES, POINTER_GAMES } from "./factories";
+import { FACTORIES, TOUCH } from "./factories";
 
 type Status = "ready" | "playing" | "paused" | "over";
 
@@ -27,6 +27,7 @@ export type ArcadeLabels = {
   level: string;
   soundOff: string;
   fullscreen: string;
+  exitFullscreen: string;
 };
 
 /* High scores live in localStorage; a tiny external store keeps the HUD in sync. */
@@ -53,6 +54,33 @@ const typing = (el: EventTarget | null) =>
 
 const pad = (n: number) => String(n).padStart(6, "0");
 
+const coarse = () => window.matchMedia("(pointer: coarse)").matches;
+
+/** Play time in coarse ranges, so Umami's property breakdown reads like a histogram. */
+const bucket = (s: number) => (s < 30 ? "<30s" : s < 60 ? "30s-1m" : s < 180 ? "1-3m" : s < 600 ? "3-10m" : "10m+");
+
+type Round = { seconds: number; live: boolean; attempt: number; input: "keyboard" | "touch" };
+
+/** Event properties shared by arcade-over and arcade-quit. */
+function roundData(game: GameSlug, round: Round, hud: Hud, score = hud.score) {
+  const duration = Math.round(round.seconds);
+  const data: Record<string, string | number> = {
+    game,
+    score,
+    duration,
+    bucket: bucket(duration),
+    attempt: round.attempt,
+    input: round.input,
+  };
+  if (hud.level !== undefined) data.level = hud.level;
+  return data;
+}
+
+/** Swipe tuning in CSS pixels / milliseconds. */
+const SWIPE_STEP = 22;
+const TAP_MS = 250;
+const FLICK_SPEED = 0.6;
+
 /** The cabinet: canvas, HUD, start/pause/game-over screens, keyboard and touch input. */
 export function ArcadePlayer({
   slug,
@@ -69,14 +97,37 @@ export function ArcadePlayer({
   const screenRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Game | null>(null);
   const pausedRef = useRef(false);
+  /* Analytics for the current round: active play time (pauses excluded), last HUD, and
+     whether the round is still open (so leaving mid-game is reported once as a quit). */
+  const playRef = useRef<Round>({ seconds: 0, live: false, attempt: 0, input: "keyboard" });
+  const hudRef = useRef<Hud>({ score: 0 });
+  const touchRef = useRef<{ id: number; x0: number; y0: number; ax: number; ay: number; t0: number; moved: boolean } | null>(
+    null,
+  );
   const [input] = useState(() => new Input());
   const [status, setStatus] = useState<Status>("ready");
   const [run, setRun] = useState(0);
   const [hud, setHud] = useState<Hud>({ score: 0 });
   const [record, setRecord] = useState(false);
+  const [immersive, setImmersive] = useState(false);
   const best = useSyncExternalStore(subscribeBest, () => readBest(slug), () => 0);
   const soundOn = useSyncExternalStore(subscribeSound, isSoundOn, () => true);
   const reduce = useReducedMotion();
+  const scheme = TOUCH[slug];
+
+  // A round left open (tab closed, another page or game opened) is sent once as a quit.
+  useEffect(() => {
+    const quit = () => {
+      if (!playRef.current.live) return;
+      playRef.current.live = false;
+      track("arcade-quit", roundData(slug, playRef.current, hudRef.current));
+    };
+    window.addEventListener("pagehide", quit);
+    return () => {
+      window.removeEventListener("pagehide", quit);
+      quit();
+    };
+  }, [slug]);
 
   // One game instance per run; run 0 is the self-playing attract screen.
   useEffect(() => {
@@ -87,7 +138,10 @@ export function ArcadePlayer({
     const game = FACTORIES[slug](
       {
         sfx,
-        hud: setHud,
+        hud: (h) => {
+          hudRef.current = h;
+          setHud(h);
+        },
         reduceMotion: reduce,
         end: ({ score }) => {
           const previous = readBest(slug);
@@ -100,7 +154,8 @@ export function ArcadePlayer({
           }
           setRecord(isRecord);
           setStatus("over");
-          track("arcade-over", { game: slug, score });
+          playRef.current.live = false;
+          track("arcade-over", { ...roundData(slug, playRef.current, hudRef.current, score), record: isRecord });
         },
       },
       { demo, locale },
@@ -116,7 +171,10 @@ export function ArcadePlayer({
       return () => game.dispose?.();
     }
     const stop = runLoop((dt) => {
-      if (!pausedRef.current) game.update(dt, input);
+      if (!pausedRef.current) {
+        game.update(dt, input);
+        if (!demo) playRef.current.seconds += dt;
+      }
       input.endFrame();
     }, render);
     return () => {
@@ -132,14 +190,53 @@ export function ArcadePlayer({
     if (status !== "playing") input.clear();
   }, [status, input]);
 
+  // Immersive mode: the cabinet fills the viewport (real fullscreen where the browser
+  // allows it, a fixed overlay otherwise, e.g. iPhone Safari) and the page stops scrolling.
+  useEffect(() => {
+    if (!immersive) return;
+    const root = document.documentElement;
+    const previous = root.style.overflow;
+    root.style.overflow = "hidden";
+    const onChange = () => {
+      if (!document.fullscreenElement) setImmersive(false);
+    };
+    document.addEventListener("fullscreenchange", onChange);
+    return () => {
+      root.style.overflow = previous;
+      document.removeEventListener("fullscreenchange", onChange);
+    };
+  }, [immersive]);
+
+  function enterImmersive() {
+    setImmersive(true);
+    const el = screenRef.current;
+    if (!el?.requestFullscreen || document.fullscreenElement) return;
+    el.requestFullscreen({ navigationUI: "hide" })
+      .then(() => {
+        // Phones play better sideways; unsupported browsers just keep their orientation.
+        const orientation = screen.orientation as ScreenOrientation & { lock?: (o: string) => Promise<void> };
+        return orientation.lock?.("landscape");
+      })
+      .catch(() => {});
+  }
+  function exitImmersive() {
+    setImmersive(false);
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  }
+
   function start() {
     resumeSound();
     sfx("start");
     setHud({ score: 0 });
+    hudRef.current = { score: 0 };
     setRecord(false);
     setRun((r) => r + 1);
     setStatus("playing");
-    track("arcade-start", { game: slug });
+    const touch = coarse();
+    const attempt = playRef.current.attempt + 1;
+    playRef.current = { seconds: 0, live: true, attempt, input: touch ? "touch" : "keyboard" };
+    track("arcade-start", { game: slug, attempt, input: playRef.current.input });
+    if (touch && !immersive) enterImmersive();
     canvasRef.current?.focus({ preventScroll: true });
   }
   function togglePause() {
@@ -190,17 +287,93 @@ export function ArcadePlayer({
     };
   });
 
-  const pointerGame = POINTER_GAMES.has(slug);
-  const toGameX = (e: React.PointerEvent<HTMLCanvasElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    return ((e.clientX - rect.left) / rect.width) * e.currentTarget.width;
+  /* Pointer input on the whole game surface. Mouse keeps the desktop behaviour
+     (click is A, pointer games follow the cursor); touch follows the game's scheme. */
+  const toGameX = (clientX: number) => {
+    const canvas = canvasRef.current!;
+    const rect = canvas.getBoundingClientRect();
+    return Math.max(0, Math.min(canvas.width, ((clientX - rect.left) / rect.width) * canvas.width));
+  };
+  const pulse = (b: Button) => {
+    input.down(b);
+    input.up(b);
+  };
+  const playing = status === "playing";
+
+  const surface = {
+    onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!playing) return;
+      if (e.pointerType === "mouse") {
+        if (scheme.kind === "pointer") input.setPointer(toGameX(e.clientX));
+        input.down("a");
+        return;
+      }
+      if (scheme.kind === "pad" || touchRef.current) return;
+      e.currentTarget.setPointerCapture(e.pointerId);
+      touchRef.current = { id: e.pointerId, x0: e.clientX, y0: e.clientY, ax: e.clientX, ay: e.clientY, t0: e.timeStamp, moved: false };
+      if (scheme.kind === "pointer") input.setPointer(toGameX(e.clientX));
+      if (scheme.kind === "tap" || scheme.kind === "pointer") input.down("a");
+    },
+    onPointerMove: (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!playing) return;
+      if (e.pointerType === "mouse") {
+        if (scheme.kind === "pointer") input.setPointer(toGameX(e.clientX));
+        return;
+      }
+      const t = touchRef.current;
+      if (!t || t.id !== e.pointerId) return;
+      if (scheme.kind === "pointer") input.setPointer(toGameX(e.clientX));
+      if (scheme.kind !== "swipe") return;
+      // One direction press per step of drag; the anchor follows so long drags repeat.
+      const dx = e.clientX - t.ax;
+      const dy = e.clientY - t.ay;
+      if (Math.max(Math.abs(dx), Math.abs(dy)) < SWIPE_STEP) return;
+      t.moved = true;
+      if (Math.abs(dx) > Math.abs(dy)) {
+        pulse(dx > 0 ? "right" : "left");
+        t.ax += Math.sign(dx) * SWIPE_STEP;
+        t.ay = e.clientY;
+      } else {
+        pulse(dy > 0 ? "down" : "up");
+        t.ay += Math.sign(dy) * SWIPE_STEP;
+        t.ax = e.clientX;
+      }
+    },
+    onPointerUp: (e: React.PointerEvent<HTMLDivElement>) => {
+      if (e.pointerType === "mouse") return input.up("a");
+      const t = touchRef.current;
+      if (!t || t.id !== e.pointerId) return;
+      touchRef.current = null;
+      input.up("a");
+      if (scheme.kind !== "swipe" || !playing) return;
+      const dx = e.clientX - t.x0;
+      const dy = e.clientY - t.y0;
+      const ms = Math.max(1, e.timeStamp - t.t0);
+      if (!t.moved && ms < TAP_MS && Math.hypot(dx, dy) < 12) {
+        if (scheme.tap) pulse(scheme.tap);
+      } else if (scheme.flick && dy > 40 && dy > Math.abs(dx) && dy / ms > FLICK_SPEED) {
+        pulse(scheme.flick);
+      }
+    },
+    onPointerCancel: () => {
+      touchRef.current = null;
+      input.up("a");
+    },
+    onPointerLeave: (e: React.PointerEvent<HTMLDivElement>) => {
+      if (e.pointerType !== "mouse") return;
+      input.up("a");
+      input.setPointer(null);
+    },
+    onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
   };
 
   return (
     <div className="mx-auto flex w-full max-w-[calc((100svh-9rem)*16/9)] flex-col gap-4">
       <div
         ref={screenRef}
-        className="arcade-screen relative overflow-hidden rounded-xl border border-line-strong bg-[#06120c] shadow-[0_0_80px_-20px_color-mix(in_srgb,var(--color-ghost)_35%,transparent)]"
+        className={`arcade-screen relative overflow-hidden rounded-xl border border-line-strong bg-[#06120c] shadow-[0_0_80px_-20px_color-mix(in_srgb,var(--color-ghost)_35%,transparent)] ${
+          immersive ? "is-immersive" : ""
+        }`}
       >
         <dl className="flex flex-wrap items-center gap-x-6 gap-y-1 border-b border-white/10 px-4 py-2.5 font-mono text-[0.7rem] tracking-widest text-[#9ff5b6] uppercase">
           <div className="flex gap-2">
@@ -239,40 +412,37 @@ export function ArcadePlayer({
             )}
             <button
               type="button"
-              onClick={() => (document.fullscreenElement ? document.exitFullscreen() : screenRef.current?.requestFullscreen())}
-              aria-label={labels.fullscreen}
-              title={labels.fullscreen}
-              className="grid size-7 place-items-center rounded text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+              onClick={() => (immersive ? exitImmersive() : enterImmersive())}
+              aria-label={immersive ? labels.exitFullscreen : labels.fullscreen}
+              title={immersive ? labels.exitFullscreen : labels.fullscreen}
+              className="grid size-8 place-items-center rounded text-white/60 transition-colors hover:bg-white/10 hover:text-white"
             >
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden className="size-3.5">
-                <path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
+              {immersive ? (
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden className="size-3.5">
+                  <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden className="size-3.5">
+                  <path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" stroke="currentColor" strokeWidth="1.5" />
+                </svg>
+              )}
             </button>
           </div>
         </dl>
 
-        <div className="arcade-stage relative">
-          <canvas
-            ref={canvasRef}
-            tabIndex={-1}
-            aria-label={title}
-            role="img"
-            className="pixelated arcade-canvas block aspect-[16/9] w-full touch-none outline-none select-none"
-            onPointerMove={(e) => {
-              if (pointerGame && status === "playing") input.setPointer(toGameX(e));
-            }}
-            onPointerDown={(e) => {
-              if (status !== "playing") return;
-              if (pointerGame) input.setPointer(toGameX(e));
-              input.down("a");
-            }}
-            onPointerUp={() => input.up("a")}
-            onPointerLeave={(e) => {
-              input.up("a");
-              if (e.pointerType === "mouse") input.setPointer(null);
-            }}
-          />
-          <div aria-hidden className="crt-overlay pointer-events-none absolute inset-0" />
+        <div className="arcade-stage relative touch-none select-none [-webkit-touch-callout:none]" {...surface}>
+          <div className="arcade-frame relative w-full">
+            <canvas
+              ref={canvasRef}
+              tabIndex={-1}
+              aria-label={title}
+              role="img"
+              className="pixelated block aspect-[16/9] w-full outline-none"
+            />
+            <div aria-hidden className="crt-overlay pointer-events-none absolute inset-0" />
+          </div>
+
+          {scheme.kind === "pad" && playing && <SurfacePad input={input} />}
 
           {status !== "playing" && (
             <div
@@ -301,7 +471,7 @@ export function ArcadePlayer({
                   type="button"
                   data-sound="none"
                   onClick={status === "paused" ? togglePause : start}
-                  className="rounded-full bg-[#d7ffe0] px-5 py-2 text-sm font-semibold sm:px-6 sm:py-3 text-[#050505] transition-transform hover:scale-105 active:scale-95"
+                  className="rounded-full bg-[#d7ffe0] px-5 py-2 text-sm font-semibold text-[#050505] transition-transform hover:scale-105 active:scale-95 sm:px-6 sm:py-3"
                 >
                   ▶ {status === "paused" ? labels.resume : status === "over" ? labels.restart : labels.start}
                 </button>
@@ -312,51 +482,44 @@ export function ArcadePlayer({
           )}
         </div>
       </div>
-
-      <TouchPad input={input} active={status === "playing"} />
     </div>
   );
 }
 
-/** On-screen controller for touch devices: D-pad on the left, A/B on the right. */
-function TouchPad({ input, active }: { input: Input; active: boolean }) {
+/**
+ * Translucent controls drawn on the game surface itself, touch screens only:
+ * left/right in the bottom-left corner, B and A in the bottom-right.
+ */
+function SurfacePad({ input }: { input: Input }) {
   const bind = (b: Button) => ({
-    onPointerDown: (e: React.PointerEvent<HTMLButtonElement>) => {
-      e.preventDefault();
+    onPointerDown: (e: React.PointerEvent<HTMLSpanElement>) => {
+      e.stopPropagation();
       e.currentTarget.setPointerCapture(e.pointerId);
-      if (!active) return;
       if (b === "left" || b === "right") input.setPointer(null);
       input.down(b);
     },
     onPointerUp: () => input.up(b),
     onPointerCancel: () => input.up(b),
-    onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
   });
   const key =
-    "grid size-14 place-items-center rounded-2xl border border-line-strong bg-surface-2 font-mono text-lg text-fg active:bg-surface-3 active:scale-95 transition-transform touch-none select-none";
+    "pointer-events-auto grid size-14 place-items-center rounded-full border border-white/25 bg-white/10 font-mono text-base text-white/80 backdrop-blur-[1px] active:scale-95 active:bg-white/25 transition-transform";
   return (
-    <div className="hidden items-center justify-between gap-4 pointer-coarse:flex" aria-hidden>
-      <div className="grid grid-cols-3 grid-rows-3 gap-1">
-        <button type="button" data-sound="none" tabIndex={-1} className={`${key} col-start-2`} {...bind("up")}>
-          ▲
-        </button>
-        <button type="button" data-sound="none" tabIndex={-1} className={`${key} col-start-1 row-start-2`} {...bind("left")}>
+    <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 hidden items-end justify-between p-3 pointer-coarse:flex">
+      <div className="flex gap-3">
+        <span className={key} {...bind("left")}>
           ◀
-        </button>
-        <button type="button" data-sound="none" tabIndex={-1} className={`${key} col-start-3 row-start-2`} {...bind("right")}>
+        </span>
+        <span className={key} {...bind("right")}>
           ▶
-        </button>
-        <button type="button" data-sound="none" tabIndex={-1} className={`${key} col-start-2 row-start-3`} {...bind("down")}>
-          ▼
-        </button>
+        </span>
       </div>
       <div className="flex items-end gap-3">
-        <button type="button" data-sound="none" tabIndex={-1} className={`${key} rounded-full`} {...bind("b")}>
+        <span className={`${key} size-12`} {...bind("b")}>
           B
-        </button>
-        <button type="button" data-sound="none" tabIndex={-1} className={`${key} mb-8 size-16 rounded-full border-ghost/60 text-ghost`} {...bind("a")}>
+        </span>
+        <span className={`${key} mb-6 size-16 border-[#d7ffe0]/50 text-[#d7ffe0]`} {...bind("a")}>
           A
-        </button>
+        </span>
       </div>
     </div>
   );

@@ -552,6 +552,8 @@ export const createRunner: GameFactory = (host, { demo, locale }) => {
       }
       if (phaseT > 4.2) {
         level++;
+        // Every cleared level is worth an extra life.
+        lives = Math.min(lives + 1, 9);
         loadLevel();
         if (!demo) {
           music.reset();
@@ -867,7 +869,7 @@ export const createRunner: GameFactory = (host, { demo, locale }) => {
       g.fillStyle = "rgb(2 6 4 / 0.6)";
       g.fillRect(0, 56, W, 30);
       const title = text.clear;
-      const sub = `${text.level} ${level + 1}`;
+      const sub = `${text.level} ${level + 1}  +1UP`;
       drawText(g, title, Math.round(W / 2 - (title.length * 4) / 2), 63, PAL.glint);
       drawText(g, sub, Math.round(W / 2 - (sub.length * 4) / 2), 73, PAL.ice);
     }

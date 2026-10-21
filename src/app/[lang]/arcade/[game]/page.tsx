@@ -74,6 +74,7 @@ export default async function GamePage({ params }: PageProps<"/[lang]/arcade/[ga
               level: a.level,
               soundOff: a.soundOff,
               fullscreen: a.fullscreen,
+              exitFullscreen: a.exitFullscreen,
             }}
           />
 

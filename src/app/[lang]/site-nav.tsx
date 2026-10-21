@@ -19,7 +19,11 @@ export function SiteNav({ locale, path = "/", onHome = true }: { locale: Locale;
       themeLabels={{ light: dict.nav.themeLight, dark: dict.nav.themeDark }}
       soundLabels={{ on: dict.nav.soundOn, off: dict.nav.soundOff }}
       menuLabels={{ open: dict.nav.menu, close: dict.nav.menuClose }}
-      items={ids.map((id) => ({ id, label: dict.nav[id] }))}
+      items={[
+        ...ids.map((id) => ({ id, label: dict.nav[id] })),
+        { id: "arcade", label: dict.nav.arcade, href: href(locale, "/arcade") },
+      ]}
+      current={path.startsWith("/arcade") ? "arcade" : undefined}
     />
   );
 }

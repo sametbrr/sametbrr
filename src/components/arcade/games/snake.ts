@@ -27,6 +27,14 @@ const MUSIC: Track = {
   ],
 };
 
+const BRACES = ["..x..x..", ".x....x.", ".x....x.", "x......x", ".x....x.", ".x....x.", "..x..x.."];
+function braces(g: CanvasRenderingContext2D, x: number, y: number, color: string) {
+  g.fillStyle = color;
+  BRACES.forEach((row, dy) => {
+    for (let dx = 0; dx < row.length; dx++) if (row[dx] === "x") g.fillRect(x + dx, y + dy, 1, 1);
+  });
+}
+
 const TEXT = { tr: { length: "UZUNLUK" }, en: { length: "LEN" } };
 
 export const createSnake: GameFactory = (host, { demo, locale }) => {
@@ -49,7 +57,7 @@ export const createSnake: GameFactory = (host, { demo, locale }) => {
   let deadT = 0;
   let flash = 0;
 
-  const speed = () => Math.max(0.045, 0.12 - eaten * 0.0025);
+  const speed = () => Math.max(0.045, 0.14 - eaten * 0.0025);
   const occupied = (c: Cell) => body.some((b) => b.x === c.x && b.y === c.y);
   const free = (): Cell => {
     for (;;) {
@@ -189,20 +197,13 @@ export const createSnake: GameFactory = (host, { demo, locale }) => {
     for (let x = 0; x <= COLS; x += 4) g.fillRect(x * C, 0, 1, H);
     for (let y = 0; y <= ROWS; y += 4) g.fillRect(0, y * C, W, 1);
 
-    // Food: a data packet with a pulsing outline
+    // Food: a "{ }" code block that pulses; the golden one has a bright core.
     const pulse = Math.floor(t * 4) % 2;
-    g.fillStyle = PAL.quantum;
-    g.fillRect(food.x * C + 1, food.y * C + 1, 6, 6);
-    g.fillStyle = pulse ? PAL.ice : PAL.quantumLight;
-    g.fillRect(food.x * C + 2, food.y * C + 2, 2, 2);
-    g.fillRect(food.x * C + 4, food.y * C + 4, 2, 2);
+    braces(g, food.x * C, food.y * C, pulse ? PAL.ice : PAL.quantumLight);
     if (gold && (gold.t > 1.5 || Math.floor(t * 10) % 2)) {
-      g.fillStyle = PAL.coinDark;
-      g.fillRect(gold.x * C, gold.y * C, 8, 8);
-      g.fillStyle = PAL.coin;
-      g.fillRect(gold.x * C + 1, gold.y * C + 1, 6, 6);
+      braces(g, gold.x * C, gold.y * C, PAL.coin);
       g.fillStyle = PAL.white;
-      g.fillRect(gold.x * C + 2, gold.y * C + 2, 2, 1);
+      g.fillRect(gold.x * C + 3, gold.y * C + 2, 2, 4);
     }
 
     // Pipeline: head bright, body in alternating greens.
