@@ -11,7 +11,7 @@ careerStart: "2021-10"
 # Canlı ürünler: hero'daki "N+ canlı ürün" sayacı ve altındaki kayan bant buradan beslenir.
 products: [NarPOS, NarCloud, NarCost, NarBoss, NarGO, NarMenu, Tezgahtar, Ege Çocuk, Giy-Teks, MinimalBlock]
 # GitHub'daki herkese açık proje sayısı; sitede ona aşağı yuvarlanıp "N+" gösterilir (12 → 10+).
-publicRepos: 12
+publicRepos: 11
 # Eğitim (Öğrenme yolculuğu) bölümü gizli; education.yaml duruyor, göstermek için true yap.
 showEducation: false
 availability:

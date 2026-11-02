@@ -1,0 +1,15 @@
+sametbrr.com — Notice
+
+Source code in this repository (src/, scripts/ and configuration files) is licensed
+under the MIT License, see LICENSE.
+
+The following are NOT covered by the MIT License and remain © Samet Birer, all rights
+reserved. They may not be copied, modified or redistributed without written permission:
+
+- content/        texts, CV data, project and case-study write-ups
+- public/         images, logos, photos, documents and other media
+- product names, client names and logos shown on the site, which belong to their
+  respective owners
+
+To reuse the site as a template, replace everything under content/ and public/ with
+your own material.

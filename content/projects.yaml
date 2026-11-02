@@ -4,6 +4,7 @@
   url: https://github.com/sametbrr/codeagent-sync
   kind: package
   registry: { type: npm, id: codeagent-sync }
+  featured: true
   summary:
     tr: "Claude Code ve Codex ayarlarını (skill, MCP, hook) her makinede uçtan uca şifreli olarak aynı tutar."
     en: "Keeps Claude Code and Codex config (skills, MCP servers, hooks) identical on every machine, end-to-end encrypted."
@@ -11,34 +12,28 @@
   url: https://github.com/sametbrr/github-manager
   kind: plugin
   summary:
-    tr: "GitHub hesabını uçtan uca denetleyip düzelten Claude Code plugin'i."
-    en: "Claude Code plugin that audits and fixes a GitHub account end to end."
+    tr: "GitHub hesabını uçtan uca denetleyip düzelten Agent Skills plugin'i — profil, açıklamalar, topic'ler, README'ler ve release workflow'ları."
+    en: "Agent Skills plugin that audits and fixes a GitHub account — profile, descriptions, topics, READMEs and release workflows."
 - name: crypt-sync
   url: https://github.com/sametbrr/crypt-sync
   kind: package
   registry: { type: npm, id: crypt-sync }
   summary:
-    tr: ".env dosyalarını age ile şifreli olarak git'te tutar ve makineler arası senkronlar."
-    en: "Keeps .env files age-encrypted in git and synced across machines."
+    tr: ".env dosyalarını age ile şifreli olarak git'te tutar ve makineler arası senkronlar — npm CLI ve Claude Code / Codex plugin'i."
+    en: "Keeps .env files age-encrypted in git and synced across machines — an npm CLI plus a Claude Code and Codex plugin."
 - name: skill-hub
   url: https://github.com/sametbrr/skill-hub
   kind: plugin
   featured: true
   summary:
-    tr: "Tüm Claude Code plugin'lerimin tek marketplace'i — bir kez ekle, ismiyle kur."
-    en: "One marketplace for all my Claude Code plugins — register once, install by name."
-- name: readme-standard
-  url: https://github.com/sametbrr/readme-standard
-  kind: plugin
-  summary:
-    tr: "README.md ve README.tr.md'yi 23 kurala göre oluşturan, denetleyen ve Türkçe kopyayı senkron tutan Claude Code skill'i."
-    en: "Claude Code skill that creates, audits and fixes README.md + README.tr.md against 23 rules and keeps the Turkish mirror in sync."
+    tr: "Claude Code ve Codex için tüm agent plugin'lerimin tek marketplace'i — bir kez ekle, ismiyle kur."
+    en: "One marketplace for all my agent plugins, for Claude Code and Codex — register once, install by name."
 - name: look-again
   url: https://github.com/sametbrr/look-again
   kind: plugin
   summary:
-    tr: "Konuşmayı kararlar, elenen seçenekler ve son planla birlikte kaydedip kaldığı yerden sürdüren Claude Code skill'i."
-    en: "Claude Code skill that checkpoints a conversation — decisions, rejected options and the final plan — and resumes it with full context."
+    tr: "Konuşmayı kararlar, elenen seçenekler ve son planla birlikte kaydedip Claude Code ya da Codex'te kaldığı yerden sürdüren Agent Skills plugin'i."
+    en: "Agent Skills plugin that checkpoints a conversation — decisions, rejected options and the final plan — and resumes it with full context in Claude Code or Codex."
 - name: project-radar
   url: https://github.com/sametbrr/project-radar
   kind: plugin
@@ -49,34 +44,33 @@
   url: https://github.com/sametbrr/prompt-architect
   kind: plugin
   summary:
-    tr: "Kaba bir fikri alan sınıflandırmalı, kalite kapılı uzman prompt'a çevirir."
-    en: "Turns a rough idea into a domain-classified, quality-gated expert prompt."
+    tr: "Kaba bir fikri, tespit edilen Claude ya da GPT modeline göre ayarlanmış, 12 kalite kapılı uzman prompt'a çevirir."
+    en: "Turns a rough idea into an expert prompt tuned to the detected Claude or GPT model, with a 12-gate quality review."
 - name: llm-wiki-manager
   url: https://github.com/sametbrr/llm-wiki-manager
   kind: plugin
   featured: true
   summary:
-    tr: "Modelin yazıp çapraz bağladığı, senin kaynak seçtiğin kalıcı LLM wiki'si."
-    en: "A persistent LLM-managed wiki — the model writes and cross-references, you curate sources."
+    tr: "Claude Code ve Codex için kalıcı, LLM'in yönettiği markdown wiki — model yazar ve çapraz bağlar, sen kaynak seçersin."
+    en: "A persistent LLM-managed markdown wiki for Claude Code and Codex — the model writes and cross-references, you curate sources."
 - name: openapi-rest-mcp
   url: https://github.com/sametbrr/openapi-rest-mcp
   kind: mcp
-  featured: true
   registry: { type: npm, id: openapi-rest-mcp }
   summary:
-    tr: "Herhangi bir OpenAPI/Swagger spec'inden tam işlevli MCP server."
-    en: "A fully working MCP server from any OpenAPI/Swagger spec."
+    tr: "Herhangi bir OpenAPI/Swagger REST API'yi CRUD, keşif, bulanık arama ve çoklu kimlik doğrulamayla saran MCP server."
+    en: "MCP server that wraps any OpenAPI/Swagger REST API with CRUD, discovery, fuzzy search and multi-scheme auth."
 - name: AssemblyServiceRegistrar
   url: https://github.com/sametbrr/AssemblyServiceRegistrar
   kind: package
   registry: { type: nuget, id: AssemblyServiceRegistrar }
   summary:
-    tr: ".NET'te sıfır boilerplate DI kaydı — marker interface ve attribute ile."
-    en: "Zero-boilerplate DI registration in .NET via marker interfaces and attributes."
+    tr: ".NET'te servisleri marker interface ve attribute ile otomatik kaydeden kütüphane — tüm lifetime'lar ve open generic desteği."
+    en: ".NET library that auto-registers services via marker interfaces and attributes — all lifetimes and open generics."
 - name: EnvironmentConfigurator
   url: https://github.com/sametbrr/EnvironmentConfigurator
   kind: package
   registry: { type: nuget, id: EnvironmentConfigurator }
   summary:
-    tr: "ASP.NET Core için tek çağrıda ortam duyarlı yapılandırma."
-    en: "Single-call environment-aware configuration for ASP.NET Core."
+    tr: "ASP.NET Core için tek çağrıda ortam duyarlı yapılandırma; publish profillerini ve appsettings dosyalarını otomatik oluşturur."
+    en: "ASP.NET Core package for single-call, environment-aware config loading with auto-scaffolded publish profiles and appsettings."

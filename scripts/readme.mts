@@ -81,7 +81,7 @@ const T = {
     parts: "Built as",
     more: "More products",
     tools: "🧰 Open Source",
-    toolsIntro: "Claude Code skills and plugins ship through one marketplace — register it once, install anything by name:",
+    toolsIntro: "Agent plugins for Claude Code and Codex ship through one marketplace — register it once, install anything by name:",
     packages: "📦 Published Packages",
     pkg: "Package",
     solves: "What it solves",
@@ -91,6 +91,12 @@ const T = {
     activity: "📈 Contribution Activity",
     alt: { details: "Profile Details", langs: "Repos Per Language", commits: "Most Commit Language", streak: "GitHub Streak" },
     generated: "Generated from [`content/`](content) by `pnpm readme` — the same source as [sametbrr.com](https://sametbrr.com) and the CV.",
+    contact: "📬 Contact",
+    contactIntro: "Consulting, architecture reviews or a new product — let's talk.",
+    email: "Email",
+    site: "Website",
+    community: "Questions about a project? Use its **Discussions** tab. Contribution guide: [CONTRIBUTING](https://github.com/sametbrr/.github/blob/main/CONTRIBUTING.md).",
+    license: "Code in this repository is MIT licensed; the site content (texts, case studies, images) is © Samet Birer, all rights reserved. See [NOTICE](NOTICE).",
   },
   tr: {
     langLine: "> 🇬🇧 For English see [README.md](README.md)",
@@ -104,7 +110,7 @@ const T = {
     parts: "Parçalar",
     more: "Diğer ürünler",
     tools: "🧰 Açık Kaynak",
-    toolsIntro: "Claude Code skill ve plugin'lerinin hepsi tek bir marketplace'ten dağıtılır — bir kez ekleyin, ismiyle kurun:",
+    toolsIntro: "Claude Code ve Codex için agent plugin'lerinin hepsi tek bir marketplace'ten dağıtılır — bir kez ekleyin, ismiyle kurun:",
     packages: "📦 Yayınlanmış Paketler",
     pkg: "Paket",
     solves: "Ne çözer",
@@ -114,6 +120,12 @@ const T = {
     activity: "📈 Katkı Aktivitesi",
     alt: { details: "Profil Detayları", langs: "Dile Göre Repolar", commits: "En Çok Commit Edilen Dil", streak: "GitHub Serisi" },
     generated: "Bu dosya [`content/`](content) klasöründen `pnpm readme` ile üretilir — [sametbrr.com](https://sametbrr.com) ve CV ile aynı kaynak.",
+    contact: "📬 İletişim",
+    contactIntro: "Danışmanlık, mimari inceleme ya da yeni bir ürün — konuşalım.",
+    email: "E-posta",
+    site: "Web sitesi",
+    community: "Bir proje hakkında sorun mu var? Projenin **Discussions** sekmesini kullanın. Katkı rehberi: [CONTRIBUTING](https://github.com/sametbrr/.github/blob/main/CONTRIBUTING.tr.md).",
+    license: "Bu repodaki kod MIT lisanslıdır; site içeriği (metinler, vaka çalışmaları, görseller) © Samet Birer, tüm hakları saklıdır. Bkz. [NOTICE](NOTICE).",
   },
 } as const;
 
@@ -122,8 +134,13 @@ function render(lang: Locale) {
   const p = profile.positioning;
   const featured = cases.filter((c) => c.tier === "featured");
   const compact = cases.filter((c) => c.tier === "compact").sort((a, b) => a.order - b.order);
-  const packages = oss.filter((o) => o.registry);
-  const tools = oss.filter((o) => !o.registry);
+  // Featured projects first; otherwise keep the file order (newest first).
+  const byFeatured = (a: (typeof oss)[number], b: (typeof oss)[number]) => Number(b.featured) - Number(a.featured);
+  const packages = oss.filter((o) => o.registry).sort(byFeatured);
+  const tools = oss.filter((o) => !o.registry).sort(byFeatured);
+  const repoPath = (url: string) => new URL(url).pathname.replace(/^\//, "");
+  const stars = (o: (typeof oss)[number]) =>
+    o.featured ? `<br><img src="https://img.shields.io/github/stars/${repoPath(o.url)}?style=flat&color=137a43&label=%E2%98%85" alt="GitHub stars">` : "";
   const current = experience.find((e) => e.end === null);
   const cvUrl = `${profile.url}/cv/${profile.handle}-cv-${lang}.pdf`;
   const badge = (label: string, message: string, color: string, logo: string, link: string) =>
@@ -170,9 +187,7 @@ function render(lang: Locale) {
     ``,
     `## ${t.about}`,
     ``,
-    "```txt",
-    p.philosophy[lang],
-    "```",
+    `> **${p.philosophy[lang]}**`,
     ``,
     p.manifesto[lang],
     ``,
@@ -211,8 +226,8 @@ function render(lang: Locale) {
     t.toolsIntro,
     ``,
     "```bash",
-    `claude plugin marketplace add ${profile.handle}/skill-hub`,
-    `claude plugin install llm-wiki-manager@skill-hub`,
+    `claude plugin marketplace add ${profile.handle}/skill-hub   # Claude Code`,
+    `codex plugin marketplace add ${profile.handle}/skill-hub    # Codex`,
     "```",
     ``,
     `<table>`,
@@ -221,7 +236,7 @@ function render(lang: Locale) {
     `</thead>`,
     `<tbody>`,
   );
-  for (const o of tools) lines.push(`<tr>`, `<td><a href="${o.url}"><b>${o.name}</b></a></td>`, `<td>${o.summary[lang]}</td>`, `</tr>`);
+  for (const o of tools) lines.push(`<tr>`, `<td><a href="${o.url}"><b>${o.name}</b></a>${stars(o)}</td>`, `<td>${o.summary[lang]}</td>`, `</tr>`);
   lines.push(`</tbody>`, `</table>`, ``, `### ${t.packages}`, ``, `| ${t.pkg} | ${t.solves} | ${t.downloads} |`, `|---------|----------------|-----------|`);
   for (const o of packages) {
     const r = o.registry!;
@@ -229,7 +244,7 @@ function render(lang: Locale) {
       r.type === "nuget"
         ? `[![NuGet](https://img.shields.io/nuget/dt/${r.id}?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/${r.id})`
         : `[![npm](https://img.shields.io/npm/dt/${r.id}?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/${r.id})`;
-    lines.push(`| [**${o.name}**](${o.url}) | ${o.summary[lang]} | ${dl} |`);
+    lines.push(`| [**${o.name}**](${o.url})${o.featured ? " ⭐" : ""} | ${o.summary[lang]} | ${dl} |`);
   }
 
   lines.push(``, `---`, ``, `## ${t.stack}`, ``);
@@ -259,6 +274,23 @@ function render(lang: Locale) {
     `</p>`,
     ``,
     `---`,
+    ``,
+    `## ${t.contact}`,
+    ``,
+    t.contactIntro,
+  );
+  if (profile.availability.open) lines.push(``, `🟢 **${profile.availability.label[lang]}**`);
+  lines.push(
+    ``,
+    `* **${t.site}:** [${host(profile.url)}](${profile.url})`,
+    `* **${t.email}:** [${profile.email}](mailto:${profile.email})`,
+    ...profile.socials.filter((s) => s.label !== "GitHub").map((s) => `* **${s.label}:** [${s.handle}](${s.url})`),
+    ``,
+    t.community,
+    ``,
+    `---`,
+    ``,
+    `<sub>${t.license}</sub>`,
     ``,
     `<sub>${t.generated}</sub>`,
     ``,

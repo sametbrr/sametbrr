@@ -46,9 +46,7 @@ LLM-native araçlarla fikirden ölçeklenen ürüne. Mimari, geliştirme ve tekn
 
 ## 👋 Hakkımda
 
-```txt
-Rutini otomatikleştir. Anlamlı olanı mühendislikle inşa et.
-```
+> **Rutini otomatikleştir. Anlamlı olanı mühendislikle inşa et.**
 
 İşletmelerin gerçek problemlerini çözen, sahada çalışan ve ekiplerin daha az uğraşıp daha çok teslim ettiği sistemler kuruyorum.
 
@@ -109,11 +107,11 @@ Rutini otomatikleştir. Anlamlı olanı mühendislikle inşa et.
 
 ## 🧰 Açık Kaynak
 
-Claude Code skill ve plugin'lerinin hepsi tek bir marketplace'ten dağıtılır — bir kez ekleyin, ismiyle kurun:
+Claude Code ve Codex için agent plugin'lerinin hepsi tek bir marketplace'ten dağıtılır — bir kez ekleyin, ismiyle kurun:
 
 ```bash
-claude plugin marketplace add sametbrr/skill-hub
-claude plugin install llm-wiki-manager@skill-hub
+claude plugin marketplace add sametbrr/skill-hub   # Claude Code
+codex plugin marketplace add sametbrr/skill-hub    # Codex
 ```
 
 <table>
@@ -122,20 +120,20 @@ claude plugin install llm-wiki-manager@skill-hub
 </thead>
 <tbody>
 <tr>
+<td><a href="https://github.com/sametbrr/skill-hub"><b>skill-hub</b></a><br><img src="https://img.shields.io/github/stars/sametbrr/skill-hub?style=flat&color=137a43&label=%E2%98%85" alt="GitHub stars"></td>
+<td>Claude Code ve Codex için tüm agent plugin'lerimin tek marketplace'i — bir kez ekle, ismiyle kur.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/llm-wiki-manager"><b>llm-wiki-manager</b></a><br><img src="https://img.shields.io/github/stars/sametbrr/llm-wiki-manager?style=flat&color=137a43&label=%E2%98%85" alt="GitHub stars"></td>
+<td>Claude Code ve Codex için kalıcı, LLM'in yönettiği markdown wiki — model yazar ve çapraz bağlar, sen kaynak seçersin.</td>
+</tr>
+<tr>
 <td><a href="https://github.com/sametbrr/github-manager"><b>github-manager</b></a></td>
-<td>GitHub hesabını uçtan uca denetleyip düzelten Claude Code plugin'i.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/sametbrr/skill-hub"><b>skill-hub</b></a></td>
-<td>Tüm Claude Code plugin'lerimin tek marketplace'i — bir kez ekle, ismiyle kur.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/sametbrr/readme-standard"><b>readme-standard</b></a></td>
-<td>README.md ve README.tr.md'yi 23 kurala göre oluşturan, denetleyen ve Türkçe kopyayı senkron tutan Claude Code skill'i.</td>
+<td>GitHub hesabını uçtan uca denetleyip düzelten Agent Skills plugin'i — profil, açıklamalar, topic'ler, README'ler ve release workflow'ları.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/look-again"><b>look-again</b></a></td>
-<td>Konuşmayı kararlar, elenen seçenekler ve son planla birlikte kaydedip kaldığı yerden sürdüren Claude Code skill'i.</td>
+<td>Konuşmayı kararlar, elenen seçenekler ve son planla birlikte kaydedip Claude Code ya da Codex'te kaldığı yerden sürdüren Agent Skills plugin'i.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/project-radar"><b>project-radar</b></a></td>
@@ -143,11 +141,7 @@ claude plugin install llm-wiki-manager@skill-hub
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/prompt-architect"><b>prompt-architect</b></a></td>
-<td>Kaba bir fikri alan sınıflandırmalı, kalite kapılı uzman prompt'a çevirir.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/sametbrr/llm-wiki-manager"><b>llm-wiki-manager</b></a></td>
-<td>Modelin yazıp çapraz bağladığı, senin kaynak seçtiğin kalıcı LLM wiki'si.</td>
+<td>Kaba bir fikri, tespit edilen Claude ya da GPT modeline göre ayarlanmış, 12 kalite kapılı uzman prompt'a çevirir.</td>
 </tr>
 </tbody>
 </table>
@@ -156,11 +150,11 @@ claude plugin install llm-wiki-manager@skill-hub
 
 | Paket | Ne çözer | İndirme |
 |---------|----------------|-----------|
-| [**codeagent-sync**](https://github.com/sametbrr/codeagent-sync) | Claude Code ve Codex ayarlarını (skill, MCP, hook) her makinede uçtan uca şifreli olarak aynı tutar. | [![npm](https://img.shields.io/npm/dt/codeagent-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/codeagent-sync) |
-| [**crypt-sync**](https://github.com/sametbrr/crypt-sync) | .env dosyalarını age ile şifreli olarak git'te tutar ve makineler arası senkronlar. | [![npm](https://img.shields.io/npm/dt/crypt-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/crypt-sync) |
-| [**openapi-rest-mcp**](https://github.com/sametbrr/openapi-rest-mcp) | Herhangi bir OpenAPI/Swagger spec'inden tam işlevli MCP server. | [![npm](https://img.shields.io/npm/dt/openapi-rest-mcp?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/openapi-rest-mcp) |
-| [**AssemblyServiceRegistrar**](https://github.com/sametbrr/AssemblyServiceRegistrar) | .NET'te sıfır boilerplate DI kaydı — marker interface ve attribute ile. | [![NuGet](https://img.shields.io/nuget/dt/AssemblyServiceRegistrar?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/AssemblyServiceRegistrar) |
-| [**EnvironmentConfigurator**](https://github.com/sametbrr/EnvironmentConfigurator) | ASP.NET Core için tek çağrıda ortam duyarlı yapılandırma. | [![NuGet](https://img.shields.io/nuget/dt/EnvironmentConfigurator?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/EnvironmentConfigurator) |
+| [**codeagent-sync**](https://github.com/sametbrr/codeagent-sync) ⭐ | Claude Code ve Codex ayarlarını (skill, MCP, hook) her makinede uçtan uca şifreli olarak aynı tutar. | [![npm](https://img.shields.io/npm/dt/codeagent-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/codeagent-sync) |
+| [**crypt-sync**](https://github.com/sametbrr/crypt-sync) | .env dosyalarını age ile şifreli olarak git'te tutar ve makineler arası senkronlar — npm CLI ve Claude Code / Codex plugin'i. | [![npm](https://img.shields.io/npm/dt/crypt-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/crypt-sync) |
+| [**openapi-rest-mcp**](https://github.com/sametbrr/openapi-rest-mcp) | Herhangi bir OpenAPI/Swagger REST API'yi CRUD, keşif, bulanık arama ve çoklu kimlik doğrulamayla saran MCP server. | [![npm](https://img.shields.io/npm/dt/openapi-rest-mcp?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/openapi-rest-mcp) |
+| [**AssemblyServiceRegistrar**](https://github.com/sametbrr/AssemblyServiceRegistrar) | .NET'te servisleri marker interface ve attribute ile otomatik kaydeden kütüphane — tüm lifetime'lar ve open generic desteği. | [![NuGet](https://img.shields.io/nuget/dt/AssemblyServiceRegistrar?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/AssemblyServiceRegistrar) |
+| [**EnvironmentConfigurator**](https://github.com/sametbrr/EnvironmentConfigurator) | ASP.NET Core için tek çağrıda ortam duyarlı yapılandırma; publish profillerini ve appsettings dosyalarını otomatik oluşturur. | [![NuGet](https://img.shields.io/nuget/dt/EnvironmentConfigurator?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/EnvironmentConfigurator) |
 
 ---
 
@@ -194,5 +188,25 @@ claude plugin install llm-wiki-manager@skill-hub
 </p>
 
 ---
+
+## 📬 İletişim
+
+Danışmanlık, mimari inceleme ya da yeni bir ürün — konuşalım.
+
+🟢 **Yeni projelere açık**
+
+* **Web sitesi:** [sametbrr.com](https://sametbrr.com)
+* **E-posta:** [sametbrr@gmail.com](mailto:sametbrr@gmail.com)
+* **LinkedIn:** [in/sametbrr](https://www.linkedin.com/in/sametbrr/)
+* **X:** [@sametbrr](https://x.com/sametbrr)
+* **Instagram:** [@sametbrr](https://www.instagram.com/sametbrr/)
+* **npm:** [~sametbrr](https://www.npmjs.com/~sametbrr)
+* **NuGet:** [sametbrr](https://www.nuget.org/profiles/sametbrr)
+
+Bir proje hakkında sorun mu var? Projenin **Discussions** sekmesini kullanın. Katkı rehberi: [CONTRIBUTING](https://github.com/sametbrr/.github/blob/main/CONTRIBUTING.tr.md).
+
+---
+
+<sub>Bu repodaki kod MIT lisanslıdır; site içeriği (metinler, vaka çalışmaları, görseller) © Samet Birer, tüm hakları saklıdır. Bkz. [NOTICE](NOTICE).</sub>
 
 <sub>Bu dosya [`content/`](content) klasöründen `pnpm readme` ile üretilir — [sametbrr.com](https://sametbrr.com) ve CV ile aynı kaynak.</sub>

@@ -46,9 +46,7 @@ From idea to a product that scales, with LLM-native tooling. Architecture, engin
 
 ## 👋 About Me
 
-```txt
-Automate the routine. Engineer the meaningful.
-```
+> **Automate the routine. Engineer the meaningful.**
 
 I build systems that solve real business problems, hold up in the field, and let teams spend less effort to ship more.
 
@@ -109,11 +107,11 @@ I build systems that solve real business problems, hold up in the field, and let
 
 ## 🧰 Open Source
 
-Claude Code skills and plugins ship through one marketplace — register it once, install anything by name:
+Agent plugins for Claude Code and Codex ship through one marketplace — register it once, install anything by name:
 
 ```bash
-claude plugin marketplace add sametbrr/skill-hub
-claude plugin install llm-wiki-manager@skill-hub
+claude plugin marketplace add sametbrr/skill-hub   # Claude Code
+codex plugin marketplace add sametbrr/skill-hub    # Codex
 ```
 
 <table>
@@ -122,20 +120,20 @@ claude plugin install llm-wiki-manager@skill-hub
 </thead>
 <tbody>
 <tr>
+<td><a href="https://github.com/sametbrr/skill-hub"><b>skill-hub</b></a><br><img src="https://img.shields.io/github/stars/sametbrr/skill-hub?style=flat&color=137a43&label=%E2%98%85" alt="GitHub stars"></td>
+<td>One marketplace for all my agent plugins, for Claude Code and Codex — register once, install by name.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sametbrr/llm-wiki-manager"><b>llm-wiki-manager</b></a><br><img src="https://img.shields.io/github/stars/sametbrr/llm-wiki-manager?style=flat&color=137a43&label=%E2%98%85" alt="GitHub stars"></td>
+<td>A persistent LLM-managed markdown wiki for Claude Code and Codex — the model writes and cross-references, you curate sources.</td>
+</tr>
+<tr>
 <td><a href="https://github.com/sametbrr/github-manager"><b>github-manager</b></a></td>
-<td>Claude Code plugin that audits and fixes a GitHub account end to end.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/sametbrr/skill-hub"><b>skill-hub</b></a></td>
-<td>One marketplace for all my Claude Code plugins — register once, install by name.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/sametbrr/readme-standard"><b>readme-standard</b></a></td>
-<td>Claude Code skill that creates, audits and fixes README.md + README.tr.md against 23 rules and keeps the Turkish mirror in sync.</td>
+<td>Agent Skills plugin that audits and fixes a GitHub account — profile, descriptions, topics, READMEs and release workflows.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/look-again"><b>look-again</b></a></td>
-<td>Claude Code skill that checkpoints a conversation — decisions, rejected options and the final plan — and resumes it with full context.</td>
+<td>Agent Skills plugin that checkpoints a conversation — decisions, rejected options and the final plan — and resumes it with full context in Claude Code or Codex.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/project-radar"><b>project-radar</b></a></td>
@@ -143,11 +141,7 @@ claude plugin install llm-wiki-manager@skill-hub
 </tr>
 <tr>
 <td><a href="https://github.com/sametbrr/prompt-architect"><b>prompt-architect</b></a></td>
-<td>Turns a rough idea into a domain-classified, quality-gated expert prompt.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/sametbrr/llm-wiki-manager"><b>llm-wiki-manager</b></a></td>
-<td>A persistent LLM-managed wiki — the model writes and cross-references, you curate sources.</td>
+<td>Turns a rough idea into an expert prompt tuned to the detected Claude or GPT model, with a 12-gate quality review.</td>
 </tr>
 </tbody>
 </table>
@@ -156,11 +150,11 @@ claude plugin install llm-wiki-manager@skill-hub
 
 | Package | What it solves | Downloads |
 |---------|----------------|-----------|
-| [**codeagent-sync**](https://github.com/sametbrr/codeagent-sync) | Keeps Claude Code and Codex config (skills, MCP servers, hooks) identical on every machine, end-to-end encrypted. | [![npm](https://img.shields.io/npm/dt/codeagent-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/codeagent-sync) |
-| [**crypt-sync**](https://github.com/sametbrr/crypt-sync) | Keeps .env files age-encrypted in git and synced across machines. | [![npm](https://img.shields.io/npm/dt/crypt-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/crypt-sync) |
-| [**openapi-rest-mcp**](https://github.com/sametbrr/openapi-rest-mcp) | A fully working MCP server from any OpenAPI/Swagger spec. | [![npm](https://img.shields.io/npm/dt/openapi-rest-mcp?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/openapi-rest-mcp) |
-| [**AssemblyServiceRegistrar**](https://github.com/sametbrr/AssemblyServiceRegistrar) | Zero-boilerplate DI registration in .NET via marker interfaces and attributes. | [![NuGet](https://img.shields.io/nuget/dt/AssemblyServiceRegistrar?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/AssemblyServiceRegistrar) |
-| [**EnvironmentConfigurator**](https://github.com/sametbrr/EnvironmentConfigurator) | Single-call environment-aware configuration for ASP.NET Core. | [![NuGet](https://img.shields.io/nuget/dt/EnvironmentConfigurator?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/EnvironmentConfigurator) |
+| [**codeagent-sync**](https://github.com/sametbrr/codeagent-sync) ⭐ | Keeps Claude Code and Codex config (skills, MCP servers, hooks) identical on every machine, end-to-end encrypted. | [![npm](https://img.shields.io/npm/dt/codeagent-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/codeagent-sync) |
+| [**crypt-sync**](https://github.com/sametbrr/crypt-sync) | Keeps .env files age-encrypted in git and synced across machines — an npm CLI plus a Claude Code and Codex plugin. | [![npm](https://img.shields.io/npm/dt/crypt-sync?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/crypt-sync) |
+| [**openapi-rest-mcp**](https://github.com/sametbrr/openapi-rest-mcp) | MCP server that wraps any OpenAPI/Swagger REST API with CRUD, discovery, fuzzy search and multi-scheme auth. | [![npm](https://img.shields.io/npm/dt/openapi-rest-mcp?label=npm&color=CB3837&logo=npm)](https://www.npmjs.com/package/openapi-rest-mcp) |
+| [**AssemblyServiceRegistrar**](https://github.com/sametbrr/AssemblyServiceRegistrar) | .NET library that auto-registers services via marker interfaces and attributes — all lifetimes and open generics. | [![NuGet](https://img.shields.io/nuget/dt/AssemblyServiceRegistrar?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/AssemblyServiceRegistrar) |
+| [**EnvironmentConfigurator**](https://github.com/sametbrr/EnvironmentConfigurator) | ASP.NET Core package for single-call, environment-aware config loading with auto-scaffolded publish profiles and appsettings. | [![NuGet](https://img.shields.io/nuget/dt/EnvironmentConfigurator?label=NuGet&color=004880&logo=nuget)](https://www.nuget.org/packages/EnvironmentConfigurator) |
 
 ---
 
@@ -194,5 +188,25 @@ claude plugin install llm-wiki-manager@skill-hub
 </p>
 
 ---
+
+## 📬 Contact
+
+Consulting, architecture reviews or a new product — let's talk.
+
+🟢 **Open to new projects**
+
+* **Website:** [sametbrr.com](https://sametbrr.com)
+* **Email:** [sametbrr@gmail.com](mailto:sametbrr@gmail.com)
+* **LinkedIn:** [in/sametbrr](https://www.linkedin.com/in/sametbrr/)
+* **X:** [@sametbrr](https://x.com/sametbrr)
+* **Instagram:** [@sametbrr](https://www.instagram.com/sametbrr/)
+* **npm:** [~sametbrr](https://www.npmjs.com/~sametbrr)
+* **NuGet:** [sametbrr](https://www.nuget.org/profiles/sametbrr)
+
+Questions about a project? Use its **Discussions** tab. Contribution guide: [CONTRIBUTING](https://github.com/sametbrr/.github/blob/main/CONTRIBUTING.md).
+
+---
+
+<sub>Code in this repository is MIT licensed; the site content (texts, case studies, images) is © Samet Birer, all rights reserved. See [NOTICE](NOTICE).</sub>
 
 <sub>Generated from [`content/`](content) by `pnpm readme` — the same source as [sametbrr.com](https://sametbrr.com) and the CV.</sub>
