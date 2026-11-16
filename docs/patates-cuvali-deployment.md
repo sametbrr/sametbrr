@@ -117,3 +117,15 @@ Dokploy (proje `sametbrr.com`, ortam `production`):
 Sıra: kodu gönder → `sametbrr-web` dağıt → `sametbrr-pato-worker` dağıt → gerçek telefonda dene.
 
 Düzeltilen hata: `web-push` 4 varsayılan dışa aktarım sunmuyor; worker ve `keys.mjs` içe aktarımı düzeltilene kadar başlamıyordu.
+
+## Tek servis (16 Kasım 2026, yukarıdaki worker anlatımlarının yerine geçer)
+
+Ayrı bildirim worker'ı kaldırıldı. Hatırlatma döngüsü web sunucusunun içinde çalışır: `src/instrumentation.ts` sunucu açılırken `src/lib/patates/notifier.ts` içindeki döngüyü bir kez başlatır. Dockerfile'daki `patates-worker` hedefi ve `scripts/patates/worker.mjs` silindi.
+
+- Gereken tek şey `sametbrr-web` servisi ve `/app/data` yolundaki kalıcı volume. `PATATES_DB_PATH` imajda tanımlıdır.
+- VAPID anahtarları ilk açılışta üretilip veritabanına yazılır; `PATATES_VAPID_*` verilirse onlar kullanılır. `PATATES_PUSH_ENABLED=false` döngüyü hiç başlatmaz.
+- Site yeniden başlarken hatırlatmalar birkaç saniye durur; 5 dakikadan yeni görevler açılışta gönderilir.
+- Web servisi tek kopya çalışmalıdır. Birden fazla kopya aynı diski paylaşırsa görev kilidi çift gönderimi önler, ama bu kurulum bunun için tasarlanmadı.
+- Dokploy'daki `sametbrr-pato-worker` servisi artık gereksizdir; yeni kod dağıtıldıktan sonra silinmelidir. İkisi birlikte çalışırsa zarar vermez.
+
+Düzeltilen hata: POST isteklerindeki köken kontrolü `request.url` ile karşılaştırıyordu; ters vekil arkasında bu container adresini taşıdığı için canlıda her eşleşme ve abonelik isteği 403 dönüyordu. Kontrol artık `X-Forwarded-Host` ve `Host` başlıklarına bakar.

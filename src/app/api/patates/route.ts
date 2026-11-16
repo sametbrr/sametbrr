@@ -68,12 +68,19 @@ export async function GET(request: Request) {
   if (!row) return json({ error: "room" }, 404);
   return new URL(request.url).searchParams.has("stream") ? stream(request, String(row.id)) : json(packet(row));
 }
-const deviceSchema = z.string().regex(/^[a-f0-9-]{20,40}$/);
+// Behind the reverse proxy request.url carries the container's own address, so the public host
+// is read from the forwarded headers instead.
+function sameOrigin(request: Request) {
+  try {
+    const host = new URL(request.headers.get("origin") ?? "").host;
+    return [request.headers.get("x-forwarded-host"), request.headers.get("host"), new URL(request.url).host].some((value) => value?.split(",")[0].trim() === host);
+  } catch { return false; }
+}
+const deviceSchema =z.string().regex(/^[a-f0-9-]{20,40}$/);
 const subSchema = z.object({ endpoint: z.string().url().max(2048), keys: z.object({ p256dh: z.string().min(80).max(150), auth: z.string().min(16).max(40) }) });
 export async function POST(request: Request) {
   if (!configured()) return json({ error: "unconfigured" }, 503);
-  const origin = request.headers.get("origin");
-  if (!origin || origin !== new URL(request.url).origin) return json({ error: "origin" }, 403);
+  if (!sameOrigin(request)) return json({ error: "origin" }, 403);
   if (Number(request.headers.get("content-length")) > 16000) return json({ error: "size" }, 413);
   let raw: Record<string, unknown>;
   try { const text = await request.text(); if (text.length > 16000) return json({ error: "size" }, 413); raw = JSON.parse(text); } catch { return json({ error: "json" }, 400); }
