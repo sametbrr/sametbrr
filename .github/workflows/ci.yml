@@ -24,6 +24,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
+      - run: node scripts/patates/state-test.mts
+      - run: node scripts/patates/scheduler-test.mjs
+      - run: node scripts/patates/recovery-test.mts
       - run: pnpm readme:check
       - run: pnpm build
 

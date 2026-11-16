@@ -12,6 +12,9 @@ export function Footer({ profile, dict, locale }: { profile: Profile; dict: Dict
           © {new Date().getFullYear()} {profile.name}. {dict.footer.rights}
         </p>
         <div className="flex items-center gap-6">
+          <Link href={href(locale, "/pato")} className="transition-colors hover:text-ghost">
+            Pato
+          </Link>
           <Link
             href={href(locale, "/arcade")}
             data-umami-event="arcade-open"

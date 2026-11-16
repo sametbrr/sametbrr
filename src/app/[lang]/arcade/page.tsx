@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { GAMES } from "@/components/arcade/catalog";
 import { LazyArcadePreview } from "@/components/arcade/lazy";
+import { PatoTeaser } from "@/components/sections/pato-teaser";
 import { ArrowIcon, Label, Tag } from "@/components/ui/primitives";
 import { hasLocale, href } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -36,6 +37,7 @@ export default async function ArcadePage({ params }: PageProps<"/[lang]/arcade">
           <h1 className="text-display max-w-4xl text-balance">{dict.arcade.title}</h1>
           <p className="max-w-2xl text-lg text-fg-muted">{dict.arcade.text}</p>
         </header>
+        <PatoTeaser locale={lang} source="arcade-card" className="pb-10 md:pb-14" />
         <ul className="container-site grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {GAMES.map((game, i) => (
             <li key={game.slug}>

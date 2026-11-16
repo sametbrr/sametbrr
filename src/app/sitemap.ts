@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/",
     ...getDetailedCaseStudies().map((c) => `/work/${c.slug}`),
     "/arcade",
+    "/pato",
     ...GAMES.map((g) => `/arcade/${g.slug}`),
   ];
   return paths.flatMap((path) =>

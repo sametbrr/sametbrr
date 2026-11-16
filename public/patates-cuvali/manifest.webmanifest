@@ -1,0 +1,16 @@
+{
+  "id": "/patates-cuvali",
+  "name": "Pato",
+  "short_name": "Pato",
+  "description": "Biraz odaklan, biraz yürü. Patatesi tarlasına götür.",
+  "lang": "tr",
+  "start_url": "/pato",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f6f6f2",
+  "theme_color": "#f6f6f2",
+  "icons": [
+    { "src": "/patates-cuvali/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/patates-cuvali/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

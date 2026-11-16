@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { Hero } from "@/components/sections/hero";
+import { PatoTeaser } from "@/components/sections/pato-teaser";
 import {
   About,
   ArcadeTeaser,
@@ -78,6 +79,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <About profile={profile} dict={dict} locale={lang} stats={stats} />
         <Services services={getServices()} dict={dict} locale={lang} />
         <Work cases={cases} dict={dict} locale={lang} />
+        <PatoTeaser locale={lang} />
         <Process dict={dict} />
         <OpenSource projects={oss} dict={dict} locale={lang} />
         <ArcadeTeaser dict={dict} locale={lang} />

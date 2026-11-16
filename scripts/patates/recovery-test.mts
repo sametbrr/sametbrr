@@ -1,0 +1,11 @@
+import assert from "node:assert/strict";
+import { settleDisconnect } from "../../src/lib/patates/recovery.ts";
+let localRevoked = 0;
+const local = async () => { localRevoked++; };
+const missing = await settleDisconnect(async () => { throw new Error("404"); }, local);
+assert.equal(missing.remotePending, false); assert.equal(localRevoked, 1, "missing room never blocks local revoke");
+const offline = await settleDisconnect(async () => { throw new Error("network"); }, local);
+assert.equal(offline.remotePending, true); assert.equal(localRevoked, 2, "offline server never blocks local revoke");
+const failed = await settleDisconnect(async () => {}, async () => { throw new Error("network"); });
+assert.equal(failed.localPending, true); assert.equal(failed.remotePending, false);
+console.log("Patates recovery checks passed: expired room, offline server, local revocation failure");

@@ -43,4 +43,8 @@ next-env.d.ts
 # nested legacy cv repo (content migrated into content/)
 /cv/
 
+# Local focus companion data (production uses a persistent mounted path)
+/.data/
+/.impeccable/review/
+
 !.env.example

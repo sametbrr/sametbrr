@@ -16,4 +16,4 @@ export const themeInitScript = `(function(){try{var t=localStorage.getItem("${TH
  * Runs in <head> before first paint: if the boot screen already ran this session, or the
  * visitor prefers reduced motion, or this is the printable CV, mark the page as booted so CSS never shows the screen.
  */
-export const bootInitScript = `(function(){try{if(/\\/cv\\/?$/.test(location.pathname)||sessionStorage.getItem("${BOOT_SESSION_KEY}")||matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.dataset.booted="1"}}catch(e){document.documentElement.dataset.booted="1"}})();`;
+export const bootInitScript = `(function(){try{if(/\\/(?:cv|pato)\\/?$/.test(location.pathname)||sessionStorage.getItem("${BOOT_SESSION_KEY}")||matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.dataset.booted="1"}}catch(e){document.documentElement.dataset.booted="1"}})();`;
